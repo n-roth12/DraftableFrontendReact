@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  background-color: var(--background-color);
+  color: var(--text-color-1);
+}
+
+.App-dark {
+  --background-color: var(--dark-grey);
+  --text-color-1: var(--lightgrey);
+  --google-btn-color: var(--google-blue);
+}
+
+.App-light {
+  --background-color: var(--white);
+  --text-color-1: var(--black);
+  --google-btn-color: var(--google-blue);
+  --box-shadow-1: var(--box-shadow-light-1);
+  --btn-blue-1: var(--submit-btn-light-1);
+}
+
+:root {
+  --white: white;
+  --black: black;
+  --dark-grey: #1e1e1e;
+  --lightgrey: #d4d4d4;
+  --google-blue: #4285F4;
+  --box-shadow-light-1: 0px 0px 10px 0px lightgray;
+  --submit-btn-light-1: #635AFF;
+}
