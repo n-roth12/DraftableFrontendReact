@@ -1,5 +1,6 @@
 .auth-form {
     margin: auto;
+    margin-top: 10vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -11,7 +12,7 @@
     padding-left: 20px;
     padding-right: 20px;
 
-    h1 {
+    h2 {
         font-weight: 600;
         font-size: 20pt;
         text-align: left;
@@ -52,6 +53,9 @@
         margin: 10px;
         margin-top: 15px;
     }
+    .submit-btn:hover {
+        background-color: var(--btn-blue-hover-1);
+    }
     .link-wrapper {
         padding: 20px;
         font-size: 12pt;
@@ -59,12 +63,22 @@
 
         a {
             border: None;
-            color: var(--btn-blue-1);
+            color: var(--link-color-1);
             background: none;
             font-weight: 400;
             cursor: pointer;
             text-decoration: None;
             margin-left: 5px;
         }
+        a:hover {
+            color: var(--link-color-hover-1);
+        }
     }
+}
+
+@media (max-width: 540px) {
+	.auth-form {
+		box-shadow: none;
+        margin-top: 5vh;
+	}
 }

@@ -51,8 +51,10 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { useState, useEffect } from 'react'
 import useFetch from './useFetch'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Login from './Login'
-import Register from './Register'
+import Login from './Pages/Login/Login'
+import Register from './Pages/Register/Register'
+import RankingsPage from './Pages/RankingsPage/RankingsPage'
+import CustomRankingsPage from './Pages/CustomRankingsPage/CustomRankingsPage'
 
 function App() {
 
@@ -75,6 +77,12 @@ function App() {
             <Register isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
           } />
           <Route path="rankings" element={
+            <RankingsPage />
+          } />
+          <Route path="custom" element={
+            <CustomRankingsPage />
+          } />
+          {/* <Route path="rankings" element={
             <>
               <DndProvider backend={HTML5Backend}>
                 {players && players.length > 0 ?
@@ -85,7 +93,7 @@ function App() {
               </DndProvider>
               <button onClick={savePlayers}>Save</button>
             </>
-          } />
+          } /> */}
         </Routes>
       </BrowserRouter>
     </div>

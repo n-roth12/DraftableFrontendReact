@@ -1,0 +1,12 @@
+.rankings-table {
+    border-spacing: 0;
+    thead tr {
+        background-color: var(--table-header-color);
+    }
+    .name {
+        font-weight: 600;
+    }
+    tbody td {
+        padding: 4px;
+    }
+}

@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import LoginForm from './components/Auth/LoginForm'
 import './Login.scss'
+import LoginForm from '../../components/Auth/LoginForm'
+import Nav from '../../components/Nav/Nav'
 
 const Login = ({ isDarkMode, setIsDarkMode }) => {
 
   return (
     <div className='login-page'>
+      <Nav />
       <div className='auth-wrapper'>
         <LoginForm />
       </div>

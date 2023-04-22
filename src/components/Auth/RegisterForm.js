@@ -31,7 +31,7 @@ const RegisterForm = () => {
   return (
     <form className="auth-form">
       <div className='form-header'>
-        <h1>Create an Account</h1>
+        <h2>Create an Account</h2>
       </div>
       <button className='google-auth-btn'>Continue with Google</button>
       <hr />

@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+html {
+  background-color: var(--offwhite-1);
+}
+
 .App {
   background-color: var(--background-color);
   color: var(--text-color-1);
@@ -15,19 +19,31 @@
 }
 
 .App-light {
-  --background-color: var(--white);
+  --background-color: var(--offwhite-1);
   --text-color-1: var(--black);
+  --text-color-2: var(--white);
   --google-btn-color: var(--google-blue);
   --box-shadow-1: var(--box-shadow-light-1);
   --btn-blue-1: var(--submit-btn-light-1);
+  --btn-blue-hover-1: var(--submit-btn-hover-light-1);
+  --link-color-1: var(--link-color-light-1);
+  --link-color-hover-1: var(--link-color-hover-light-1);
+  --nav-color: var(--black);
+  --table-header-color: var(--table-header-blue-light);
 }
 
 :root {
   --white: white;
+  --offwhite-1: #F7FAFC;
   --black: black;
   --dark-grey: #1e1e1e;
+  --grey: #454545;
   --lightgrey: #d4d4d4;
   --google-blue: #4285F4;
   --box-shadow-light-1: 0px 0px 10px 0px lightgray;
   --submit-btn-light-1: #635AFF;
+  --submit-btn-hover-light-1: #3C54D5;
+  --link-color-light-1: #635AFF;
+  --link-color-hover-light-1: #1a1f35;
+  --table-header-blue-light: #EAF0FF;
 }

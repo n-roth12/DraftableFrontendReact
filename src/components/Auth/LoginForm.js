@@ -30,7 +30,7 @@ const LoginForm = () => {
   return (
     <form className="auth-form">
       <div className='form-header'>
-        <h1>Login</h1>
+        <h2>Login</h2>
       </div>
       <button className='google-auth-btn'>Login with Google</button>
       <hr />
