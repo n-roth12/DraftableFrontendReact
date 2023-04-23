@@ -10,9 +10,29 @@
     tbody td {
         padding: 4px;
     }
+    tr {
+        display: flex;
+        td, th {
+            flex: 1;
+            text-align: center;
+        }
+        .name, .name-header {
+            flex: 3;
+            justify-content: flex-start;
+            text-align: left;
+        }
+    }
     th {
-        text-align: left;
         cursor: pointer;
         user-select: none;
+        padding: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+    .info-icon {
+        height: 0.8em;
+        color: var(--grey);
     }
 }

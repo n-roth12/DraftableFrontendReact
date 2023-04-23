@@ -1,6 +1,6 @@
 import './Rankings.scss'
 import { useState } from 'react'
-import { FaAngleUp, FaAngleDown } from 'react-icons/fa'
+import { FaAngleUp, FaAngleDown, FaInfoCircle } from 'react-icons/fa'
 
 const Rankings = () => {
   const [sortColumn, setSortColumn] = useState("ECR")
@@ -29,7 +29,10 @@ const Rankings = () => {
       <thead>
         <tr>
           {["ECR", "Name", "Pos", "Team", "Bye"].map(col => 
-            <th onClick={() => toggleSort(col)}>{getSortIcon(col)} {col}</th>
+            <th onClick={() => toggleSort(col)}
+            className={col === "Name" ? "name-header" : ""}>{getSortIcon(col)} {col}
+              {col === "ECR" ? <FaInfoCircle className='info-icon'/> : ""}
+            </th>
           )}
         </tr>
       </thead>

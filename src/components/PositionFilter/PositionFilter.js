@@ -6,7 +6,7 @@ const PositionFilter = ({ positions }) => {
 
   return (
     <div className='position-filter-wrapper'>
-      <label>Position</label>
+      <label></label>
       <div className="position-filter">
         {["ALL", ...positions].map(pos =>
           <button

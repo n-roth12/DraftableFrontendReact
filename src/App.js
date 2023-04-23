@@ -55,6 +55,7 @@ import Login from './Pages/Login/Login'
 import Register from './Pages/Register/Register'
 import RankingsPage from './Pages/RankingsPage/RankingsPage'
 import CustomRankingsPage from './Pages/CustomRankingsPage/CustomRankingsPage'
+import EditRankingPage from './Pages/EditRankingPage/EditRankingPage'
 
 function App() {
 
@@ -76,9 +77,10 @@ function App() {
           <Route path="register" element={
             <Register isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
           } />
-          <Route path="rankings" element={
-            <RankingsPage />
-          } />
+          <Route path="rankings">
+            <Route index element={<RankingsPage />} />
+            <Route path="/rankings/:rankingsId" element={<EditRankingPage />} />
+          </Route>
           <Route path="custom" element={
             <CustomRankingsPage />
           } />
