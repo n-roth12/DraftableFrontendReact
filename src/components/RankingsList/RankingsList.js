@@ -4,21 +4,32 @@ import { FaAngleRight } from 'react-icons/fa'
 const RankingsList = () => {
   return (
     <div className='rankings-list'>
-      <div className='row col-labels'>
+      <div className='col-labels'>
         <p></p>
         <p>Title</p>
         <p>Last Updated</p>
       </div>
       <div className='row'>
         <input type="checkbox"></input>
-        <p>PPR Rankings</p>
-        <p>20 April 2023</p>
+        <div className='rankings-title-wrapper'>
+          <p className='rankings-title'>PPR Rankings</p>
+          <div className='rankings-details'>
+            <p>NFL 2023</p>
+            <p>197 Players</p>
+          </div>
+        </div>
+        <p className='last-update'>20 April 2023</p>
       </div>
       <div className='row'>
         <input type="checkbox"></input>
-        <p>Half-PPR Rankings</p>
-        <FaAngleRight className='arrow-icon' />
-        <p>16 April 2023</p>
+        <div className='rankings-title-wrapper'>
+          <p className='rankings-title'>Half-PPR Rankings</p>
+          <div className='rankings-details'>
+            <p>NFL 2023</p>
+            <p>197 Players</p>
+          </div>
+        </div>
+        <p className='last-update'>16 April 2023</p>
       </div>
     </div>
   )

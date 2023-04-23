@@ -4,6 +4,7 @@ import Rankings from "../../components/Rankings/Rankings"
 import PositionFilter from "../../components/PositionFilter/PositionFilter"
 import SelectFilter from "../../components/SelectFilter/SelectFilter"
 import Search from '../../components/Search/Search'
+import EditButton from '../../components/EditButton/EditButton'
 
 const RankingsPage = () => {
   return (
@@ -11,9 +12,12 @@ const RankingsPage = () => {
       <Nav />
       <div className="content">
         <h1>Draft Rankings</h1>
-        <div className="filters-wrapper">
-          <SelectFilter />
-          <Search />
+        <div className="options-wrapper">
+          <div className='filters-wrapper'>
+            <SelectFilter />
+            <Search />
+          </div>
+          <EditButton title={"Customize"} />
         </div>
         <PositionFilter positions={["QB", "RB", "WR", "TE", "DST"]} />
         <Rankings />

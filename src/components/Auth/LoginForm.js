@@ -1,15 +1,23 @@
 import './AuthForm.scss'
 import { useState, useEffect } from 'react'
-import { TextField } from '@mui/material'
+import { TextField, InputAdornment, IconButton } from '@mui/material'
+import { VisibilityOff, Visibility } from '@mui/icons-material'
 
 const LoginForm = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
 
   const onSubmit = () => {
     console.log(email, password)
   }
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleChangeEmail = (e) => {
     setEmail(e.target.value)
@@ -37,12 +45,24 @@ const LoginForm = () => {
       <TextField
         className='text-input'
         variant='outlined'
-        label='Username or Email'
+        label='Enter Email'
         onChange={handleChangeEmail}
         size='medium'
       />
       <TextField
         className='text-input'
+        type={showPassword ? 'text' : 'password'}
+        InputProps={{
+          endAdornment: <InputAdornment position="end">
+            <IconButton
+              aria-label="toggle password visibility"
+              onClick={handleClickShowPassword}
+              onMouseDown={handleMouseDownPassword}
+            >
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          </InputAdornment>
+        }}
         variant='outlined'
         label='Enter Password'
         onChange={handleChangePassword}

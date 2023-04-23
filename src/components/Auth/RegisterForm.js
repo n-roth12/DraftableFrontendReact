@@ -1,6 +1,7 @@
 import './AuthForm.scss'
 import { useState } from 'react'
 import { TextField } from '@mui/material'
+import { FcGoogle } from 'react-icons/fc'
 
 const RegisterForm = () => {
   const [email, setEmail] = useState('')
@@ -16,10 +17,6 @@ const RegisterForm = () => {
     setEmail(e.target.value)
   }
 
-  const handleChangeUsername = (e) => {
-    setUsername(e.target.value)
-  }
-
   const handleChangePassword = (e) => {
     setPassword(e.target.value)
   }
@@ -33,7 +30,7 @@ const RegisterForm = () => {
       <div className='form-header'>
         <h2>Create an Account</h2>
       </div>
-      <button className='google-auth-btn'>Continue with Google</button>
+      <button className='google-auth-btn'><FcGoogle className='google-icon'/>Continue with Google</button>
       <hr />
       <TextField
         className='text-input'
@@ -45,13 +42,7 @@ const RegisterForm = () => {
       <TextField
         className='text-input'
         variant='outlined'
-        label='Create Username'
-        onChange={handleChangeUsername}
-        size='medium'
-      />
-      <TextField
-        className='text-input'
-        variant='outlined'
+        type="password"
         label='Create Password'
         onChange={handleChangePassword}
         size='medium'
@@ -59,6 +50,7 @@ const RegisterForm = () => {
       <TextField
         className='text-input'
         variant='outlined'
+        type="password"
         label='Confirm Password'
         onChange={handleChangeConfirmPassword}
         size='medium'

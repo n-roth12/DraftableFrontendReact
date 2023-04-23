@@ -1,20 +1,41 @@
 .rankings-list {
-    .row {
+    max-width: 700px;
+    margin: auto;
+
+    .row, .col-labels {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         border-bottom: 1px solid var(--lightgrey);
-        height: 40px;
         cursor: pointer;
     }
-    .col-labels {
+    .row:hover {
         background-color: var(--table-header-color);
     }
-    .arrow-icon {
-        display: none;
+    .rankings-title {
+        color: var(--btn-blue-1);
+        font-weight: 600;
+        padding: 2px;
     }
-    .row:hover {
-        .arrow-icon {
-            display: inline;
+    .rankings-details {
+        display: flex;
+        color: var(--grey);
+        font-size: 9pt;
+        padding: 2px;
+        p {
+            margin-right: 10px;
         }
+    }
+    .rankings-title-wrapper {
+        flex: 2;
+        padding: 8px 8px 8px 16px;
+    }
+    input {
+        margin: 10px;
+        height: 1.2em;
+        width: 1.2em;
+    }
+    .last-update {
+        font-size: 10pt;
     }
 }

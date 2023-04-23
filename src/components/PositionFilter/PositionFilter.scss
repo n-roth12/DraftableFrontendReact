@@ -10,17 +10,17 @@
         button {
             background: var(--background-color);
             padding: 11px 20px 11px 20px;
-            border-top: 1px solid var(--grey);
-            border-bottom: 1px solid var(--grey);
-            border-right: 1px solid var(--grey);
+            border-top: 1px solid var(--lightgrey);
+            border-bottom: 1px solid var(--lightgrey);
+            border-right: 1px solid var(--lightgrey);
             cursor: pointer;
         }
         button.active {
-            background-color: var(--grey);
-            color: var(--text-color-2);
+            background-color: var(--lightgrey);
+            color: var(--text-color-1);
         }
         :nth-child(1) {
-            border-left: 1px solid var(--grey);
+            border-left: 1px solid var(--lightgrey);
             border-radius: 4px 0px 0px 4px;
         }
         :nth-child(n + 2) {
