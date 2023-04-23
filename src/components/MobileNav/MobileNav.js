@@ -1,10 +1,10 @@
 import './MobileNav.scss'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { FaAngleRight } from 'react-icons/fa'
 
 const MobileNav = () => {
-
+  const navigate = useNavigate()
   const [burgerClass, setBurgerClass] = useState("burger-bar unclicked")
   const [menuClass, setMenuClass] = useState("menu hidden")
   const [isMenuClicked, setIsMenuClicked] = useState(false)
@@ -27,7 +27,7 @@ const MobileNav = () => {
   return (
     <header className='mobile-nav'>
       <nav>
-        <h1>Draftabl</h1>
+        <img onClick={() => navigate('/')} src="/Draftabl_black_outlined.png" alt="image" />
         <div className='burger-menu' onClick={updateMenu}>
           <div className={burgerClass}></div>
           <div className={burgerClass}></div>

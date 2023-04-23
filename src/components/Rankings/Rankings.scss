@@ -1,5 +1,6 @@
 .rankings-table {
     border-spacing: 0;
+    min-width: 400px;
     thead tr {
         background-color: var(--table-header-color);
     }
@@ -8,5 +9,10 @@
     }
     tbody td {
         padding: 4px;
+    }
+    th {
+        text-align: left;
+        cursor: pointer;
+        user-select: none;
     }
 }

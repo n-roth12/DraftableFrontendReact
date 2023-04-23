@@ -1,0 +1,21 @@
+.rankings-page {
+
+    .filters-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .search, .position-filter {
+            align-self: flex-end;
+        }
+    }
+    .content {
+        box-shadow: var(--box-shadow-1);
+        display: flex;
+        flex-direction: column;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 4px;
+    }
+}

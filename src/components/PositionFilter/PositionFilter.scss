@@ -1,24 +1,33 @@
-.position-filter {
-    button {
-        background: var(--background-color);
-        padding: 4px 8px 4px 8px;
-        border-top: 1px solid black;
-        border-bottom: 1px solid black;
-        border-right: 1px solid black;
-        cursor: pointer;
+.position-filter-wrapper {
+    label {
+        display: block;
+        font-size: 11pt;
+        font-weight: 600;
+        color: var(--dark-grey);
     }
-    button.active {
-        background-color: var(--text-color-1);
-        color: var(--text-color-2);
-    }
-    :nth-child(1) {
-        border-left: 1px solid black;
-        border-radius: 4px 0px 0px 4px;
-    }
-    :nth-child(n + 2) {
-        border-left: none;
-    }
-    :last-child {
-        border-radius: 0px 4px 4px 0px;
+    .position-filter {
+
+        button {
+            background: var(--background-color);
+            padding: 11px 20px 11px 20px;
+            border-top: 1px solid var(--grey);
+            border-bottom: 1px solid var(--grey);
+            border-right: 1px solid var(--grey);
+            cursor: pointer;
+        }
+        button.active {
+            background-color: var(--grey);
+            color: var(--text-color-2);
+        }
+        :nth-child(1) {
+            border-left: 1px solid var(--grey);
+            border-radius: 4px 0px 0px 4px;
+        }
+        :nth-child(n + 2) {
+            border-left: none;
+        }
+        :last-child {
+            border-radius: 0px 4px 4px 0px;
+        }
     }
 }
