@@ -5,8 +5,11 @@ import PositionFilter from "../../components/PositionFilter/PositionFilter"
 import SelectFilter from "../../components/SelectFilter/SelectFilter"
 import Search from '../../components/Search/Search'
 import EditButton from '../../components/EditButton/EditButton'
+import { useNavigate } from 'react-router-dom'
 
 const RankingsPage = () => {
+  const navigate = useNavigate()
+
   return (
     <div className="rankings-page">
       <Nav />
@@ -17,7 +20,7 @@ const RankingsPage = () => {
             <SelectFilter />
             <Search />
           </div>
-          <EditButton title={"Customize"} />
+          <EditButton title={"Customize"} onClick={() => navigate("/rankings/1")} />
         </div>
         <PositionFilter positions={["QB", "RB", "WR", "TE", "DST"]} />
         <Rankings />

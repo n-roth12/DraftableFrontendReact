@@ -1,9 +1,10 @@
 import './Rankings.scss'
 import { useState } from 'react'
 import { FaAngleUp, FaAngleDown, FaInfoCircle } from 'react-icons/fa'
+import { Tooltip } from '@mui/material'
 
 const Rankings = () => {
-  const [sortColumn, setSortColumn] = useState("ECR")
+  const [sortColumn, setSortColumn] = useState("Rank")
   const [sortAsc, setSortAsc] = useState(true)
 
   const toggleSort = (col) => {
@@ -28,10 +29,10 @@ const Rankings = () => {
     <table className="rankings-table">
       <thead>
         <tr>
-          {["ECR", "Name", "Pos", "Team", "Bye"].map(col => 
+          {["Rank", "Name", "Pos", "Team", "Bye"].map(col => 
             <th onClick={() => toggleSort(col)}
             className={col === "Name" ? "name-header" : ""}>{getSortIcon(col)} {col}
-              {col === "ECR" ? <FaInfoCircle className='info-icon'/> : ""}
+              {col === "Rank" ? <Tooltip title="Expert Consensus"><FaInfoCircle className='info-icon'/></Tooltip> : ""}
             </th>
           )}
         </tr>

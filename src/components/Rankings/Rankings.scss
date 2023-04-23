@@ -2,13 +2,16 @@
     border-spacing: 0;
     min-width: 400px;
     thead tr {
-        background-color: var(--table-header-color);
+        background-color: var(--lightgrey);
     }
     .name {
+        color: var(--btn-blue-1);
         font-weight: 600;
+        cursor: pointer;
     }
-    tbody td {
-        padding: 4px;
+    tbody td, thead th {
+        padding: 6px;
+        font-size: 11pt;
     }
     tr {
         display: flex;
@@ -22,6 +25,9 @@
             text-align: left;
         }
     }
+    tbody tr:nth-child(even) {
+        background-color: #f1f1f1;
+    }
     th {
         cursor: pointer;
         user-select: none;
@@ -34,5 +40,8 @@
     .info-icon {
         height: 0.8em;
         color: var(--grey);
+    }
+    tbody tr:hover {
+        background-color: var(--table-header-color);
     }
 }

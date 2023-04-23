@@ -10,11 +10,11 @@ const Search = () => {
   return (
     <div className='search'>
       <TextField
-      placeholder="Search"
-      size='small'
-      InputProps={{
-        startAdornment: <InputAdornment position="end"><FaSearch /></InputAdornment>
-      }}
+        placeholder="Search"
+        size='small'
+        InputProps={{
+          startAdornment: <InputAdornment position="end"><FaSearch /></InputAdornment>
+        }}
       />
     </div>
   )

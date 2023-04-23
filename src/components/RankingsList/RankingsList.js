@@ -1,5 +1,5 @@
 import './RankingsList.scss'
-import { FaAngleRight } from 'react-icons/fa'
+import { HiDotsHorizontal } from 'react-icons/hi'
 
 const RankingsList = () => {
   return (
@@ -10,7 +10,7 @@ const RankingsList = () => {
         <p>Last Updated</p>
       </div>
       <div className='row'>
-        <input type="checkbox"></input>
+        <HiDotsHorizontal className='rankings-options-btn'/>
         <div className='rankings-title-wrapper'>
           <p className='rankings-title'>PPR Rankings</p>
           <div className='rankings-details'>
@@ -21,7 +21,7 @@ const RankingsList = () => {
         <p className='last-update'>20 April 2023</p>
       </div>
       <div className='row'>
-        <input type="checkbox"></input>
+        <HiDotsHorizontal className='rankings-options-btn' />
         <div className='rankings-title-wrapper'>
           <p className='rankings-title'>Half-PPR Rankings</p>
           <div className='rankings-details'>
