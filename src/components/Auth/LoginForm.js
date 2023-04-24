@@ -2,6 +2,7 @@ import './AuthForm.scss'
 import { useState, useEffect } from 'react'
 import { TextField, InputAdornment, IconButton } from '@mui/material'
 import { VisibilityOff, Visibility } from '@mui/icons-material'
+import { GoogleLogin} from '@react-oauth/google'
 
 const LoginForm = () => {
 
@@ -40,7 +41,16 @@ const LoginForm = () => {
       <div className='form-header'>
         <h2>Login</h2>
       </div>
-      <button className='google-auth-btn'>Login with Google</button>
+      <div className='google-auth-wrapper'>
+        <GoogleLogin
+          onSuccess={credentialResponse => {
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            console.log('Login Failed');
+          }}
+        />
+      </div>
       <hr />
       <TextField
         className='text-input'

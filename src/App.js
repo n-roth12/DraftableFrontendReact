@@ -2,11 +2,11 @@
 // import { useState, useEffect, useRef } from "react"
 
 // function App() {
-  
+
 //   const dragItem = useRef()
 //   const dragOverItem = useRef()
 //   const [list, setList] = useState(["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"])
-  
+
 //   const dragStart = (e, position) => {
 //     dragItem.current = position
 //     console.log(e.target.innerHTML)
@@ -56,10 +56,11 @@ import Register from './Pages/Register/Register'
 import RankingsPage from './Pages/RankingsPage/RankingsPage'
 import CustomRankingsPage from './Pages/CustomRankingsPage/CustomRankingsPage'
 import EditRankingPage from './Pages/EditRankingPage/EditRankingPage'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 function App() {
 
-  const [ players, loadingPlayers, playersError, setPlayers, setLoadingPlayers, setError] = useFetch("http://ec2-54-176-136-159.us-west-1.compute.amazonaws.com/api/players?pos=QB&limit=5")
+  const [players, loadingPlayers, playersError, setPlayers, setLoadingPlayers, setError] = useFetch("http://ec2-54-176-136-159.us-west-1.compute.amazonaws.com/api/players?pos=QB&limit=5")
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const savePlayers = () => {
@@ -68,23 +69,23 @@ function App() {
 
   return (
     <div className={`App ${isDarkMode ? "App-dark" : "App-light"}`}>
-
-      <BrowserRouter>
-        <Routes>
-          <Route path="login" element={
-            <Login isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-          } />
-          <Route path="register" element={
-            <Register isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-          } />
-          <Route path="rankings">
-            <Route index element={<RankingsPage />} />
-            <Route path="/rankings/:rankingsId" element={<EditRankingPage />} />
-          </Route>
-          <Route path="custom" element={
-            <CustomRankingsPage />
-          } />
-          {/* <Route path="rankings" element={
+      <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="login" element={
+              <Login isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+            } />
+            <Route path="register" element={
+              <Register isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+            } />
+            <Route path="rankings">
+              <Route index element={<RankingsPage />} />
+              <Route path="/rankings/:rankingsId" element={<EditRankingPage />} />
+            </Route>
+            <Route path="custom" element={
+              <CustomRankingsPage />
+            } />
+            {/* <Route path="rankings" element={
             <>
               <DndProvider backend={HTML5Backend}>
                 {players && players.length > 0 ?
@@ -96,8 +97,9 @@ function App() {
               <button onClick={savePlayers}>Save</button>
             </>
           } /> */}
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </GoogleOAuthProvider>
     </div>
   )
 }
