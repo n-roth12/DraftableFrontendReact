@@ -6,9 +6,12 @@ import SelectFilter from "../../components/SelectFilter/SelectFilter"
 import Search from '../../components/Search/Search'
 import EditButton from '../../components/EditButton/EditButton'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectAllDraftables } from '../../features/draftables/draftablesSlice'
 
 const RankingsPage = () => {
   const navigate = useNavigate()
+  const draftables = useSelector(selectAllDraftables)
 
   return (
     <div className="rankings-page">
@@ -24,6 +27,7 @@ const RankingsPage = () => {
         </div>
         <PositionFilter positions={["QB", "RB", "WR", "TE", "DST"]} />
         <Rankings />
+        {draftables}
       </div>
     </div>
   )
