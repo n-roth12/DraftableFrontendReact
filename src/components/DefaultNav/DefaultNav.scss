@@ -15,9 +15,13 @@
         padding: 12px;
     }
     .nav-link {
+        cursor: pointer;
         text-decoration: none;
         color: var(--text-color-2);
         margin-right: 20px;
+        border: none;
+        background: none;
+        font-size: 0.8em;
     }
 }
 

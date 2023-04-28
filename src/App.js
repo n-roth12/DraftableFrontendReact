@@ -77,7 +77,7 @@ function App() {
           {/* protected routes  */}
           <Route element={<RequireAuth />}>
             <Route path="welcome" element={<Welcome />} />
-            <Route path="rankingslist" element={<RankingsList />} />
+            <Route path="custom" element={<CustomRankingsPage />} />
           </Route>
 
         </Route>

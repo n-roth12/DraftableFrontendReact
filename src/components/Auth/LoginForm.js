@@ -33,7 +33,7 @@ const LoginForm = () => {
       dispatch(setCredentials({ ...userData, email }))
       setEmail('')
       setPassword('')
-      navigate('/welcome')
+      navigate('/rankings')
     } catch (err) {
       if (!err?.originalStatus) {
         setErrorMessage('No server response')
