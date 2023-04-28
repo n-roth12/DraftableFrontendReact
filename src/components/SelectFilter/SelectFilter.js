@@ -2,7 +2,7 @@ import './SelectFilter.scss'
 import { MenuItem } from "@mui/material"
 import { TextField } from "@mui/material"
 
-const SelectFilter = () => {
+const SelectFilter = ({ handleChange }) => {
   return (
     <div className='select-filter'>
       <label>Scoring</label>
@@ -11,7 +11,8 @@ const SelectFilter = () => {
         id="scoring-format-options"
         select
         defaultValue="Standard"
-        size="small">
+        size="small"
+        onChange={handleChange}>
         {["Standard", "Half-PPR", "PPR"].map((option) => (
           <MenuItem key={option} value={option}>
             {option}
