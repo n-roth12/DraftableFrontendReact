@@ -22,7 +22,7 @@ const DefaultNav = () => {
   return (
     <header className='default-nav'>
       <nav>
-        <img onClick={() => navigate('/rankings')} src="/Draftabl_word_white.png" alt="image" />
+        <img onClick={() => navigate('/rankings')} src="/draftabl_word_blue.svg" alt="image" />
         {!window.location.pathname.startsWith("/login") && !window.location.pathname.startsWith("/register") &&
           <div className='nav-links'>
             <Link className='nav-link' to='/rankings'>Rankings</Link>

@@ -56,10 +56,7 @@ import RankingsPage from './Pages/RankingsPage/RankingsPage'
 import CustomRankingsPage from './Pages/CustomRankingsPage/CustomRankingsPage'
 import EditRankingPage from './Pages/EditRankingPage/EditRankingPage'
 import RequireAuth from './components/Auth/RequireAuth'
-import Welcome from './components/Auth/Welcome'
 import Layout from './components/Layout'
-import Public from './components/Public'
-import RankingsList from './Pages/RankingsList/RankingsList'
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -67,33 +64,23 @@ function App() {
   return (
     <div className={`App ${isDarkMode ? "App-dark" : "App-light"}`}>
       <Routes>
+
         <Route path="/" element={<Layout />} >
           {/* public routes */}
-          <Route index element={<Public />} />
+          <Route index element={<RankingsPage />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="rankings" element={<RankingsPage />} />
 
           {/* protected routes  */}
           <Route element={<RequireAuth />}>
-            <Route path="welcome" element={<Welcome />} />
-            <Route path="custom" element={<CustomRankingsPage />} />
+            <Route path="custom">
+              <Route index element={<CustomRankingsPage />} />
+              <Route path="edit" element={<EditRankingPage />} />
+            </Route>
           </Route>
 
         </Route>
-        {/* <Route path="login" element={
-          <Login isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-        } />
-        <Route path="register" element={
-          <Register isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-        } />
-        <Route path="rankings">
-          <Route index element={<RankingsPage />} />
-          <Route path="/rankings/:rankingsId" element={<EditRankingPage />} />
-        </Route>
-        <Route path="custom" element={
-          <CustomRankingsPage />
-        } /> */}
       </Routes>
     </div>
   )
