@@ -5,7 +5,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import { TextField, MenuItem } from '@mui/material';
 
-const NewRankingsDialog = ({ open, onClose, onSubmit }) => {
+const NewRankingsDialog = ({ open, onClose, onSubmit, templates }) => {
   return (
     <Dialog open={open} className="new-rankings-dialog" maxWidth="md">
       <DialogTitle className='dialog-title'>
@@ -29,11 +29,11 @@ const NewRankingsDialog = ({ open, onClose, onSubmit }) => {
             className="dialog-input-select"
             id="rankings-template-options"
             select
-            defaultValue="2023 NFL Standard Scoring"
+            defaultValue={templates[0].scoring}
             size="small">
-            {["2023 NFL Standard Scoring", "2023 NFL Half-PPR Scoring", "2023 NFL PPR Scoring"].map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
+            {templates.map(template => (
+              <MenuItem key={template.scoring} value={template.scoring}>
+                {template.league} {template.scoring}
               </MenuItem>
             ))}
           </TextField>

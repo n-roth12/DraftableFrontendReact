@@ -8,11 +8,15 @@ export const rankingsApiSlice = apiSlice.injectEndpoints({
         }),
         getCurrentRanking: builder.query({
             query: (format) => `/rankings/nfl/${format}`
+        }),
+        getCurrentRankingTemplates: builder.query({
+            query: () => '/rankings/templates'
         })
     })
 })
 
 export const {
     useGetRankingsQuery,
-    useGetCurrentRankingQuery
+    useGetCurrentRankingQuery,
+    useGetCurrentRankingTemplatesQuery
 } = rankingsApiSlice
