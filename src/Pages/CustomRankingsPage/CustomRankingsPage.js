@@ -4,15 +4,21 @@ import CustomRankingsList from "../../components/CustomRankingsList/CustomRankin
 import Search from "../../components/Search/Search"
 import EditButton from '../../components/EditButton/EditButton'
 import NewRankingsDialog from '../../components/Dialogs/NewRankingsDialog/NewRankingsDialog'
-import { useGetUserCustomRankingsQuery } from '../../features/rankings/customRankingsApiSlice'
+import { useGetUserCustomRankingsQuery, 
+  useCreateNewCustomRankingsMutation } from '../../features/rankings/customRankingsApiSlice'
 import { useState } from 'react'
 import { useGetCurrentRankingTemplatesQuery } from '../../features/rankings/rankingsApiSlice'
 
 const CustomRankingsPage = () => {
   const [showNewRankingsDialog, setShowRankingsDialog] = useState(false)
+  const [createNewCustomRankings] = useCreateNewCustomRankingsMutation()
 
   const createNewLineup = (title, template) => {
-    console.log(title, template)
+    createNewCustomRankings({
+      "title": title,
+      "template": template,
+      "user": "6449a041b0bbf7e173737793"
+    })
   }
 
   const {
@@ -35,7 +41,6 @@ const CustomRankingsPage = () => {
   if (isRankingsLoading) {
     rankingsContent = <p>"Loading..."</p>
   } else if (isRankingsSuccess) {
-    console.log(customRankings)
     rankingsContent = <CustomRankingsList rankings={customRankings} />
   } else if (isRankingsError) {
     rankingsContent = <p>{JSON.stringify(rankingsError)}</p>

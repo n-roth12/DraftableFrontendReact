@@ -8,12 +8,22 @@ import { useState } from 'react';
 
 const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle }) => {
   const [selectedTemplate, setSelectedTemplate] = useState(
-    templates && templates.length > 0 && templates[0].scoring
+    templates && templates.length > 0 && templates[0]._id
   )
   const [title, setTitle] = useState('')
 
   const handleChangeTemplate = (e) => setSelectedTemplate(e.target.value)
   const handleChangeTitle = (e) => setTitle(e.target.value)
+
+  const onCloseWrapper = () => {
+    onClose()
+    setTitle('')
+  }
+
+  const onSubmitWrapper = () => {
+    onSubmit(title.length ? title : defaultTitle, selectedTemplate)
+    onCloseWrapper()
+  }
 
   return (
     <Dialog disableEnforceFocus open={open} className="new-rankings-dialog" maxWidth="md">
@@ -37,21 +47,21 @@ const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle })
             className="dialog-input-select"
             id="rankings-template-options"
             select
-            defaultValue="STANDARD"
+            onChange={handleChangeTemplate}
             size="small">
             {templates.map(template => (
-              <MenuItem key={template.scoring} value={template.scoring}>
-                {template.league} {template.scoring}
+              <MenuItem key={template._id} value={template._id}>
+                NFL {template.scoring}
               </MenuItem>
             ))}
           </TextField>
         </div>
       </DialogContent>
       <DialogActions className='dialog-actions'>
-        <button className='cancel-btn' onClick={onClose}>Cancel</button>
+        <button className='cancel-btn' onClick={onCloseWrapper}>Cancel</button>
         <button 
           className='submit-btn' 
-          onClick={() => onSubmit(title.length ? title : defaultTitle, selectedTemplate)}
+          onClick={onSubmitWrapper}
           >Create
         </button>
       </DialogActions>
