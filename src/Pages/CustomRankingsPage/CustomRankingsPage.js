@@ -11,6 +11,10 @@ import { useGetCurrentRankingTemplatesQuery } from '../../features/rankings/rank
 const CustomRankingsPage = () => {
   const [showNewRankingsDialog, setShowRankingsDialog] = useState(false)
 
+  const createNewLineup = (title, template) => {
+    console.log(title, template)
+  }
+
   const {
     data: customRankings,
     isLoading: isRankingsLoading,
@@ -43,6 +47,8 @@ const CustomRankingsPage = () => {
       open={showNewRankingsDialog}
       onClose={() => setShowRankingsDialog(false)}
       templates={rankingsTemplates}
+      defaultTitle={`Custom Ranking ${customRankings ? customRankings.length + 1 : ""}`}
+      onSubmit={createNewLineup}
     />
   } else {
     templatesContent = null
