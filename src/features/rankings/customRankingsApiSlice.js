@@ -14,11 +14,19 @@ export const customRankingsApiSlice = apiSlice.injectEndpoints({
                 body: customRanking
             }),
             invalidatesTags: ['CustomRankings']
+        }),
+        deleteCustomRanking: builder.mutation({
+            query: ({ id }) => ({
+                url: `/rankings/custom/${id}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['CustomRankings']
         })
     })
 })
 
 export const {
     useGetUserCustomRankingsQuery,
-    useCreateNewCustomRankingsMutation
+    useCreateNewCustomRankingsMutation,
+    useDeleteCustomRankingMutation
 } = customRankingsApiSlice

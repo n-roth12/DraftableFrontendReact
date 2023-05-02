@@ -1,9 +1,12 @@
 import './CustomRankingsList.scss'
 import { HiDotsHorizontal } from 'react-icons/hi'
 import { useState } from 'react'
+import { useDeleteCustomRankingMutation } from '../../features/rankings/customRankingsApiSlice'
 
 const RankingsList = ({ rankings }) => {
   const [showOptionsDropdown, setShowOptionsDropdown] = useState('')
+
+  const [deleteCustomRanking] = useDeleteCustomRankingMutation()
 
   return (
     <div className='custom-rankings-list'>
@@ -19,9 +22,9 @@ const RankingsList = ({ rankings }) => {
             onMouseLeave={() => setShowOptionsDropdown('')}>
             <HiDotsHorizontal className='rankings-options-btn' />
             <div className={`${showOptionsDropdown !== ranking._id ? "hidden" : "dropdown-content"}`}>
-              <a href="">Edit</a>
-              <a href="">Export</a>
-              <a href="">Delete</a>
+              <button>Edit</button>
+              <button>Export</button>
+              <button onClick={() => deleteCustomRanking({ id: ranking._id })}>Delete</button>
             </div>
           </div>
           <div className='rankings-title-wrapper'>

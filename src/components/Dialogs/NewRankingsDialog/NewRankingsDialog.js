@@ -47,6 +47,7 @@ const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle })
             className="dialog-input-select"
             id="rankings-template-options"
             select
+            value={selectedTemplate}
             onChange={handleChangeTemplate}
             size="small">
             {templates.map(template => (
