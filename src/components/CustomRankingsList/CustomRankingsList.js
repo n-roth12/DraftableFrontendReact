@@ -2,8 +2,10 @@ import './CustomRankingsList.scss'
 import { HiDotsHorizontal } from 'react-icons/hi'
 import { useState } from 'react'
 import { useDeleteCustomRankingMutation } from '../../features/rankings/customRankingsApiSlice'
+import { useNavigate } from 'react-router-dom'
 
 const RankingsList = ({ rankings }) => {
+  const navigate = useNavigate()
   const [showOptionsDropdown, setShowOptionsDropdown] = useState('')
 
   const [deleteCustomRanking] = useDeleteCustomRankingMutation()
@@ -22,7 +24,7 @@ const RankingsList = ({ rankings }) => {
             onMouseLeave={() => setShowOptionsDropdown('')}>
             <HiDotsHorizontal className='rankings-options-btn' />
             <div className={`${showOptionsDropdown !== ranking._id ? "hidden" : "dropdown-content"}`}>
-              <button>Edit</button>
+              <button onClick={() => navigate(`/custom/${ranking._id}`)}>Edit</button>
               <button>Export</button>
               <button onClick={() => deleteCustomRanking({ id: ranking._id })}>Delete</button>
             </div>

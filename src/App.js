@@ -76,7 +76,7 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path="custom">
               <Route index element={<CustomRankingsPage />} />
-              <Route path="edit" element={<EditRankingPage />} />
+              <Route path=":rankingId" element={<EditRankingPage />} />
             </Route>
           </Route>
 
