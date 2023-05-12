@@ -7,25 +7,52 @@ import Search from '../../components/Search/Search'
 import EditButton from '../../components/EditButton/EditButton'
 import { useGetCurrentRankingQuery } from '../../features/rankings/rankingsApiSlice'
 import { useNavigate } from 'react-router-dom'
+import NewRankingsDialog from '../../components/Dialogs/NewRankingsDialog/NewRankingsDialog'
+import { useGetCurrentRankingTemplatesQuery } from '../../features/rankings/rankingsApiSlice'
+import { useGetRankingByIdQuery } from '../../features/rankings/rankingsApiSlice'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { skipToken } from '@reduxjs/toolkit/dist/query'
+import { useCreateNewCustomRankingsMutation } from '../../features/rankings/customRankingsApiSlice'
 
 const RankingsPage = () => {
-  const [format, setFormat] = useState("Standard")
-  const navigate = useNavigate()
+  const [selectedTemplate, setSelectedTemplate] = useState()
 
-  const handleFormatChange = (e) => {
-    setFormat(e.target.value)
-  }
-  
+  const {
+    data: rankingsTemplates,
+    isLoading: isTemplatesLoading,
+    isSuccess: isTemplatesSuccess,
+    isError: isTemplatesError,
+    error: templatesError
+  } = useGetCurrentRankingTemplatesQuery()
+
+  useEffect(() => {
+    setSelectedTemplate(rankingsTemplates && rankingsTemplates.length > 0 && rankingsTemplates[0]._id)
+  }, [rankingsTemplates])
+
   const {
     data: rankings,
     isLoading,
     isSuccess,
     isError,
     error
-  } = useGetCurrentRankingQuery(format)
+  } = useGetRankingByIdQuery(selectedTemplate ? selectedTemplate : skipToken)
+
+  const [createNewCustomRankings] = useCreateNewCustomRankingsMutation()
+  const navigate = useNavigate()
+
+  const handleFormatChange = (e) => {
+    setSelectedTemplate(e.target.value)
+  }
+
+  const createNewLineup = (title, template) => {
+    createNewCustomRankings({
+      "title": title,
+      "template": template,
+      "user": "6449a041b0bbf7e173737793"
+    })
+  }
 
   let content
   if (isLoading) {
@@ -36,6 +63,7 @@ const RankingsPage = () => {
     content  = <p>{JSON.stringify(error)}</p>
   }
 
+
   return (
     <div className="rankings-page">
       <Nav />
@@ -43,10 +71,17 @@ const RankingsPage = () => {
         <h1>Draft Rankings</h1>
         <div className="options-wrapper">
           <div className='filters-wrapper'>
-            <SelectFilter handleChange={handleFormatChange}/>
+            {rankingsTemplates && rankingsTemplates.length > 0 &&
+              <SelectFilter 
+                templates={rankingsTemplates} 
+                defaultTemplate={rankingsTemplates[0]._id}
+                handleChange={handleFormatChange} 
+                selectedTemplate={selectedTemplate} 
+              />
+            }
             <Search />
           </div>
-          <EditButton title={"Customize"} onClick={() => navigate("/rankings/1")} />
+          <EditButton title={"Customize"} />
         </div>
         <PositionFilter positions={["QB", "RB", "WR", "TE", "DST"]} />
         {content}

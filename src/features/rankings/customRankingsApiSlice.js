@@ -7,6 +7,11 @@ export const customRankingsApiSlice = apiSlice.injectEndpoints({
             keepUnusedDataFor: 5,
             providesTags: ['CustomRankings']
         }),
+        getCustomRankingById: builder.query({
+            query: (rankingId) => `rankings/custom/${rankingId}`,
+            keepUnusedDataFor: 5,
+            providesTags: ['CustomRankings']
+        }),
         createNewCustomRankings: builder.mutation({
             query: (customRanking) => ({
                 url: '/rankings/custom',
@@ -28,5 +33,6 @@ export const customRankingsApiSlice = apiSlice.injectEndpoints({
 export const {
     useGetUserCustomRankingsQuery,
     useCreateNewCustomRankingsMutation,
-    useDeleteCustomRankingMutation
+    useDeleteCustomRankingMutation,
+    useGetCustomRankingByIdQuery
 } = customRankingsApiSlice

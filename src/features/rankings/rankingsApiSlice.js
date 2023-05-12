@@ -6,6 +6,9 @@ export const rankingsApiSlice = apiSlice.injectEndpoints({
             query: () => '/rankings/nfl',
             keepUnusedDataFor: 5
         }),
+        getRankingById: builder.query({
+            query: (id) => `/rankings/templates/${id}`,
+        }),
         getCurrentRanking: builder.query({
             query: (format) => `/rankings/nfl/${format}`
         }),
@@ -18,5 +21,6 @@ export const rankingsApiSlice = apiSlice.injectEndpoints({
 export const {
     useGetRankingsQuery,
     useGetCurrentRankingQuery,
-    useGetCurrentRankingTemplatesQuery
+    useGetCurrentRankingTemplatesQuery,
+    useGetRankingByIdQuery
 } = rankingsApiSlice

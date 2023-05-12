@@ -5,10 +5,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import { TextField, MenuItem } from '@mui/material';
 import { useState } from 'react';
+import TemplateSelector from '../../TemplateSelector/TemplateSelector';
 
-const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle }) => {
+const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle, defaultTemplate }) => {
   const [selectedTemplate, setSelectedTemplate] = useState(
-    templates && templates.length > 0 && templates[0]._id
+    defaultTemplate ? defaultTemplate :
+      templates && templates.length > 0 && templates[0]._id
   )
   const [title, setTitle] = useState('')
 
@@ -41,22 +43,11 @@ const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle })
               value={title}
             />
         </div>
-        <div className='dialog-input'>
-          <label>Rankings Template</label>
-          <TextField
-            className="dialog-input-select"
-            id="rankings-template-options"
-            select
-            value={selectedTemplate}
-            onChange={handleChangeTemplate}
-            size="small">
-            {templates.map(template => (
-              <MenuItem key={template._id} value={template._id}>
-                NFL {template.scoring}
-              </MenuItem>
-            ))}
-          </TextField>
-        </div>
+        <TemplateSelector 
+          templates={templates} 
+          handleChange={handleChangeTemplate}
+          selectedTemplate={selectedTemplate}
+        />
       </DialogContent>
       <DialogActions className='dialog-actions'>
         <button className='cancel-btn' onClick={onCloseWrapper}>Cancel</button>

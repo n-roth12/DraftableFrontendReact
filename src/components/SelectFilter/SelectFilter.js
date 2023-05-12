@@ -2,7 +2,7 @@ import './SelectFilter.scss'
 import { MenuItem } from "@mui/material"
 import { TextField } from "@mui/material"
 
-const SelectFilter = ({ handleChange }) => {
+const SelectFilter = ({ handleChange, templates, selectedTemplate, defaultTemplate }) => {
   return (
     <div className='select-filter'>
       <label>Scoring</label>
@@ -10,12 +10,13 @@ const SelectFilter = ({ handleChange }) => {
         className="select-filter-input"
         id="scoring-format-options"
         select
-        defaultValue="Standard"
+        defaultValue={defaultTemplate}
+        value={selectedTemplate && selectedTemplate._id}
         size="small"
         onChange={handleChange}>
-        {["Standard", "Half-PPR", "PPR"].map((option) => (
-          <MenuItem key={option} value={option}>
-            {option}
+        {templates && templates.length && templates.map((option) => (
+          <MenuItem key={option._id} value={option._id}>
+            {option.scoring}
           </MenuItem>
         ))}
       </TextField>

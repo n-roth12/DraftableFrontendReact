@@ -1,3 +1,12 @@
 .edit-ranking-page {
-    
+    .title-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: fit-content;
+    }
+    .edit-btn {
+        margin: auto;
+        height: fit-content;
+    }
 }
