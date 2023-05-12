@@ -4,13 +4,13 @@ import { useParams } from 'react-router-dom'
 import { useGetCustomRankingByIdQuery } from '../../features/rankings/customRankingsApiSlice'
 import Rankings from '../../components/Rankings/Rankings'
 import { FaEdit } from 'react-icons/fa'
-import { useState } from 'react'
-import EditCustomRankingDialog from '../../components/Dialogs/EditCustomRankingDialog/EditCustomRankingDialog'
-import { TextField } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { useUpdateCustomRankingMutation } from '../../features/rankings/customRankingsApiSlice'
 
 const EditRankingPage = () => {
   const { rankingId } = useParams()
   const [editingTitle, setEditingTitle] = useState(false)
+  const [updateCustomRanking] = useUpdateCustomRankingMutation()
 
   const {
     data: customRanking,
@@ -19,6 +19,21 @@ const EditRankingPage = () => {
     isError: isRankingError,
     error: rankingError
   } = useGetCustomRankingByIdQuery(rankingId)
+
+  const updateRanking = (title, rankings) => {
+    updateCustomRanking({
+      title: title,
+      rankings: rankings,
+      id: customRanking._id
+    })
+    setNewTitle(title)
+  }
+
+  const [newTitle, setNewTitle] = useState(customRanking?.title ? customRanking.title : '')
+
+  useEffect(() => {
+    setNewTitle(customRanking?.title && customRanking.title)
+  }, [customRanking])
 
   let content
   if (isRankingLoading) {
@@ -29,12 +44,23 @@ const EditRankingPage = () => {
     content = <p>{JSON.stringify(rankingError)}</p>
   }
 
+  const saveRanking = () => {
+    if (newTitle) {
+      updateRanking(newTitle, customRanking.rankings)
+    }
+    setEditingTitle(false)
+  }
+
+  const cancelChangeTitle = () => {
+    setNewTitle(customRanking.title)
+    setEditingTitle(false)
+  }
+
+  const handleChangeNewTitle = (e) => setNewTitle(e.target.value)
+
   return (
     <div className='edit-ranking-page'>
       <Nav />
-      {/* <EditCustomRankingDialog 
-          open={editingTitle}
-          onClose={() => setEditingTitle(false)}/> */}
       <p className='title-wrapper'>
         <span>Title: </span>
         {editingTitle ?
@@ -42,11 +68,11 @@ const EditRankingPage = () => {
           <input
             type="text"
             className='dialog-input-text'
-            onChange={(e) => console.log(e.target.value)}
-            value={customRanking.title}
+            onChange={handleChangeNewTitle}
+            value={newTitle}
           />
-          <button onClick={() =>  setEditingTitle(false)}>Cancel</button>
-          <button>Save</button>
+          <button onClick={cancelChangeTitle}>Cancel</button>
+          <button onClick={() => saveRanking()}>Save</button>
           </>
           :
           <>
