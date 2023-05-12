@@ -5,9 +5,11 @@ import { useDispatch } from 'react-redux'
 import { setCredentials } from '../../features/auth/authSlice'
 import { useLoginMutation } from '../../features/auth/authApiSlice'
 
+import { FiAlertCircle } from 'react-icons/fi'
+import { Ellipsis } from 'react-awesome-spinners'
 import { TextField, InputAdornment, IconButton } from '@mui/material'
 import { VisibilityOff, Visibility } from '@mui/icons-material'
-import { GoogleLogin} from '@react-oauth/google'
+import { GoogleLogin } from '@react-oauth/google'
 
 const LoginForm = () => {
   const errRef = useRef()
@@ -63,8 +65,6 @@ const LoginForm = () => {
     <form className="auth-form">
       <div className='form-header'>
         <h2>Login</h2>
-        <p ref={errRef}>{errorMessage}</p>
-        {isLoading && <p>Loading...</p>}
       </div>
       <div className='google-auth-wrapper'>
         <GoogleLogin
@@ -103,9 +103,18 @@ const LoginForm = () => {
         onChange={handleChangePassword}
         size='medium'
       />
+      {errorMessage && !isLoading &&
+        <div className='error-message-wrapper'>
+          <FiAlertCircle className='error-icon' />
+          <span className='error-message'
+            ref={errRef}>
+            {errorMessage}
+          </span>
+        </div>
+      }
       <button type='button'
         className='submit-btn'
-        onClick={handleSubmit}>Log in</button>
+        onClick={handleSubmit}>{isLoading ? <Ellipsis className="loading-spinner" /> : "Log in"}</button>
       <div className='link-wrapper'>
         <span>Don't have an account?</span>
         <a href="/register">Sign Up</a>
