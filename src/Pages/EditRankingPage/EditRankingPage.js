@@ -10,6 +10,8 @@ import { Switch } from '@mui/material'
 import DragDropRankings from '../../components/DragDropRankings/DragDropRankings'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { StrictModeDroppable as Droppable } from '../../features/helpers/StrictModeDroppable'
+import PositionFilter from '../../components/PositionFilter/PositionFilter'
+import Search from '../../components/Search/Search'
 
 const EditRankingPage = () => {
   const { rankingId } = useParams()
@@ -121,7 +123,12 @@ const EditRankingPage = () => {
                   {players.map((player, index) => (
                     <Draggable key={player?.name} draggableId={player?.name} index={index} >
                       {(provided) => (
-                        <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className='draggable'>{player.rank} {player.name} {player.position} {player.team}</div>
+                        <div 
+                          {...provided.draggableProps} 
+                          {...provided.dragHandleProps} 
+                          ref={provided.innerRef} 
+                          className='draftable'>{player.rank} {player.name} {player.position} {player.team}
+                        </div>
                       )}
                     </Draggable>
                   ))}
@@ -166,6 +173,7 @@ const EditRankingPage = () => {
       id: customRanking._id,
       rankings: players
     })
+    setHasChanges(false)
   }
 
   return (
@@ -214,6 +222,8 @@ const EditRankingPage = () => {
             </>
           }
         </div>
+        <PositionFilter positions={["QB", "RB", "WR", "TE", "DST"]} />
+        <Search />
         {content}
       </div>
     </div>
