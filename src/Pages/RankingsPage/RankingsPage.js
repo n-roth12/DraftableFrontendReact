@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { useCreateNewCustomRankingsMutation } from '../../features/rankings/customRankingsApiSlice'
+import { FaAngleRight } from 'react-icons/fa'
 
 const RankingsPage = () => {
   const [selectedTemplate, setSelectedTemplate] = useState()
@@ -46,42 +47,45 @@ const RankingsPage = () => {
     setSelectedTemplate(e.target.value)
   }
 
-  const createNewLineup = (title, template) => {
-    createNewCustomRankings({
-      "title": title,
-      "template": template,
-      "user": "6449a041b0bbf7e173737793"
-    })
-  }
-
   let content
   if (isLoading) {
     content = <p>"Loading..."</p>
   } else if (isSuccess) {
     content = <Rankings players={rankings} />
   } else if (isError) {
-    content  = <p>{JSON.stringify(error)}</p>
+    content = <p>{JSON.stringify(error)}</p>
   }
 
+  const customizeRanking = () => {
+    createNewCustomRankings({
+      title: "Custom Ranking",
+      template: selectedTemplate,
+      user: "6449a041b0bbf7e173737793"
+    }).unwrap().then(fulfilled => navigate(`/custom/${fulfilled._id}`)).catch(rejected => console.log(rejected))
+  }
 
   return (
     <div className="rankings-page">
       <Nav />
       <div className="content">
-        <h1>Draft Rankings</h1>
+        <h1>2023 NFL Draft Rankings</h1>
         <div className="options-wrapper">
           <div className='filters-wrapper'>
             {rankingsTemplates && rankingsTemplates.length > 0 &&
-              <SelectFilter 
-                templates={rankingsTemplates} 
+              <SelectFilter
+                templates={rankingsTemplates}
                 defaultTemplate={rankingsTemplates[0]._id}
-                handleChange={handleFormatChange} 
-                selectedTemplate={selectedTemplate} 
+                handleChange={handleFormatChange}
+                selectedTemplate={selectedTemplate}
               />
             }
             <Search />
           </div>
-          <EditButton title={"Customize"} />
+          <button
+            className='edit-button'
+            onClick={customizeRanking}>
+            Customize <FaAngleRight />
+          </button>
         </div>
         <PositionFilter positions={["QB", "RB", "WR", "TE", "DST"]} />
         {content}

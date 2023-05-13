@@ -114,7 +114,7 @@ const LoginForm = () => {
       }
       <button type='button'
         className='submit-btn'
-        onClick={handleSubmit}>{isLoading ? <Ellipsis className="loading-spinner" /> : "Log in"}</button>
+        onClick={handleSubmit}>{isLoading ? <Ellipsis /> : "Log in"}</button>
       <div className='link-wrapper'>
         <span>Don't have an account?</span>
         <a href="/register">Sign Up</a>
