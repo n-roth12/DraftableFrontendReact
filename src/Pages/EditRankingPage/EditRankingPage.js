@@ -153,6 +153,17 @@ const EditRankingPage = () => {
 
   const handleChangeNewTitle = (e) => setNewTitle(e.target.value)
 
+  const cancelEdit = () => {
+    setPlayers(draftables)
+  }
+
+  const saveEdit = () => {
+    updateCustomRanking({
+      id: customRanking._id,
+      rankings: players
+    })
+  }
+
   return (
     <div className='edit-ranking-page'>
       <Nav />
@@ -188,8 +199,8 @@ const EditRankingPage = () => {
       </div>
       {!autoSave &&
         <div className='save-button-wrapper'>
-          <button>Cancel</button>
-          <button>Save</button>
+          <button onClick={cancelEdit}>Cancel</button>
+          <button onClick={saveEdit}>Save</button>
         </div>
       }
       {content}
