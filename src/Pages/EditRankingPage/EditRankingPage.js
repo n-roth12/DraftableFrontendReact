@@ -16,6 +16,7 @@ const EditRankingPage = () => {
   const [editingTitle, setEditingTitle] = useState(false)
   const [autoSave, setAutoSave] = useState(false)
   const [updateCustomRanking] = useUpdateCustomRankingMutation()
+  const [hasChanges, setHasChanges] = useState(false)
 
   const {
     data: draftables,
@@ -42,7 +43,7 @@ const EditRankingPage = () => {
     //   const newItems = draftables.filter(el => {
     //     return !arrayIdsOrder.includes(el._id)
     //   })
-      
+
     //   if (newItems?.length) myArray = [ ...newItems, ...myArray ]
 
 
@@ -92,6 +93,8 @@ const EditRankingPage = () => {
         rankings: playersCopy,
         id: customRanking._id
       })
+    } else {
+      setHasChanges(true)
     }
   }
 
@@ -155,6 +158,7 @@ const EditRankingPage = () => {
 
   const cancelEdit = () => {
     setPlayers(draftables)
+    setHasChanges(false)
   }
 
   const saveEdit = () => {
@@ -167,43 +171,51 @@ const EditRankingPage = () => {
   return (
     <div className='edit-ranking-page'>
       <Nav />
-      <div className='title-wrapper'>
-        {editingTitle ?
-          <>
-            <input
-              type="text"
-              className='dialog-input-text'
-              onChange={handleChangeNewTitle}
-              value={newTitle}
-            />
-            <button onClick={cancelChangeTitle}>Cancel</button>
-            <button onClick={() => saveRanking()}>Save</button>
-          </>
-          :
-          <>
-            <span>{customRanking?.title}</span>
-            <span>
-              <FaEdit
-                className='edit-btn'
-                onClick={() => setEditingTitle(true)} />
-            </span>
-          </>
-        }
-      </div>
-      <div className='autosave-switch-wrapper'>
-        <Switch
-          checked={autoSave}
-          onChange={handleChangeAutosave}
-          size='small' />
-        <span>Autosave {autoSave ? "On" : "Off"}</span>
-      </div>
-      {!autoSave &&
-        <div className='save-button-wrapper'>
-          <button onClick={cancelEdit}>Cancel</button>
-          <button onClick={saveEdit}>Save</button>
+      <div className='content'>
+        <div className='title-wrapper'>
+          {editingTitle ?
+            <>
+              <input
+                type="text"
+                className='dialog-input-text'
+                onChange={handleChangeNewTitle}
+                value={newTitle}
+              />
+              <button className='submit-btn' onClick={() => saveRanking()}>Save</button>
+              <button className='cancel-btn' onClick={cancelChangeTitle}>Cancel</button>
+            </>
+            :
+            <>
+              <h1>{customRanking?.title}</h1>
+              <span>
+                <FaEdit
+                  className='edit-btn'
+                  onClick={() => setEditingTitle(true)} />
+              </span>
+            </>
+          }
         </div>
-      }
-      {content}
+        <div className='save-wrapper'>
+          <Switch
+            checked={autoSave}
+            onChange={handleChangeAutosave}
+            size='small' />
+          <span className='autosave-wrapper'>Autosave {autoSave ? "On" : "Off"}</span>
+          {!autoSave &&
+            <>
+              <button
+                className={`cancel-btn${!hasChanges ? ' disabled' : ''}`}
+                onClick={cancelEdit}
+                disabled={!hasChanges}>Cancel</button>
+              <button
+                className={`submit-btn${!hasChanges ? ' disabled' : ''}`}
+                onClick={saveEdit}
+                disabled={!hasChanges}>Save</button>
+            </>
+          }
+        </div>
+        {content}
+      </div>
     </div>
   )
 }
