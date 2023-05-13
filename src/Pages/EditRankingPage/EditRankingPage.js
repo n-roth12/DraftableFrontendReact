@@ -28,27 +28,25 @@ const EditRankingPage = () => {
   const [players, setPlayers] = useState(draftables || [])
 
   useEffect(() => {
-    const arrayIdsOrder = JSON.parse(localStorage.getItem('playersOrder'))
+    // const arrayIdsOrder = JSON.parse(localStorage.getItem('playersOrder'))
+    // if (!arrayIdsOrder && draftables?.length) {
+    //   const arrayIdsOrder = draftables.map(player => player._id)
+    //   localStorage.setItem('playersOrder', JSON.stringify(arrayIdsOrder))
+    // }
 
-    if (!arrayIdsOrder && draftables?.length) {
-      const arrayIdsOrder = draftables.map(player => player._id)
-      localStorage.setItem('playersOrder', JSON.stringify(arrayIdsOrder))
-    }
-
-    let myArray
-    if (arrayIdsOrder?.length && draftables?.length) {
-      myArray = arrayIdsOrder.map(pos => {
-        return draftables.find(x => x._id === pos)
-      })
-      const newItems = draftables.filter(el => {
-        return !arrayIdsOrder.includes(el._id)
-      })
+    // let myArray
+    // if (arrayIdsOrder?.length && draftables?.length) {
+    //   myArray = arrayIdsOrder.map(pos => {
+    //     return draftables.find(x => x._id === pos)
+    //   })
+    //   const newItems = draftables.filter(el => {
+    //     return !arrayIdsOrder.includes(el._id)
+    //   })
       
-      if (newItems?.length) myArray = [ ...newItems, ...myArray ]
+    //   if (newItems?.length) myArray = [ ...newItems, ...myArray ]
 
-    }
 
-    setPlayers(myArray || draftables)
+    setPlayers(draftables)
   }, [draftables])
 
   const {
@@ -59,11 +57,6 @@ const EditRankingPage = () => {
     error: rankingError
   } = useGetCustomRankingByIdQuery(rankingId)
 
-  useEffect(() => {
-    console.log(draftables)
-  }, [draftables])
-
-
   const updateRanking = (title, rankings) => {
     updateCustomRanking({
       title: title,
@@ -71,6 +64,13 @@ const EditRankingPage = () => {
       id: customRanking._id
     })
     setNewTitle(title)
+  }
+
+  const updateRankingTitle = (title) => {
+    updateCustomRanking({
+      title: title,
+      id: customRanking._id
+    })
   }
 
   const [newTitle, setNewTitle] = useState(customRanking?.title ? customRanking.title : '')
@@ -84,9 +84,15 @@ const EditRankingPage = () => {
     const playersCopy = [...players]
     const [reorderedItem] = playersCopy.splice(result.source.index, 1)
     playersCopy.splice(result.destination.index, 0, reorderedItem)
-    const idsOrderArray = players.map(x => x._id)
-    localStorage.setItem('playersOrder', JSON.stringify(idsOrderArray))
+    // const idsOrderArray = players.map(x => x._id)
+    // localStorage.setItem('playersOrder', JSON.stringify(idsOrderArray))
     setPlayers(playersCopy)
+    if (autoSave) {
+      updateCustomRanking({
+        rankings: playersCopy,
+        id: customRanking._id
+      })
+    }
   }
 
   const handleDelete = (id) => {
@@ -110,7 +116,7 @@ const EditRankingPage = () => {
               {(provided) => (
                 <section {...provided.droppableProps} ref={provided.innerRef} >
                   {players.map((player, index) => (
-                    <Draggable key={player.name} draggableId={player.name} index={index} >
+                    <Draggable key={player?.name} draggableId={player?.name} index={index} >
                       {(provided) => (
                         <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className='draggable'>{player.rank} {player.name} {player.position} {player.team}</div>
                       )}
@@ -151,7 +157,6 @@ const EditRankingPage = () => {
     <div className='edit-ranking-page'>
       <Nav />
       <div className='title-wrapper'>
-        <span>Title: </span>
         {editingTitle ?
           <>
             <input
@@ -165,7 +170,7 @@ const EditRankingPage = () => {
           </>
           :
           <>
-            <span>{customRanking && customRanking.title}</span>
+            <span>{customRanking?.title}</span>
             <span>
               <FaEdit
                 className='edit-btn'
