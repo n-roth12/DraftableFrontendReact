@@ -19,6 +19,8 @@ const EditRankingPage = () => {
   const [autoSave, setAutoSave] = useState(false)
   const [updateCustomRanking] = useUpdateCustomRankingMutation()
   const [hasChanges, setHasChanges] = useState(false)
+  const [posFilter, setPosFilter] = useState('ALL')
+  const [showAddTier, setShowAddTier] = useState(false)
 
   const {
     data: draftables,
@@ -87,8 +89,6 @@ const EditRankingPage = () => {
     const playersCopy = [...players]
     const [reorderedItem] = playersCopy.splice(result.source.index, 1)
     playersCopy.splice(result.destination.index, 0, reorderedItem)
-    // const idsOrderArray = players.map(x => x._id)
-    // localStorage.setItem('playersOrder', JSON.stringify(idsOrderArray))
     setPlayers(playersCopy)
     if (autoSave) {
       updateCustomRanking({
@@ -109,6 +109,14 @@ const EditRankingPage = () => {
     // deleteDraftablMutation(id)
   }
 
+  const insertTier = (index) => {
+    const playersCopy = [...players]
+    const [reorderedItem] = [{"rank": 0, "name": "Tier", "pos": "", "team": ""}]
+    playersCopy.splice(index, 0, reorderedItem)
+    setPlayers(playersCopy)
+    setShowAddTier(false)
+  }
+
   let content
   if (isDraftablesLoading) {
     content = <p>"Loading..."</p>
@@ -120,14 +128,14 @@ const EditRankingPage = () => {
             <Droppable droppableId="players">
               {(provided) => (
                 <section {...provided.droppableProps} ref={provided.innerRef} >
-                  {players.map((player, index) => (
+                  {players.filter(x => posFilter === "ALL" || x.position === posFilter).map((player, index) => (
                     <Draggable key={player?.name} draggableId={player?.name} index={index} >
                       {(provided) => (
-                        <div 
-                          {...provided.draggableProps} 
-                          {...provided.dragHandleProps} 
-                          ref={provided.innerRef} 
-                          className='draftable'>{player.rank} {player.name} {player.position} {player.team}
+                        <div
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}
+                          className='draftable'>{player.rank} {player.name} {player.position} {player.team} {showAddTier ? <button onClick={() => insertTier(index)}>Insert Tier</button> : ""}
                         </div>
                       )}
                     </Draggable>
@@ -166,6 +174,7 @@ const EditRankingPage = () => {
   const cancelEdit = () => {
     setPlayers(draftables)
     setHasChanges(false)
+    setShowAddTier(false)
   }
 
   const saveEdit = () => {
@@ -222,8 +231,15 @@ const EditRankingPage = () => {
             </>
           }
         </div>
-        <PositionFilter positions={["QB", "RB", "WR", "TE", "DST"]} />
+        <PositionFilter
+          positions={["QB", "RB", "WR", "TE", "DST"]}
+          onChange={setPosFilter}
+          selectedPos={posFilter} />
         <Search />
+        {<button 
+          className='add-tier-btn'
+          onClick={() => setShowAddTier(true)}>Add Tier</button>
+        }
         {content}
       </div>
     </div>

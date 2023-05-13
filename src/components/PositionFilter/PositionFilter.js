@@ -1,18 +1,14 @@
 import './PositionFilter.scss'
-import { useState } from 'react'
 
-const PositionFilter = ({ positions }) => {
-  const [activeFilter, setActiveFilter] = useState("ALL")
-
+const PositionFilter = ({ positions, onChange, selectedPos }) => {
   return (
     <div className='position-filter-wrapper'>
-      <label></label>
       <div className="position-filter">
         {["ALL", ...positions].map(pos =>
           <button
-            className={activeFilter === pos ? "active" : ""}
+            className={selectedPos === pos ? "active" : ""}
             key={pos}
-            onClick={() => setActiveFilter(pos)}
+            onClick={() => onChange(pos)}
           >{pos}</button>
         )}
       </div>

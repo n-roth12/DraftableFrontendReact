@@ -16,7 +16,7 @@
             cursor: pointer;
         }
         button.active {
-            background-color: var(--lightgrey);
+            background-color: var(--table-header-color);
             color: var(--text-color-1);
         }
         :nth-child(1) {

@@ -10,6 +10,8 @@
             border: 1px solid black;
             margin: 5px;
             padding: 5px;
+            cursor: grab;
+            background-color: white;
         }
         .draftable:hover {
             background-color: var(--table-header-color);
