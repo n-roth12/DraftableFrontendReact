@@ -1,0 +1,22 @@
+.draftable, .tier {
+    max-width: 700px;
+    border: 1px solid black;
+    margin: 5px;
+    padding: 5px;    
+}
+.draftable, .tier:not(.top-tier) {
+    cursor: grab;
+}
+.draftable {
+    background-color: white;
+}
+.draftable:hover {
+    background-color: var(--table-header-color);
+}
+.tier:not(.top-tier):hover {
+    background-color: var(--btn-blue-hover-1);
+}
+.tier {
+    background-color: var(--btn-blue-1);
+    color: white;
+}

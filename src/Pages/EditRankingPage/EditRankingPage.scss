@@ -5,17 +5,6 @@
         margin-right: auto;
     }
     .drag-drop-rankings {
-        .draftable {
-            max-width: 700px;
-            border: 1px solid black;
-            margin: 5px;
-            padding: 5px;
-            cursor: grab;
-            background-color: white;
-        }
-        .draftable:hover {
-            background-color: var(--table-header-color);
-        }
     }
     .title-wrapper {
         display: flex;
@@ -43,7 +32,7 @@
     .autosave-wrapper {
         margin-right: 10px;
     }
-    .submit-btn, .cancel-btn {
+    .submit-btn, .cancel-btn, .add-tier-btn {
         border: none;
         padding: 10px;
         border-radius: 4px;
@@ -51,7 +40,7 @@
         margin-right: 5px;
         margin-left: 5px;
     }
-    .submit-btn:not(.disabled), .cancel-btn:not(.disabled) {
+    .submit-btn:not(.disabled), .cancel-btn:not(.disabled), .add-tier-btn:not(.disabled) {
         cursor: pointer;
     }
     .submit-btn:not(.disabled) {
@@ -63,5 +52,12 @@
     }
     .cancel-btn, .submit-btn.disabled {
         background-color: var(--lightgrey);
+    }
+    .add-tier-btn {
+        background-color: var(--btn-green-1);
+        color: white;
+    }
+    .add-tier-btn:hover {
+        background-color: var(--btn-green-2);
     }
 }

@@ -12,6 +12,7 @@ import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { StrictModeDroppable as Droppable } from '../../features/helpers/StrictModeDroppable'
 import PositionFilter from '../../components/PositionFilter/PositionFilter'
 import Search from '../../components/Search/Search'
+import Tier from '../../components/Tier/Tier'
 
 const EditRankingPage = () => {
   const { rankingId } = useParams()
@@ -21,6 +22,7 @@ const EditRankingPage = () => {
   const [hasChanges, setHasChanges] = useState(false)
   const [posFilter, setPosFilter] = useState('ALL')
   const [showAddTier, setShowAddTier] = useState(false)
+  const [maxTierIndex, setMaxTierIndex] = useState()
 
   const {
     data: draftables,
@@ -78,6 +80,17 @@ const EditRankingPage = () => {
     })
   }
 
+  useEffect(() => {
+    if (!players?.length) return
+    let maxIndex = 0
+    players.forEach((element, index) => {
+      if (element?.tier && element?.position === posFilter) {
+        maxIndex = index
+      }
+    });
+    setMaxTierIndex(maxIndex)
+  }, [players])
+
   const [newTitle, setNewTitle] = useState(customRanking?.title ? customRanking.title : '')
 
   useEffect(() => {
@@ -86,6 +99,22 @@ const EditRankingPage = () => {
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return
+    if (result.source.index === result.destination.index) return
+    const player = players[(result.source.index)]
+    console.log(player)
+    // check if we crossed a tier with a tier, which is not allowed
+    if (player?.tier) {
+      if (result.source.index > result.destination.index) {
+        const temp = players.slice(result.destination.index, result.source.index)
+        // console.log(temp.find(x => x?.tier?.position === tier.position))
+        if (temp.find(x => x?.tier && x?.position === player.position)) return
+      } else if (result.source.index < result.destination.index) {
+        const temp = players.slice(result.source.index + 1, result.destination.index + 1)
+        // console.log(tier.position)
+        // console.log(temp.find(x => x?.tier?.position === tier.position))
+        if (temp.find(x => x?.tier && x?.position === player.position)) return
+      }
+    }
     const playersCopy = [...players]
     const [reorderedItem] = playersCopy.splice(result.source.index, 1)
     playersCopy.splice(result.destination.index, 0, reorderedItem)
@@ -111,9 +140,17 @@ const EditRankingPage = () => {
 
   const insertTier = (index) => {
     const playersCopy = [...players]
-    const [reorderedItem] = [{"rank": 0, "name": "Tier", "pos": "", "team": ""}]
+    console.log(players.filter(x => x?.tier && x?.position === posFilter))
+    const [reorderedItem] = [{ 
+      "tier": players.filter(x => x?.tier && x?.position === posFilter).length + 2, 
+      "position": posFilter
+    }]
     playersCopy.splice(index, 0, reorderedItem)
     setPlayers(playersCopy)
+    setShowAddTier(false)
+  }
+
+  const cancelAddTier = () => {
     setShowAddTier(false)
   }
 
@@ -124,27 +161,36 @@ const EditRankingPage = () => {
     content =
       <div className='drag-drop-rankings'>
         {players?.length > 0 ?
-          <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="players">
-              {(provided) => (
-                <section {...provided.droppableProps} ref={provided.innerRef} >
-                  {players.filter(x => posFilter === "ALL" || x.position === posFilter).map((player, index) => (
-                    <Draggable key={player?.name} draggableId={player?.name} index={index} >
-                      {(provided) => (
-                        <div
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}
-                          className='draftable'>{player.rank} {player.name} {player.position} {player.team} {showAddTier ? <button onClick={() => insertTier(index)}>Insert Tier</button> : ""}
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </section>
-              )}
-            </Droppable>
-          </DragDropContext>
+          <>
+            <Tier tier={{ "tier": 1, "position": posFilter }} />
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+              <Droppable droppableId="players">
+                {(provided) => (
+                  <section {...provided.droppableProps} ref={provided.innerRef} >
+                    {players.filter(x =>
+                      (posFilter === "ALL" && !x.tier) ||
+                      posFilter === x.position)
+                      .map((player, index) => (
+                        <Draggable key={player?.name || `${player?.position}-${player?.tier?.toString()}`} draggableId={player?.name || `${player?.position}-${player?.tier?.toString()}`} index={index} >
+                          {(provided) => (
+                            player?.tier ?
+                              <Tier provided={provided} tier={player} />
+                              :
+                              <div
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                ref={provided.innerRef}
+                                className='draftable'>{player.rank} {player.name} {player.position} {player.team} {showAddTier && index > maxTierIndex ? <button onClick={() => insertTier(index)}>Insert Tier</button> : ""}
+                              </div>
+                          )}
+                        </Draggable>
+                      ))}
+                    {provided.placeholder}
+                  </section>
+                )}
+              </Droppable>
+            </DragDropContext>
+          </>
           :
           <p>No players</p>
         }
@@ -235,10 +281,14 @@ const EditRankingPage = () => {
           positions={["QB", "RB", "WR", "TE", "DST"]}
           onChange={setPosFilter}
           selectedPos={posFilter} />
-        <Search />
-        {<button 
-          className='add-tier-btn'
-          onClick={() => setShowAddTier(true)}>Add Tier</button>
+        {!showAddTier ?
+          <button
+            className='add-tier-btn'
+            onClick={() => setShowAddTier(true)}>Add Tier</button>
+          :
+          <button
+            className='cancel-btn'
+            onClick={cancelAddTier}>Cancel Add Tier</button>
         }
         {content}
       </div>
