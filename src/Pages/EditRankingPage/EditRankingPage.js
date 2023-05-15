@@ -83,13 +83,13 @@ const EditRankingPage = () => {
   useEffect(() => {
     if (!players?.length) return
     let maxIndex = 0
-    players.forEach((element, index) => {
-      if (element?.tier && element?.position === posFilter) {
+    players.filter(x => posFilter === "ALL" || x?.position === posFilter).forEach((element, index) => {
+      if (element?.tier) {
         maxIndex = index
       }
     });
     setMaxTierIndex(maxIndex)
-  }, [players])
+  }, [players, posFilter])
 
   const [newTitle, setNewTitle] = useState(customRanking?.title ? customRanking.title : '')
 
@@ -101,18 +101,13 @@ const EditRankingPage = () => {
     if (!result.destination) return
     if (result.source.index === result.destination.index) return
     const player = players[(result.source.index)]
-    console.log(player)
-    // check if we crossed a tier with a tier, which is not allowed
     if (player?.tier) {
       if (result.source.index > result.destination.index) {
         const temp = players.slice(result.destination.index, result.source.index)
-        // console.log(temp.find(x => x?.tier?.position === tier.position))
-        if (temp.find(x => x?.tier && x?.position === player.position)) return
+        if (temp.find(x => x?.tier)) return
       } else if (result.source.index < result.destination.index) {
         const temp = players.slice(result.source.index + 1, result.destination.index + 1)
-        // console.log(tier.position)
-        // console.log(temp.find(x => x?.tier?.position === tier.position))
-        if (temp.find(x => x?.tier && x?.position === player.position)) return
+        if (temp.find(x => x?.tier)) return
       }
     }
     const playersCopy = [...players]
@@ -140,9 +135,8 @@ const EditRankingPage = () => {
 
   const insertTier = (index) => {
     const playersCopy = [...players]
-    console.log(players.filter(x => x?.tier && x?.position === posFilter))
-    const [reorderedItem] = [{ 
-      "tier": players.filter(x => x?.tier && x?.position === posFilter).length + 2, 
+    const [reorderedItem] = [{
+      "tier": players.filter(x => x?.tier).length + 2,
       "position": posFilter
     }]
     playersCopy.splice(index, 0, reorderedItem)
@@ -167,24 +161,21 @@ const EditRankingPage = () => {
               <Droppable droppableId="players">
                 {(provided) => (
                   <section {...provided.droppableProps} ref={provided.innerRef} >
-                    {players.filter(x =>
-                      (posFilter === "ALL" && !x.tier) ||
-                      posFilter === x.position)
-                      .map((player, index) => (
-                        <Draggable key={player?.name || `${player?.position}-${player?.tier?.toString()}`} draggableId={player?.name || `${player?.position}-${player?.tier?.toString()}`} index={index} >
-                          {(provided) => (
-                            player?.tier ?
-                              <Tier provided={provided} tier={player} />
-                              :
-                              <div
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                ref={provided.innerRef}
-                                className='draftable'>{player.rank} {player.name} {player.position} {player.team} {showAddTier && index > maxTierIndex ? <button onClick={() => insertTier(index)}>Insert Tier</button> : ""}
-                              </div>
-                          )}
-                        </Draggable>
-                      ))}
+                    {players.map((player, index) => (
+                      <Draggable key={player?.name || `${player?.position}-${player?.tier?.toString()}`} draggableId={player?.name || `${player?.position}-${player?.tier?.toString()}`} index={index} >
+                        {(provided) => (
+                          player?.tier ?
+                            <Tier provided={provided} tier={player} />
+                            :
+                            <div
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              ref={provided.innerRef}
+                              className='draftable'>{player.rank} {player.name} {player.position} {player.team} {showAddTier && index > maxTierIndex ? <button onClick={() => insertTier(index)}>Insert Tier</button> : ""}
+                            </div>
+                        )}
+                      </Draggable>
+                    ))}
                     {provided.placeholder}
                   </section>
                 )}
@@ -213,6 +204,11 @@ const EditRankingPage = () => {
   const cancelChangeTitle = () => {
     setNewTitle(customRanking.title)
     setEditingTitle(false)
+  }
+
+  const setPosFilterWrapper = (x) => {
+    setShowAddTier(false)
+    setPosFilter(x)
   }
 
   const handleChangeNewTitle = (e) => setNewTitle(e.target.value)
@@ -279,7 +275,7 @@ const EditRankingPage = () => {
         </div>
         <PositionFilter
           positions={["QB", "RB", "WR", "TE", "DST"]}
-          onChange={setPosFilter}
+          onChange={setPosFilterWrapper}
           selectedPos={posFilter} />
         {!showAddTier ?
           <button
