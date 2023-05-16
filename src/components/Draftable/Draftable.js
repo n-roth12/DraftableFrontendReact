@@ -1,6 +1,7 @@
 import './Draftable.scss'
 import { MdDragIndicator } from 'react-icons/md'
 import { AiOutlineMinusCircle } from 'react-icons/ai'
+import { FaAngleDoubleLeft } from 'react-icons/fa'
 
 const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete, maxTierIndex }) => {
   return (
@@ -19,7 +20,9 @@ const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete,
       </div>
       <div>
         {showAddTier && index > maxTierIndex ? 
-          <button onClick={() => insertTier(index)}>Insert Tier</button> 
+          <button 
+            className='insert-tier-btn'
+            onClick={() => insertTier(index)}><FaAngleDoubleLeft className='insert-icon' /> Insert Tier</button> 
         : 
           <AiOutlineMinusCircle 
             className='delete-icon'
