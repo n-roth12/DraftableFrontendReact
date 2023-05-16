@@ -1,6 +1,7 @@
 .draftable, .tier {
-    max-width: 700px;
-    padding: 10px;
+    max-width: max(700px, 80%);
+    padding: 8px;
+    font-size: 10pt;
 
     .drag-icon, .delete-icon {
         font-size: 1.5em;
@@ -28,6 +29,32 @@
     border: 1px solid var(--lightgrey);
     border-left: 2px solid var(--lightgrey);
     border-right: 2px solid var(--lightgrey);
+
+    .drag-icon-wrapper {
+        flex: 1;
+        justify-content: flex-start;
+    }
+    .rank-wrapper {
+        flex: 1;
+        justify-content: flex-start;
+    }
+    .name-wrapper {
+        flex: 4;
+        justify-content: flex-start;
+        font-weight: 600;
+    }
+    .team-wrapper {
+        flex: 1;
+        justify-content: flex-start;
+    }
+    .position-wrapper {
+        flex: 2;
+        justify-content: flex-start;
+    }
+    .buttons-wrapper {
+        flex: 2;
+        justify-content: flex-end;
+    }
 }
 .draftable:hover {
     background-color: var(--table-header-color);
@@ -41,13 +68,32 @@
     border-left: 2px solid var(--btn-blue-1);
     border-right: 2px solid var(--btn-blue-1);
     color: white;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-weight: 600;
+
+    .drag-icon-wrapper {
+        flex: 1;
+        justify-content: flex-start;
+    }
+
+    .rank-wrapper {
+        flex: 1;
+        justify-content: flex-start;
+    }
+    .buttons-wrapper {
+        flex: 9;
+        justify-content: flex-end;
+    }
 }
 .insert-tier-btn {
-    color: var(--btn-blue-1);
-    background: none;
+    color: white;
+    background: var(--btn-blue-1);
     border: none;
+    padding: 4px;
     font-weight: 600;
     display: flex;
+    border-radius: 20px;
     align-items: center;
     cursor: pointer;
 

@@ -21,7 +21,6 @@ const EditRankingPage = () => {
   const [autoSave, setAutoSave] = useState(false)
   const [updateCustomRanking] = useUpdateCustomRankingMutation()
   const [hasChanges, setHasChanges] = useState(false)
-  const [posFilter, setPosFilter] = useState('ALL')
   const [showAddTier, setShowAddTier] = useState(false)
   const [maxTierIndex, setMaxTierIndex] = useState()
 
@@ -84,13 +83,13 @@ const EditRankingPage = () => {
   useEffect(() => {
     if (!players?.length) return
     let maxIndex = 0
-    players.filter(x => posFilter === "ALL" || x?.position === posFilter).forEach((element, index) => {
+    players.forEach((element, index) => {
       if (element?.tier) {
         maxIndex = index
       }
     });
     setMaxTierIndex(maxIndex)
-  }, [players, posFilter])
+  }, [players])
 
   const [newTitle, setNewTitle] = useState(customRanking?.title ? customRanking.title : '')
 
@@ -155,7 +154,7 @@ const EditRankingPage = () => {
     const playersCopy = [...players]
     const [reorderedItem] = [{
       "tier": players.filter(x => x?.tier).length + 2,
-      "position": posFilter
+      "position": "ALL"
     }]
     playersCopy.splice(index, 0, reorderedItem)
     setPlayers(playersCopy)
@@ -195,33 +194,51 @@ const EditRankingPage = () => {
       <div className='drag-drop-rankings'>
         {players?.length > 0 ?
           <>
-            <Tier tier={{ "tier": 1, "position": posFilter }} />
+            <div className='draftable'>
+              <div className="drag-icon-wrapper table-header">
+              </div>
+              <div className='rank-wrapper'>
+                RANK
+              </div>
+              <div className='name-wrapper'>
+                NAME
+              </div>
+              <div className='position-wrapper'>
+                POS
+              </div>
+              <div className='team-wrapper'>
+                TEAM
+              </div>
+              <div className='buttons-wrapper'>
+              </div>
+            </div>
+            <Tier tier={{ "tier": 1, "position": "ALL" }} />
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId="players">
                 {(provided) => (
                   <section {...provided.droppableProps} ref={provided.innerRef} >
                     {addRankings(players).map((player, index) => (
-                      <Draggable 
-                        key={player?.name || `${player?.position}-${player?.tier?.toString()}`} 
-                        draggableId={player?.name || `${player?.position}-${player?.tier?.toString()}`} 
+                      <Draggable
+                        key={player?.name || `${player?.position}-${player?.tier?.toString()}`}
+                        draggableId={player?.name || `${player?.position}-${player?.tier?.toString()}`}
                         index={index}>
                         {(provided) => (
                           player?.tier ?
-                            <Tier 
-                              index={index} 
-                              provided={provided} 
-                              tier={player} 
-                              onDelete={deleteDraftable} 
+                            <Tier
+                              index={index}
+                              provided={provided}
+                              tier={player}
+                              onDelete={deleteDraftable}
                             />
                             :
-                            <Draftable 
-                              provided={provided} 
-                              index={index} 
-                              player={player} 
-                              onDelete={deleteDraftable} 
-                              maxTierIndex={maxTierIndex} 
-                              insertTier={insertTier} 
-                              showAddTier={showAddTier} 
+                            <Draftable
+                              provided={provided}
+                              index={index}
+                              player={player}
+                              onDelete={deleteDraftable}
+                              maxTierIndex={maxTierIndex}
+                              insertTier={insertTier}
+                              showAddTier={showAddTier}
                             />
                         )}
                       </Draggable>
@@ -254,11 +271,6 @@ const EditRankingPage = () => {
   const cancelChangeTitle = () => {
     setNewTitle(customRanking.title)
     setEditingTitle(false)
-  }
-
-  const setPosFilterWrapper = (x) => {
-    setShowAddTier(false)
-    setPosFilter(x)
   }
 
   const handleChangeNewTitle = (e) => setNewTitle(e.target.value)
@@ -304,38 +316,44 @@ const EditRankingPage = () => {
             </>
           }
         </div>
-        <div className='save-wrapper'>
-          <Switch
-            checked={autoSave}
-            onChange={handleChangeAutosave}
-            size='small' />
-          <span className='autosave-wrapper'>Autosave {autoSave ? "On" : "Off"}</span>
-          {!autoSave &&
-            <>
-              <button
-                className={`cancel-btn${!hasChanges ? ' disabled' : ''}`}
-                onClick={cancelEdit}
-                disabled={!hasChanges}>Cancel</button>
-              <button
-                className={`submit-btn${!hasChanges ? ' disabled' : ''}`}
-                onClick={saveEdit}
-                disabled={!hasChanges}>Save</button>
-            </>
-          }
+        <div className='updated-wrapper'>
+          <p>Last updated {new Date(customRanking.updatedAt).getMonth()}
+            /{new Date(customRanking.updatedAt).getDate()}
+            /{new Date(customRanking.updatedAt).getFullYear()}
+          </p>
         </div>
-        <PositionFilter
-          positions={["QB", "RB", "WR", "TE", "DST"]}
-          onChange={setPosFilterWrapper}
-          selectedPos={posFilter} />
-        {!showAddTier ?
-          <button
-            className='add-tier-btn'
-            onClick={() => setShowAddTier(true)}>Add Tier</button>
-          :
-          <button
-            className='cancel-btn'
-            onClick={cancelAddTier}>Cancel Add Tier</button>
-        }
+        <div className='save-wrapper'>
+          <div className='save-wrapper-inner'>
+            <Switch
+              checked={autoSave}
+              onChange={handleChangeAutosave}
+              size='small' />
+            <p className='autosave-wrapper'>Autosave {autoSave ? "On" : "Off"}</p>
+            {!autoSave &&
+              <>
+                <button
+                  className={`cancel-btn${!hasChanges ? ' disabled' : ''}`}
+                  onClick={cancelEdit}
+                  disabled={!hasChanges}>Cancel</button>
+                <button
+                  className={`submit-btn${!hasChanges ? ' disabled' : ''}`}
+                  onClick={saveEdit}
+                  disabled={!hasChanges}>Save</button>
+              </>
+            }
+          </div>
+          <div className='add-tier-wrapper'>
+            {!showAddTier ?
+              <button
+                className='add-tier-btn'
+                onClick={() => setShowAddTier(true)}>Add Tier</button>
+              :
+              <button
+                className='cancel-btn'
+                onClick={cancelAddTier}>Cancel Add Tier</button>
+            }
+          </div>
+        </div>
         {content}
       </div>
     </div>

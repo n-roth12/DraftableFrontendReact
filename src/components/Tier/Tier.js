@@ -9,20 +9,22 @@ const Tier = ({ tier, provided, index, onDelete }) => {
       {...provided?.draggableProps}
       {...provided?.dragHandleProps}
       ref={provided?.innerRef}>
-      <div>
+      <div className='drag-icon-wrapper'>
         {tier.tier !== 1 &&
           <MdDragIndicator className='drag-icon' />
         }
-        <p>Tier {tier.tier}</p>
       </div>
-      {tier.tier !== 1 &&
-        <div>
+      <div className='rank-wrapper'>
+        Tier {tier.tier}
+      </div>
+      <div className='buttons-wrapper'>
+        {tier.tier !== 1 &&
           <AiOutlineMinusCircle
             className='delete-icon'
             onClick={() => onDelete(index)}
           />
-        </div>
-      }
+        }
+      </div>
     </div>
   )
 }

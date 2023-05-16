@@ -4,7 +4,9 @@
         margin-left: auto;
         margin-right: auto;
     }
-    .drag-drop-rankings {
+    .updated-wrapper {
+        margin-top: 10px;
+        font-size: 11pt;
     }
     .title-wrapper {
         display: flex;
@@ -25,9 +27,15 @@
     }
     .save-wrapper {
         display: flex;
+        height: 60px;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .save-wrapper-inner {
+        display: flex;
         flex-direction: row;
         align-items: center;
-        margin: 10px;
+        margin: 10px 0px 10px 0px;
     }
     .autosave-wrapper {
         margin-right: 10px;

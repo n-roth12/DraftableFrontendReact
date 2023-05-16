@@ -10,15 +10,21 @@ const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete,
       {...provided.dragHandleProps} 
       ref={provided.innerRef}>
       <div className="drag-icon-wrapper">
-        <MdDragIndicator className='drag-icon'/> {player._rank} {player.name}
+        <MdDragIndicator className='drag-icon'/> 
       </div>
-      <div>
+      <div className='rank-wrapper'>
+        {player._rank}
+      </div>
+      <div className='name-wrapper'>  
+       {player.name}
+      </div>
+      <div className='position-wrapper'>
         {player.position}{player._posRank}
       </div>
-      <div>
+      <div className='team-wrapper'>
         {player.team}
       </div>
-      <div>
+      <div className='buttons-wrapper'>
         {showAddTier && index > maxTierIndex ? 
           <button 
             className='insert-tier-btn'
