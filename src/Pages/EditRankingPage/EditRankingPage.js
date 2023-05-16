@@ -13,6 +13,7 @@ import { StrictModeDroppable as Droppable } from '../../features/helpers/StrictM
 import PositionFilter from '../../components/PositionFilter/PositionFilter'
 import Search from '../../components/Search/Search'
 import Tier from '../../components/Tier/Tier'
+import Draftable from '../../components/Draftable/Draftable'
 
 const EditRankingPage = () => {
   const { rankingId } = useParams()
@@ -133,6 +134,23 @@ const EditRankingPage = () => {
     // deleteDraftablMutation(id)
   }
 
+  const deleteDraftable = (index) => {
+    const player = players[index]
+    const tier = player?.tier
+    if (tier) {
+      let playersCopy = players.filter(x => x?.tier !== tier)
+      playersCopy.filter(x => x?.tier && x?.tier > tier).forEach(tier =>
+        tier.tier -= 1
+      )
+      setPlayers(playersCopy)
+    } else {
+      const playersCopy = [...players]
+      playersCopy.splice(index, 1)
+      setPlayers(playersCopy)
+    }
+    setHasChanges(true)
+  }
+
   const insertTier = (index) => {
     const playersCopy = [...players]
     const [reorderedItem] = [{
@@ -142,10 +160,31 @@ const EditRankingPage = () => {
     playersCopy.splice(index, 0, reorderedItem)
     setPlayers(playersCopy)
     setShowAddTier(false)
+    setHasChanges(true)
   }
 
   const cancelAddTier = () => {
     setShowAddTier(false)
+  }
+
+  const addRankings = (playerList) => {
+    let playersListCopy = []
+    let totalCount = 0
+    let positionsCount = { "QB": 0, "RB": 0, "WR": 0, "TE": 0, "DST": 0 }
+    playerList.forEach(player => {
+      if (!player?.tier) {
+        totalCount += 1
+        positionsCount[player?.position] += 1
+        playersListCopy.push({
+          ...player,
+          _rank: totalCount,
+          _posRank: positionsCount[player?.position]
+        })
+      } else {
+        playersListCopy.push(player)
+      }
+    })
+    return playersListCopy
   }
 
   let content
@@ -161,18 +200,29 @@ const EditRankingPage = () => {
               <Droppable droppableId="players">
                 {(provided) => (
                   <section {...provided.droppableProps} ref={provided.innerRef} >
-                    {players.map((player, index) => (
-                      <Draggable key={player?.name || `${player?.position}-${player?.tier?.toString()}`} draggableId={player?.name || `${player?.position}-${player?.tier?.toString()}`} index={index} >
+                    {addRankings(players).map((player, index) => (
+                      <Draggable 
+                        key={player?.name || `${player?.position}-${player?.tier?.toString()}`} 
+                        draggableId={player?.name || `${player?.position}-${player?.tier?.toString()}`} 
+                        index={index}>
                         {(provided) => (
                           player?.tier ?
-                            <Tier provided={provided} tier={player} />
+                            <Tier 
+                              index={index} 
+                              provided={provided} 
+                              tier={player} 
+                              onDelete={deleteDraftable} 
+                            />
                             :
-                            <div
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              ref={provided.innerRef}
-                              className='draftable'>{player.rank} {player.name} {player.position} {player.team} {showAddTier && index > maxTierIndex ? <button onClick={() => insertTier(index)}>Insert Tier</button> : ""}
-                            </div>
+                            <Draftable 
+                              provided={provided} 
+                              index={index} 
+                              player={player} 
+                              onDelete={deleteDraftable} 
+                              maxTierIndex={maxTierIndex} 
+                              insertTier={insertTier} 
+                              showAddTier={showAddTier} 
+                            />
                         )}
                       </Draggable>
                     ))}
