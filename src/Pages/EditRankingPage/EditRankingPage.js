@@ -317,9 +317,9 @@ const EditRankingPage = () => {
           }
         </div>
         <div className='updated-wrapper'>
-          <p>Last updated {new Date(customRanking.updatedAt).getMonth()}
-            /{new Date(customRanking.updatedAt).getDate()}
-            /{new Date(customRanking.updatedAt).getFullYear()}
+          <p>Last updated {new Date(customRanking?.updatedAt).getMonth()}
+            /{new Date(customRanking?.updatedAt).getDate()}
+            /{new Date(customRanking?.updatedAt).getFullYear()}
           </p>
         </div>
         <div className='save-wrapper'>

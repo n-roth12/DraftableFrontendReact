@@ -30,7 +30,9 @@ const RankingsList = ({ rankings }) => {
             </div>
           </div>
           <div className='rankings-title-wrapper'>
-            <p className='rankings-title'>{ranking.title}</p>
+            <p 
+              className='rankings-title'
+              onClick={(() => navigate(`/custom/${ranking._id}`))}>{ranking.title}</p>
             <div className='rankings-details'>
               <p>{ranking.league} {ranking.year}</p>
               <p>{ranking.rankings.length} Players</p>
