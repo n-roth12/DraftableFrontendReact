@@ -32,11 +32,15 @@
 
     .drag-icon-wrapper {
         flex: 1;
-        justify-content: flex-start;
+        justify-content: flex-end;
     }
     .rank-wrapper {
         flex: 1;
         justify-content: flex-start;
+    }
+    .bye-wrapper {
+        flex: 2;
+        justify-content: center;
     }
     .name-wrapper {
         flex: 4;
@@ -44,16 +48,20 @@
         font-weight: 600;
     }
     .team-wrapper {
-        flex: 1;
-        justify-content: flex-start;
+        flex: 2;
+        justify-content: center;
     }
     .position-wrapper {
         flex: 2;
-        justify-content: flex-start;
+        justify-content: center;
     }
     .buttons-wrapper {
         flex: 2;
         justify-content: flex-end;
+    }
+    .delete-icon-wrapper {
+        flex: 1;
+        justify-content: flex-start;
     }
 }
 .draftable:hover {
@@ -74,16 +82,17 @@
 
     .drag-icon-wrapper {
         flex: 1;
-        justify-content: flex-start;
+        justify-content: flex-end;
     }
 
     .rank-wrapper {
-        flex: 1;
-        justify-content: flex-start;
+        flex: 2;
+        justify-content: center;
+        font-weight: 800;
     }
     .buttons-wrapper {
-        flex: 9;
-        justify-content: flex-end;
+        flex: 1;
+        justify-content: flex-start;
     }
 }
 .insert-tier-btn {

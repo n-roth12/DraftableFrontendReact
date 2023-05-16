@@ -68,4 +68,14 @@
     .add-tier-btn:hover {
         background-color: var(--btn-green-2);
     }
+    .drag-drop-rankings-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .drag-drop-rankings {
+        width: 100%;
+        max-width: 80vw;
+        justify-content: center;
+    }
 }

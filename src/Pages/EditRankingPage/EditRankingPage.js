@@ -137,13 +137,16 @@ const EditRankingPage = () => {
     const player = players[index]
     const tier = player?.tier
     if (tier) {
-      let playersCopy = players.filter(x => x?.tier !== tier)
-      playersCopy.filter(x => x?.tier && x?.tier > tier).forEach(tier =>
-        tier.tier -= 1
-      )
-      setPlayers(playersCopy)
+      let playersCopy = [...players] 
+      setPlayers(playersCopy.filter(x => x?.tier !== tier).map(x => {
+        if (x?.tier && x?.tier > tier){
+          return { ...x, tier: x.tier - 1 }
+        } else {
+          return x 
+        }
+      }))
     } else {
-      const playersCopy = [...players]
+      let playersCopy = [...players]
       playersCopy.splice(index, 1)
       setPlayers(playersCopy)
     }
@@ -208,6 +211,9 @@ const EditRankingPage = () => {
               </div>
               <div className='team-wrapper'>
                 TEAM
+              </div>
+              <div className='bye-wrapper'>
+                BYE
               </div>
               <div className='buttons-wrapper'>
               </div>
@@ -354,7 +360,9 @@ const EditRankingPage = () => {
             }
           </div>
         </div>
-        {content}
+        <div className='drag-drop-rankings-wrapper'>
+          {content}
+        </div>
       </div>
     </div>
   )
