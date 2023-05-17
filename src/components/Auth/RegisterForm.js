@@ -1,16 +1,53 @@
 import './AuthForm.scss'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { TextField } from '@mui/material'
+import { FiAlertCircle } from 'react-icons/fi'
 import { GoogleLogin } from '@react-oauth/google'
+import { useDispatch } from 'react-redux'
+import { useRegisterMutation } from '../../features/auth/authApiSlice'
+import { setCredentials } from '../../features/auth/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 const RegisterForm = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const errRef = useRef()
+  const [register, { isLoading }] = useRegisterMutation()
+
   const [email, setEmail] = useState('')
-  const [username, setUsername] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
-  const onSubmit = () => {
-    console.log(email)
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (password !== confirmPassword) {
+      setErrorMessage('Passwords do not match!')
+      return
+    }
+    try {
+      const userData = await register({ email, password }).unwrap()
+      console.log(userData)
+      dispatch(setCredentials({ ...userData, email }))
+      setEmail('')
+      setPassword('')
+      setConfirmPassword('')
+      navigate('/rankings')
+    } catch (err) {
+      console.log(err.originalStatus)
+      if (!err?.originalStatus) {
+        setErrorMessage('No server response')
+      } else if (err.originalStatus === 400) {
+        setErrorMessage('Missing username or password')
+      } else if (err.originalStatus === 401) {
+        setErrorMessage('Unathorized')
+      } else if (err.originalStatus === 409) {
+        setErrorMessage('Account already exists for email')
+      } else {
+        setErrorMessage('Login Failed')
+      }
+      errRef.current.focus()
+    }
   }
 
   const handleChangeEmail = (e) => {
@@ -32,13 +69,13 @@ const RegisterForm = () => {
       </div>
       <div className='google-auth-wrapper'>
         <GoogleLogin
-            onSuccess={credentialResponse => {
-              console.log(credentialResponse);
-            }}
-            onError={() => {
-              console.log('Login Failed');
-            }}
-          />
+          onSuccess={credentialResponse => {
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            console.log('Login Failed');
+          }}
+        />
       </div>
       <hr />
       <TextField
@@ -64,9 +101,18 @@ const RegisterForm = () => {
         onChange={handleChangeConfirmPassword}
         size='medium'
       />
+      {errorMessage && !isLoading &&
+        <div className='error-message-wrapper'>
+          <FiAlertCircle className='error-icon' />
+          <span className='error-message'
+            ref={errRef}>
+            {errorMessage}
+          </span>
+        </div>
+      }
       <button type='button'
         className='submit-btn'
-        onClick={onSubmit}>Register</button>
+        onClick={handleSubmit}>Register</button>
       <div className='link-wrapper'>
         <span>Already have an account?</span>
         <a href="/login" className='link'>Login</a>
