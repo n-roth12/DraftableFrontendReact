@@ -2,6 +2,10 @@
     max-width: 700px;
     margin: auto;
 
+    .row {
+        height: 80px;
+    }
+
     .row, .col-labels {
         display: flex;
         justify-content: space-between;
@@ -48,6 +52,7 @@
     .dropdown {
         position: relative;
         display: inline-block;
+        margin-right: 20px;
 
         .hidden {
             display: none;
@@ -92,6 +97,21 @@
             height: 34px;
             width: 34px;
             cursor: pointer;
+        }
+    }
+    .sport-icon-wrapper {
+        // background-color: #b05902;
+        background-color: var(--grey);
+        height: 50%;
+        display: flex;
+        aspect-ratio: 1;
+        border-radius: 4px;
+        justify-content: center;
+        align-items: center;
+
+        .sport-icon {
+            font-size: 16pt;
+            color: white;
         }
     }
 }

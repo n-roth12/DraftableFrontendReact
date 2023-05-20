@@ -137,12 +137,12 @@ const EditRankingPage = () => {
     const player = players[index]
     const tier = player?.tier
     if (tier) {
-      let playersCopy = [...players] 
+      let playersCopy = [...players]
       setPlayers(playersCopy.filter(x => x?.tier !== tier).map(x => {
-        if (x?.tier && x?.tier > tier){
+        if (x?.tier && x?.tier > tier) {
           return { ...x, tier: x.tier - 1 }
         } else {
-          return x 
+          return x
         }
       }))
     } else {
@@ -197,25 +197,25 @@ const EditRankingPage = () => {
       <div className='drag-drop-rankings'>
         {players?.length > 0 ?
           <>
-            <div className='draftable'>
-              <div className="drag-icon-wrapper table-header">
-              </div>
-              <div className='rank-wrapper'>
-                RANK
-              </div>
-              <div className='name-wrapper'>
-                NAME
-              </div>
-              <div className='position-wrapper'>
-                POS
-              </div>
-              <div className='team-wrapper'>
-                TEAM
-              </div>
-              <div className='bye-wrapper'>
-                BYE
-              </div>
-              <div className='buttons-wrapper'>
+            <div className='draftable table-header'>
+              <div className="drag-icon-wrapper">
+                <div className='rank-wrapper'>
+                  RANK
+                </div>
+                <div className='name-wrapper'>
+                  NAME
+                </div>
+                <div className='position-wrapper'>
+                  POS
+                </div>
+                <div className='team-wrapper'>
+                  TEAM
+                </div>
+                <div className='bye-wrapper'>
+                  BYE
+                </div>
+                <div className='buttons-wrapper'>
+                </div>
               </div>
             </div>
             <Tier tier={{ "tier": 1, "position": "ALL" }} />

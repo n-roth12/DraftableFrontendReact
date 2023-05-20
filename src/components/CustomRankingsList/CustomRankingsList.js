@@ -1,8 +1,10 @@
 import './CustomRankingsList.scss'
 import { HiDotsHorizontal } from 'react-icons/hi'
+import { MdSportsFootball } from 'react-icons/md'
 import { useState } from 'react'
 import { useDeleteCustomRankingMutation } from '../../features/rankings/customRankingsApiSlice'
 import { useNavigate } from 'react-router-dom'
+import { epochToTimeAgo } from '../../features/helpers/EpochToTimeAgo'
 
 const RankingsList = ({ rankings }) => {
   const navigate = useNavigate()
@@ -14,7 +16,6 @@ const RankingsList = ({ rankings }) => {
     <div className='custom-rankings-list'>
       <div className='col-labels'>
         <p></p>
-        <p>Title</p>
         <p>Last Updated</p>
       </div>
       {rankings.map(ranking =>
@@ -29,6 +30,9 @@ const RankingsList = ({ rankings }) => {
               <button onClick={() => deleteCustomRanking({ id: ranking._id })}>Delete</button>
             </div>
           </div>
+          <div className='sport-icon-wrapper'>
+              <MdSportsFootball className='sport-icon' />
+            </div>
           <div className='rankings-title-wrapper'>
             <p 
               className='rankings-title'
@@ -38,7 +42,7 @@ const RankingsList = ({ rankings }) => {
               <p>{ranking.rankings.length} Players</p>
             </div>
           </div>
-          <p className='last-update'>{ranking.updatedAt}</p>
+          <p className='last-update'>{epochToTimeAgo(ranking.updatedAt)}</p>
         </div>
       )}
     </div>
