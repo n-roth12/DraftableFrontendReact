@@ -13,7 +13,7 @@
 .draftable, .tier:not(.top-tier) {
     cursor: grab;
 }
-.draftable, .tier {
+.draftable, .tier, .table-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -24,7 +24,7 @@
         justify-content: center;
     }
 }
-.draftable {
+.draftable, .table-header {
     background-color: white;
     border: 1px solid var(--lightgrey);
     border-left: 2px solid var(--lightgrey);

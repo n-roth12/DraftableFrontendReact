@@ -2,7 +2,7 @@ import RegisterForm from '../../components/Auth/RegisterForm'
 import Nav from '../../components/Nav/Nav'
 import './Register.scss'
 
-const Register = ({ isDarkMode, setIsDarkMode }) => {
+const Register = () => {
 
   return (
     <div className='register-page'>
@@ -10,8 +10,6 @@ const Register = ({ isDarkMode, setIsDarkMode }) => {
       <div className='register-form-wrapper form-wrapper'>
         <RegisterForm />
       </div>
-      <input type="checkbox" id="color-mode-selector" name="color-mode-selector" 
-        checked={isDarkMode} onChange={() => setIsDarkMode(!isDarkMode)}></input>
     </div>
   )
 }

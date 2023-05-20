@@ -79,7 +79,6 @@ const RankingsPage = () => {
                 selectedTemplate={selectedTemplate}
               />
             }
-            <Search />
           </div>
           <button
             className='edit-button'
@@ -87,7 +86,6 @@ const RankingsPage = () => {
             Customize <FaAngleRight />
           </button>
         </div>
-        <PositionFilter positions={["QB", "RB", "WR", "TE", "DST"]} />
         {content}
       </div>
     </div>

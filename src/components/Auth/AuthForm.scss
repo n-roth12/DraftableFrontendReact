@@ -26,7 +26,6 @@
     }
 
     .loading-spinner {
-
         margin: -20px;
         padding: -20px;
     }
@@ -45,6 +44,7 @@
     }
     .text-input, .google-login-btn {
         margin: 10px;
+        background-color: white;
     }
     .text-input label {
         font-size: 10pt;
@@ -108,5 +108,6 @@
 	.auth-form {
 		box-shadow: none;
         margin-top: 5vh;
+        background-color: var(--offwhite-1);
 	}
 }

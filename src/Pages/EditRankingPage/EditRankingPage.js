@@ -197,25 +197,25 @@ const EditRankingPage = () => {
       <div className='drag-drop-rankings'>
         {players?.length > 0 ?
           <>
-            <div className='draftable table-header'>
-              <div className="drag-icon-wrapper">
-                <div className='rank-wrapper'>
-                  RANK
-                </div>
-                <div className='name-wrapper'>
-                  NAME
-                </div>
-                <div className='position-wrapper'>
-                  POS
-                </div>
-                <div className='team-wrapper'>
-                  TEAM
-                </div>
-                <div className='bye-wrapper'>
-                  BYE
-                </div>
-                <div className='buttons-wrapper'>
-                </div>
+            <div className='table-header'>
+              <div className='drag-icon-wrapper'>
+              </div>
+              <div className='rank-wrapper'>
+                RANK
+              </div>
+              <div className='name-wrapper'>
+                NAME
+              </div>
+              <div className='position-wrapper'>
+                POS
+              </div>
+              <div className='team-wrapper'>
+                TEAM
+              </div>
+              <div className='bye-wrapper'>
+                BYE
+              </div>
+              <div className='buttons-wrapper'>
               </div>
             </div>
             <Tier tier={{ "tier": 1, "position": "ALL" }} />
@@ -323,7 +323,7 @@ const EditRankingPage = () => {
           }
         </div>
         <div className='updated-wrapper'>
-          <p>Last updated {new Date(customRanking?.updatedAt).getMonth()}
+          <p>Last updated {new Date(customRanking?.updatedAt).getMonth() + 1}
             /{new Date(customRanking?.updatedAt).getDate()}
             /{new Date(customRanking?.updatedAt).getFullYear()}
           </p>
