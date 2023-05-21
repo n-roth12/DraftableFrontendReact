@@ -360,6 +360,8 @@ const EditRankingPage = () => {
             }
           </div>
         </div>
+        <p className='description'>Drag and drop players and tiers to adjust rankings.</p>
+
         <div className='drag-drop-rankings-wrapper'>
           {content}
         </div>

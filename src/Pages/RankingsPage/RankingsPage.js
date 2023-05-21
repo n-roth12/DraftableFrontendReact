@@ -70,6 +70,7 @@ const RankingsPage = () => {
       <Nav />
       <div className="content">
         <h1>2023 NFL Draft Rankings</h1>
+        <p className='description'>Select Customize to edit these rankings.</p>
         <div className="options-wrapper">
           <div className='filters-wrapper'>
             {rankingsTemplates && rankingsTemplates.length > 0 &&

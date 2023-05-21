@@ -88,10 +88,15 @@
 
             .col-label {
                 font-weight: 600;
+                color: var(--grey);
             }
         }
         .draftable:last-child {
             border-bottom: 2px solid var(--lightgrey);
         }
+    }
+    .description {
+        margin-bottom: 10px;
+        margin-left: 2px;
     }
 }

@@ -66,6 +66,7 @@ const CustomRankingsPage = () => {
       {templatesContent}
       <div className='content'>
         <h1>Custom Rankings</h1>
+        <p className='description'>Create and customize your own tiered draft rankings.</p>
         <div className='rankings-options'>
           <button 
             className='edit-button'
