@@ -12,15 +12,15 @@
         align-items: center;
         border-bottom: 1px solid var(--lightgrey);
     }
-    .row:hover {
-        background-color: var(--table-header-color);
-    }
     .rankings-title {
         color: var(--btn-blue-1);
         font-weight: 600;
         padding: 2px;
         cursor: pointer;
         width: fit-content;
+    }
+    .rankings-title:hover {
+        color: var(--btn-blue-hover-1);
     }
     .rankings-details {
         display: flex;
@@ -41,6 +41,7 @@
         padding: 5px;
         height: 1.2em;
         width: 1.2em;
+        border-radius: 50%;
     }
     .rankings-options-btn:hover {
         background-color: var(--lightgrey);
@@ -53,6 +54,7 @@
         position: relative;
         display: inline-block;
         margin-right: 20px;
+        cursor: pointer;
 
         .hidden {
             display: none;

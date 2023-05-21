@@ -79,16 +79,17 @@
         justify-content: center;
 
         .table-header {
-            border-top: 2px solid var(--lightgrey);
             max-width: max(700px, 80%);
             padding: 8px;
             font-size: 10pt;
             background-color: white;
-            border: 1px solid var(--lightgrey);
-            border-left: 2px solid var(--lightgrey);
-            border-right: 2px solid var(--lightgrey);
-        }
+            border: 2px solid var(--lightgrey);
+            border-bottom: 1px solid var(--lightgrey);
 
+            .col-label {
+                font-weight: 600;
+            }
+        }
         .draftable:last-child {
             border-bottom: 2px solid var(--lightgrey);
         }

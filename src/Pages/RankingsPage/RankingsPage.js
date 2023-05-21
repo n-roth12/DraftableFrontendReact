@@ -57,6 +57,7 @@ const RankingsPage = () => {
   }
 
   const customizeRanking = () => {
+
     createNewCustomRankings({
       title: "Custom Ranking",
       template: selectedTemplate,

@@ -200,22 +200,22 @@ const EditRankingPage = () => {
             <div className='table-header'>
               <div className='drag-icon-wrapper'>
               </div>
-              <div className='rank-wrapper'>
+              <div className='rank-wrapper col-label'>
                 RANK
               </div>
-              <div className='name-wrapper'>
+              <div className='name-wrapper col-label'>
                 NAME
               </div>
-              <div className='position-wrapper'>
+              <div className='position-wrapper col-label'>
                 POS
               </div>
-              <div className='team-wrapper'>
+              <div className='team-wrapper col-label'>
                 TEAM
               </div>
-              <div className='bye-wrapper'>
+              <div className='bye-wrapper col-label'>
                 BYE
               </div>
-              <div className='buttons-wrapper'>
+              <div className='buttons-wrapper col-label'>
               </div>
             </div>
             <Tier tier={{ "tier": 1, "position": "ALL" }} />
@@ -308,8 +308,8 @@ const EditRankingPage = () => {
                 onChange={handleChangeNewTitle}
                 value={newTitle}
               />
-              <button className='submit-btn' onClick={() => saveRanking()}>Save</button>
               <button className='cancel-btn' onClick={cancelChangeTitle}>Cancel</button>
+              <button className='submit-btn' onClick={() => saveRanking()}>Save</button>
             </>
             :
             <>

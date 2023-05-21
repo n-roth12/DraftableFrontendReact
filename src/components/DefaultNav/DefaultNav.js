@@ -26,7 +26,7 @@ const DefaultNav = () => {
         {!window.location.pathname.startsWith("/login") && !window.location.pathname.startsWith("/register") &&
           <div className='nav-links'>
             <Link className='nav-link' to='/rankings'>Rankings</Link>
-            <Link className='nav-link' to='/custom'>Customize</Link>
+            <Link className='nav-link' to='/custom'>Custom</Link>
             <button className='nav-link' onClick={handleLogout}>Logout</button>
           </div>
         }

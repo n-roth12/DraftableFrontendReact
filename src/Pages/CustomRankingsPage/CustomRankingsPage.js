@@ -8,6 +8,7 @@ import { useGetUserCustomRankingsQuery,
   useCreateNewCustomRankingsMutation } from '../../features/rankings/customRankingsApiSlice'
 import { useState } from 'react'
 import { useGetCurrentRankingTemplatesQuery } from '../../features/rankings/rankingsApiSlice'
+import { FaAngleRight } from 'react-icons/fa'
 
 const CustomRankingsPage = () => {
   const [showNewRankingsDialog, setShowRankingsDialog] = useState(false)
@@ -66,8 +67,9 @@ const CustomRankingsPage = () => {
       <div className='content'>
         <h1>Custom Rankings</h1>
         <div className='rankings-options'>
-          <Search />
-          <EditButton title={"New"} onClick={() => setShowRankingsDialog(true)} />
+          <button 
+            className='edit-button'
+            onClick={() => setShowRankingsDialog(true)}>Create Ranking <FaAngleRight /></button>
         </div>
         {rankingsContent}
       </div>

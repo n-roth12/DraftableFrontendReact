@@ -37,7 +37,7 @@ const MobileNav = () => {
 
       <div className={menuClass} onClick={updateMenu}>
         <Link className='mobile-nav-link' to={`/rankings`}>Rankings <FaAngleRight /></Link>
-        <Link className='mobile-nav-link' to={`/custom`}>Customize <FaAngleRight /></Link>
+        <Link className='mobile-nav-link' to={`/custom`}>Custom <FaAngleRight /></Link>
         <Link className='mobile-nav-link' to={`/login`}>Logout <FaAngleRight /></Link>
       </div>
     </header>
