@@ -7,6 +7,11 @@
     .updated-wrapper {
         margin-top: 10px;
         font-size: 11pt;
+
+        .last-update {
+            color: var(--grey);
+            font-weight: 500;
+        }
     }
     .title-wrapper {
         display: flex;
@@ -39,6 +44,10 @@
     }
     .autosave-wrapper {
         margin-right: 10px;
+
+        .autosave {
+            font-weight: 500;
+        }
     }
     .submit-btn, .cancel-btn, .add-tier-btn {
         border: none;

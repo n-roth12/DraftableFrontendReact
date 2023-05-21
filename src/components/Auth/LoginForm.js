@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setCredentials } from '../../features/auth/authSlice'
 import { useLoginMutation } from '../../features/auth/authApiSlice'
+import { usePersist } from '../../hooks/usePersist'
 
 import { FiAlertCircle } from 'react-icons/fi'
 import { Ellipsis } from 'react-awesome-spinners'
@@ -19,6 +20,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [persist, setPersist] = usePersist()
 
   const [login, { isLoading }] = useLoginMutation()
   const dispatch = useDispatch()
@@ -52,6 +54,7 @@ const LoginForm = () => {
 
   const handleChangeEmail = (e) => setEmail(e.target.value)
   const handleChangePassword = (e) => setPassword(e.target.value)
+  const handleTogglePersist = () => setPersist(prev => !prev)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -119,6 +122,10 @@ const LoginForm = () => {
         <span>Don't have an account?</span>
         <a href="/register">Sign Up</a>
       </div>
+      <input type="checkbox"
+        onChange={handleTogglePersist}
+        checked={persist}
+      />
     </form>
   )
 }

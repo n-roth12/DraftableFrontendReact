@@ -323,7 +323,7 @@ const EditRankingPage = () => {
           }
         </div>
         <div className='updated-wrapper'>
-          <p>Last updated {new Date(customRanking?.updatedAt).getMonth() + 1}
+          <p className='last-update'>Last updated {new Date(customRanking?.updatedAt).getMonth() + 1}
             /{new Date(customRanking?.updatedAt).getDate()}
             /{new Date(customRanking?.updatedAt).getFullYear()}
           </p>
@@ -334,7 +334,7 @@ const EditRankingPage = () => {
               checked={autoSave}
               onChange={handleChangeAutosave}
               size='small' />
-            <p className='autosave-wrapper'>Autosave {autoSave ? "On" : "Off"}</p>
+            <p className='autosave-wrapper'>Autosave <span className='autosave'>{autoSave ? "On" : "Off"}</span></p>
             {!autoSave &&
               <>
                 <button

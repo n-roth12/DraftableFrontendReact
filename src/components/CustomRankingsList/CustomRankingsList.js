@@ -16,7 +16,7 @@ const RankingsList = ({ rankings }) => {
     <div className='custom-rankings-list'>
       <div className='col-labels'>
         <p></p>
-        <p>Last Updated</p>
+        <p className='last-update'>LAST UPDATED</p>
       </div>
       {rankings.map(ranking =>
         <div className='row'>

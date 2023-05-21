@@ -28,11 +28,12 @@ const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle, d
   }
 
   return (
-    <Dialog disableEnforceFocus open={open} className="new-rankings-dialog" maxWidth="md">
+    <Dialog disableEnforceFocus open={open} className="new-rankings-dialog">
       <DialogTitle className='dialog-title'>
         New Rankings
       </DialogTitle>
       <DialogContent className='dialog-content'>
+        <p className='description'>Choose a starting rankings template to customize.</p>
         <div className='dialog-input'>
           <label>Title</label>
             <TextField

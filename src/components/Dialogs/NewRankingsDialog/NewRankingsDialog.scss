@@ -7,18 +7,23 @@
         font-size: 13pt;
         font-weight: 600;
     }
+    .description {
+        margin-top: 5px;
+        margin-bottom: 15px;
+    }
     .dialog-input {
         padding-bottom: 14px;
+        margin-bottom: 5px;
 
         label {
             display: block;
             font-size: 11pt;
             font-weight: 600;
             color: var(--dark-grey);
+            margin-bottom: 3px;
         }
         .dialog-input-select, .dialog-input-text {
-            width: fit-content;
-            max-width: 340px;
+            width: 100%;
         }
     }
     .dialog-actions {

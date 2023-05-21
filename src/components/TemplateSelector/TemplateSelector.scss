@@ -1,16 +1,14 @@
 .template-selector {
-    padding-bottom: 14px;
+    padding-bottom: 20px;
 
     label {
         display: block;
         font-size: 11pt;
         font-weight: 600;
         color: var(--dark-grey);
+        margin-bottom: 4px;
     }
-
-    .dialog-input-select,
-    .dialog-input-text {
-        width: fit-content;
-        max-width: 340px;
+    .select-filter-input {
+        width: 100%;
     }
 }
