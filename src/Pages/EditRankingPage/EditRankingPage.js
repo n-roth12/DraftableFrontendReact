@@ -2,16 +2,12 @@ import './EditRankingPage.scss'
 import Nav from '../../components/Nav/Nav'
 import { useParams } from 'react-router-dom'
 import { useGetCustomRankingByIdQuery, useGetCustomRankingById2Query } from '../../features/rankings/customRankingsApiSlice'
-import Rankings from '../../components/Rankings/Rankings'
 import { FaEdit } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 import { useUpdateCustomRankingMutation } from '../../features/rankings/customRankingsApiSlice'
 import { Switch } from '@mui/material'
-import DragDropRankings from '../../components/DragDropRankings/DragDropRankings'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { StrictModeDroppable as Droppable } from '../../features/helpers/StrictModeDroppable'
-import PositionFilter from '../../components/PositionFilter/PositionFilter'
-import Search from '../../components/Search/Search'
 import Tier from '../../components/Tier/Tier'
 import Draftable from '../../components/Draftable/Draftable'
 
@@ -25,44 +21,18 @@ const EditRankingPage = () => {
   const [maxTierIndex, setMaxTierIndex] = useState()
 
   const {
-    data: draftables,
-    isLoading: isDraftablesLoading,
-    isSuccess: isDraftablesSuccess,
-    isError: isDraftablesError,
-    error: draftablesError
-  } = useGetCustomRankingById2Query(rankingId)
-
-  const [players, setPlayers] = useState(draftables || [])
-
-  useEffect(() => {
-    // const arrayIdsOrder = JSON.parse(localStorage.getItem('playersOrder'))
-    // if (!arrayIdsOrder && draftables?.length) {
-    //   const arrayIdsOrder = draftables.map(player => player._id)
-    //   localStorage.setItem('playersOrder', JSON.stringify(arrayIdsOrder))
-    // }
-
-    // let myArray
-    // if (arrayIdsOrder?.length && draftables?.length) {
-    //   myArray = arrayIdsOrder.map(pos => {
-    //     return draftables.find(x => x._id === pos)
-    //   })
-    //   const newItems = draftables.filter(el => {
-    //     return !arrayIdsOrder.includes(el._id)
-    //   })
-
-    //   if (newItems?.length) myArray = [ ...newItems, ...myArray ]
-
-
-    setPlayers(draftables)
-  }, [draftables])
-
-  const {
     data: customRanking,
     isLoading: isRankingLoading,
     isSuccess: isRankingSuccess,
     isError: isRankingError,
     error: rankingError
   } = useGetCustomRankingByIdQuery(rankingId)
+
+  const [players, setPlayers] = useState(customRanking?.rankings || [])
+
+  useEffect(() => {
+    setPlayers(customRanking?.rankings)
+  }, [customRanking])
 
   const updateRanking = (title, rankings) => {
     updateCustomRanking({
@@ -71,13 +41,6 @@ const EditRankingPage = () => {
       id: customRanking._id
     })
     setNewTitle(title)
-  }
-
-  const updateRankingTitle = (title) => {
-    updateCustomRanking({
-      title: title,
-      id: customRanking._id
-    })
   }
 
   useEffect(() => {
@@ -122,15 +85,6 @@ const EditRankingPage = () => {
     } else {
       setHasChanges(true)
     }
-  }
-
-  const handleDelete = (id) => {
-    const arrayIdsOrder = JSON.parse(localStorage.getItem('playersOrder'))
-    if (arrayIdsOrder?.length) {
-      const newIdsOrderArray = arrayIdsOrder.filter(num => num !== id)
-      localStorage.setItem('playersOrder', JSON.stringify(newIdsOrderArray))
-    }
-    // deleteDraftablMutation(id)
   }
 
   const deleteDraftable = (index) => {
@@ -190,9 +144,9 @@ const EditRankingPage = () => {
   }
 
   let content
-  if (isDraftablesLoading) {
+  if (isRankingLoading) {
     content = <p>"Loading..."</p>
-  } else if (isDraftablesSuccess) {
+  } else if (isRankingSuccess) {
     content =
       <div className='drag-drop-rankings'>
         {players?.length > 0 ?
@@ -259,8 +213,8 @@ const EditRankingPage = () => {
           <p>No players</p>
         }
       </div>
-  } else if (isDraftablesError) {
-    content = <p>{JSON.stringify(draftablesError)}</p>
+  } else if (isRankingError) {
+    content = <p>{JSON.stringify(rankingError)}</p>
   }
 
   const saveRanking = () => {
@@ -282,7 +236,7 @@ const EditRankingPage = () => {
   const handleChangeNewTitle = (e) => setNewTitle(e.target.value)
 
   const cancelEdit = () => {
-    setPlayers(draftables)
+    setPlayers(customRanking.rankings)
     setHasChanges(false)
     setShowAddTier(false)
   }

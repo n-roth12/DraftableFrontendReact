@@ -13,6 +13,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
+    "aws": "^0.0.3-2",
     "dotenv": "^16.0.3",
     "immutability-helper": "^3.1.1",
     "install": "^0.13.0",
@@ -37,7 +38,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev-deploy": "npm run build && npm run aws s3 sync build/ s3://dev.draftabl.com"
+    "dev": "aws s3 sync build/ s3://dev.draftabl.com",
+    "dev-deploy": "npm run build && npm run dev"
   },
   "eslintConfig": {
     "extends": [

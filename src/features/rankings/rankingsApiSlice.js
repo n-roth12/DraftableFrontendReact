@@ -15,7 +15,7 @@ export const rankingsApiSlice = apiSlice.injectEndpoints({
         getCurrentRankingTemplates: builder.query({
             query: () => '/rankings/templates'
         })
-    })
+    }) 
 })
 
 export const {

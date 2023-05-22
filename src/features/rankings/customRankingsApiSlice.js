@@ -3,24 +3,20 @@ import { apiSlice } from "../api/apiSlice";
 export const customRankingsApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getUserCustomRankings: builder.query({
-            query: (userId) => `/rankings/custom?user=${userId}`,
+            query: (userId) => `/custom?user=${userId}`,
             keepUnusedDataFor: 5,
             providesTags: (result, error, arg) => [
                 'CustomRanking',
                 ...result.map(({ id }) => ({ type: 'CustomRanking', id }))
             ]
         }),
-        getCustomRankingById2: builder.query({
-            query: (rankingId) => `/rankings/custom2/${rankingId}`,
-            providesTags: ['CustomRanking']
-        }),
         getCustomRankingById: builder.query({
-            query: (rankingId) => `/rankings/custom/${rankingId}`,
+            query: (rankingId) => `/custom/${rankingId}`,
             providesTags: ['CustomRanking']
         }),
         createNewCustomRankings: builder.mutation({
             query: (customRanking) => ({
-                url: '/rankings/custom',
+                url: '/custom',
                 method: 'POST',
                 body: customRanking
             }),
@@ -28,14 +24,14 @@ export const customRankingsApiSlice = apiSlice.injectEndpoints({
         }),
         deleteCustomRanking: builder.mutation({
             query: ({ id }) => ({
-                url: `/rankings/custom/${id}`,
+                url: `/custom/${id}`,
                 method: 'DELETE'
             }),
             invalidatesTags: ['CustomRanking']
         }),
         updateCustomRanking: builder.mutation({
             query: (body) => ({
-                url: '/rankings/custom',
+                url: '/custom',
                 method: 'PUT',
                 body
             }),
@@ -96,5 +92,4 @@ export const {
     useDeleteCustomRankingMutation,
     useGetCustomRankingByIdQuery,
     useUpdateCustomRankingMutation,
-    useGetCustomRankingById2Query
 } = customRankingsApiSlice

@@ -1,12 +1,11 @@
-import { Outlet, Link } from "react-router-dom"
+import { Outlet, Link, Navigate, useLocation } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
 import { useRefreshMutation } from "../../features/auth/authApiSlice"
-import { usePersist } from "../../hooks/usePersist"
 import { useSelector } from "react-redux"
 import { selectCurrentToken } from "../../features/auth/authSlice"
 
 const PersistLogin = () => {
-  const [persist] = usePersist()
+  const location = useLocation()
   const token = useSelector(selectCurrentToken)
   const effectRan = useRef(false)
   const [trueSuccess, setTrueSuccess] = useState(false)
@@ -33,7 +32,7 @@ const PersistLogin = () => {
           console.error(err)
         }
       }
-      if (!token && persist) verifyRefreshToken()
+      if (!token) verifyRefreshToken()
     }
 
     return () => effectRan.current = true
@@ -42,20 +41,12 @@ const PersistLogin = () => {
   }, [])
 
   let content
-  if (!persist) { // persist: no
-    console.log('no persist')
-    content = <Outlet />
-  } else if (isLoading) { //persist: yes, token: no
+  if (isLoading) { //persist: yes, token: no
     console.log('loading')
     content = "Loading"
   } else if (isError) { //persist: yes, token: no
     console.log('error')
-    content = (
-      <p className='errmsg'>
-        {`${error?.data?.message} - `}
-        <Link to="/login">Please login again</Link>.
-      </p>
-    )
+    content = <Navigate to="/login" state={{ from: location }} replace />
   } else if (isSuccess && trueSuccess) { //persist: yes, token: yes
     console.log('success')
     content = <Outlet />
