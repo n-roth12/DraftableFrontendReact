@@ -2,8 +2,22 @@ import './Draftable.scss'
 import { MdDragIndicator } from 'react-icons/md'
 import { AiOutlineMinusCircle } from 'react-icons/ai'
 import { FaAngleDoubleLeft } from 'react-icons/fa'
+import { useEffect } from 'react'
 
 const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete, maxTierIndex }) => {
+
+  const nameSplit = (name) => {
+    const names = name.split(/ (.*)/s)
+    return (
+      <div className='name-wrapper'>
+        <span>{names[0]}</span> <span>{names[1]}</span>
+      </div>
+    )
+  }
+  useEffect(() => {
+    nameSplit(player.name)
+  }, [])
+
   return (
     <div className='draftable'
       {...provided.draggableProps}
@@ -18,9 +32,7 @@ const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete,
       <div className='rank-wrapper'>
         {player._rank}
       </div>
-      <div className='name-wrapper'>
-        {player.name}
-      </div>
+      {nameSplit(player.name)}
       <div className='position-wrapper'>
         {player.position}{player._posRank}
       </div>

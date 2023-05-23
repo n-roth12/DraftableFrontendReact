@@ -17,10 +17,9 @@
     flex-direction: row;
     justify-content: space-between;
 
-    div {
+    div:not(.name-wrapper) {
         display: flex;
         align-items: center;
-        justify-content: center;
     }
 }
 .draftable, .table-header {
@@ -42,9 +41,16 @@
         justify-content: center;
     }
     .name-wrapper {
+        display: flex;
         flex: 4;
         justify-content: flex-start;
         font-weight: 600;
+        flex-wrap: wrap;
+
+        span {
+            margin-right: 4px;
+        }
+    
     }
     .team-wrapper {
         flex: 2;
@@ -109,4 +115,17 @@
     .insert-icon {
         margin-right: 8px;
     }
+}
+
+@media (min-width: 499px) {
+    .name-wrapper {
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 500px) {
+	.name-wrapper {
+		flex-direction: column;
+        justify-content: flex-start;
+	}
 }
