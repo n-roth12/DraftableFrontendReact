@@ -1,14 +1,13 @@
 import './App.scss'
-import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Login from './Pages/Login/Login'
-import Register from './Pages/Register/Register'
-import RankingsPage from './Pages/RankingsPage/RankingsPage'
-import CustomRankingsPage from './Pages/CustomRankingsPage/CustomRankingsPage'
-import EditRankingPage from './Pages/EditRankingPage/EditRankingPage'
-import RequireAuth from './components/Auth/RequireAuth'
+import LoginPage from './features/auth/LoginPage/LoginPage'
+import RegisterPage from './features/auth/RegisterPage/RegisterPage'
+import RankingsPage from './features/rankings/RankingsPage/RankingsPage'
+import CustomRankingsPage from './features/customRankings/CustomRankingsPage/CustomRankingsPage'
+import EditRankingPage from './features/customRankings/EditRankingPage/EditRankingPage'
+import RequireAuth from './features/auth/RequireAuth'
 import Layout from './components/Layout'
-import PersistLogin from './components/Auth/PersistLogin'
+import PersistLogin from './features/auth/PersistLogin'
 
 function App() {
   return (
@@ -17,8 +16,8 @@ function App() {
 
         <Route path="/" element={<Layout />} >
           <Route index element={<RankingsPage />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
           <Route path="rankings" element={<RankingsPage />} />
 
           <Route element={<PersistLogin />}>

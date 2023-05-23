@@ -1,15 +1,15 @@
 import './EditRankingPage.scss'
-import Nav from '../../components/Nav/Nav'
+import Nav from '../../../components/Nav/Nav'
 import { useParams } from 'react-router-dom'
-import { useGetCustomRankingByIdQuery, useGetCustomRankingById2Query } from '../../features/rankings/customRankingsApiSlice'
+import { useGetCustomRankingByIdQuery, useGetCustomRankingById2Query } from '../customRankingsApiSlice'
 import { FaEdit } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
-import { useUpdateCustomRankingMutation } from '../../features/rankings/customRankingsApiSlice'
+import { useUpdateCustomRankingMutation } from '../customRankingsApiSlice'
 import { Switch } from '@mui/material'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
-import { StrictModeDroppable as Droppable } from '../../features/helpers/StrictModeDroppable'
-import Tier from '../../components/Tier/Tier'
-import Draftable from '../../components/Draftable/Draftable'
+import { StrictModeDroppable as Droppable } from '../../helpers/StrictModeDroppable'
+import Tier from '../Tier/Tier'
+import Draftable from '../Draftable/Draftable'
 
 const EditRankingPage = () => {
   const { rankingId } = useParams()

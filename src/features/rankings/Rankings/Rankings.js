@@ -2,7 +2,7 @@ import './Rankings.scss'
 import { useState } from 'react'
 import { FaAngleUp, FaAngleDown, FaInfoCircle } from 'react-icons/fa'
 import { Tooltip } from '@mui/material'
-import { useCreateNewCustomRankingsMutation } from '../../features/rankings/customRankingsApiSlice'
+import { useCreateNewCustomRankingsMutation } from '../../customRankings/customRankingsApiSlice'
 
 const Rankings = ({ players }) => {
   const [sortColumn, setSortColumn] = useState("Rank")

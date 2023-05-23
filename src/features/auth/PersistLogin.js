@@ -1,8 +1,8 @@
 import { Outlet, Link, Navigate, useLocation } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
-import { useRefreshMutation } from "../../features/auth/authApiSlice"
+import { useRefreshMutation } from "./authApiSlice"
 import { useSelector } from "react-redux"
-import { selectCurrentToken } from "../../features/auth/authSlice"
+import { selectCurrentToken } from "./authSlice"
 
 const PersistLogin = () => {
   const location = useLocation()
@@ -23,9 +23,7 @@ const PersistLogin = () => {
 
       const verifyRefreshToken = async () => {
         try {
-          //const response = 
           await refresh()
-          //const { accessToken } = response.data
           setTrueSuccess(true)
         }
         catch (err) {

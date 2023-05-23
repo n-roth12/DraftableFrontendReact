@@ -2,9 +2,9 @@ import './CustomRankingsList.scss'
 import { HiDotsHorizontal } from 'react-icons/hi'
 import { MdSportsFootball } from 'react-icons/md'
 import { useState } from 'react'
-import { useDeleteCustomRankingMutation } from '../../features/rankings/customRankingsApiSlice'
+import { useDeleteCustomRankingMutation } from '../customRankingsApiSlice'
 import { useNavigate } from 'react-router-dom'
-import { epochToTimeAgo } from '../../features/helpers/EpochToTimeAgo'
+import { epochToTimeAgo } from '../../helpers/EpochToTimeAgo'
 
 const RankingsList = ({ rankings }) => {
   const navigate = useNavigate()

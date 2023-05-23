@@ -1,8 +1,7 @@
-import RegisterForm from '../../components/Auth/RegisterForm'
-import Nav from '../../components/Nav/Nav'
-import './Register.scss'
+import RegisterForm from '../RegisterForm'
+import Nav from '../../../components/Nav/Nav'
 
-const Register = () => {
+const RegisterPage = () => {
 
   return (
     <div className='register-page'>
@@ -14,4 +13,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default RegisterPage

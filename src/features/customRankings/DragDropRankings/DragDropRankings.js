@@ -1,6 +1,6 @@
 import './DragDropRankings.scss'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
-import { StrictModeDroppable as Droppable } from '../../features/helpers/StrictModeDroppable'
+import { StrictModeDroppable as Droppable } from '../../helpers/StrictModeDroppable'
 
 const DragDropRankings = ({ players }) => {
   return (

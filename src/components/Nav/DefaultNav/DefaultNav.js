@@ -1,7 +1,7 @@
 import './DefaultNav.scss'
 import { Link, useNavigate } from 'react-router-dom'
-import { useLogoutMutation } from '../../features/auth/authApiSlice'
-import { logOut } from '../../features/auth/authSlice'
+import { useLogoutMutation } from '../../../features/auth/authApiSlice'
+import { logOut } from '../../../features/auth/authSlice'
 import { useDispatch } from 'react-redux'
 
 const DefaultNav = () => {

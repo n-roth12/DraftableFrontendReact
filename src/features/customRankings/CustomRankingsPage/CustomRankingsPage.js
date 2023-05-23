@@ -1,13 +1,13 @@
 import './CustomRankingsPage.scss'
-import Nav from "../../components/Nav/Nav"
-import CustomRankingsList from "../../components/CustomRankingsList/CustomRankingsList"
-import Search from "../../components/Search/Search"
-import EditButton from '../../components/EditButton/EditButton'
-import NewRankingsDialog from '../../components/Dialogs/NewRankingsDialog/NewRankingsDialog'
+import Nav from "../../../components/Nav/Nav"
+import CustomRankingsList from "../CustomRankingsList/CustomRankingsList"
+import Search from "../../../components/Search/Search"
+import EditButton from '../../../components/EditButton/EditButton'
+import NewRankingsDialog from '../../../components/Dialogs/NewRankingsDialog/NewRankingsDialog'
 import { useGetUserCustomRankingsQuery, 
-  useCreateNewCustomRankingsMutation } from '../../features/rankings/customRankingsApiSlice'
+  useCreateNewCustomRankingsMutation } from '../customRankingsApiSlice'
 import { useState } from 'react'
-import { useGetCurrentRankingTemplatesQuery } from '../../features/rankings/rankingsApiSlice'
+import { useGetCurrentRankingTemplatesQuery } from '../../rankings/rankingsApiSlice'
 import { FaAngleRight } from 'react-icons/fa'
 
 const CustomRankingsPage = () => {

@@ -7,7 +7,7 @@ export const customRankingsApiSlice = apiSlice.injectEndpoints({
             keepUnusedDataFor: 5,
             providesTags: (result, error, arg) => [
                 'CustomRanking',
-                ...result.map(({ id }) => ({ type: 'CustomRanking', id }))
+                ...result?.map(({ id }) => ({ type: 'CustomRanking', id }))
             ]
         }),
         getCustomRankingById: builder.query({

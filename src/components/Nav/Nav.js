@@ -1,5 +1,5 @@
-import DefaultNav from "../DefaultNav/DefaultNav"
-import MobileNav from "../MobileNav/MobileNav"
+import DefaultNav from "./DefaultNav/DefaultNav"
+import MobileNav from "./MobileNav/MobileNav"
 
 const Nav = () => {
   return (

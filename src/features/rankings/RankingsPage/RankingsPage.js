@@ -1,22 +1,22 @@
 import './RankingsPage.scss'
-import Nav from "../../components/Nav/Nav"
-import Rankings from "../../components/Rankings/Rankings"
-import PositionFilter from "../../components/PositionFilter/PositionFilter"
-import SelectFilter from "../../components/SelectFilter/SelectFilter"
-import Search from '../../components/Search/Search'
-import EditButton from '../../components/EditButton/EditButton'
-import { useGetCurrentRankingQuery } from '../../features/rankings/rankingsApiSlice'
+import Nav from "../../../components/Nav/Nav"
+import Rankings from "../Rankings/Rankings"
+import PositionFilter from "../../../components/PositionFilter/PositionFilter"
+import SelectFilter from "../../../components/SelectFilter/SelectFilter"
+import Search from '../../../components/Search/Search'
+import EditButton from '../../../components/EditButton/EditButton'
+import { useGetCurrentRankingQuery } from '../rankingsApiSlice'
 import { useNavigate } from 'react-router-dom'
-import NewRankingsDialog from '../../components/Dialogs/NewRankingsDialog/NewRankingsDialog'
-import { useGetCurrentRankingTemplatesQuery } from '../../features/rankings/rankingsApiSlice'
-import { useGetRankingByIdQuery } from '../../features/rankings/rankingsApiSlice'
+import NewRankingsDialog from '../../../components/Dialogs/NewRankingsDialog/NewRankingsDialog'
+import { useGetCurrentRankingTemplatesQuery } from '../rankingsApiSlice'
+import { useGetRankingByIdQuery } from '../rankingsApiSlice'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
-import { useCreateNewCustomRankingsMutation } from '../../features/rankings/customRankingsApiSlice'
+import { useCreateNewCustomRankingsMutation } from '../../customRankings/customRankingsApiSlice'
 import { FaAngleRight } from 'react-icons/fa'
-import { selectCurrentToken } from '../../features/auth/authSlice'
+import { selectCurrentToken } from '../../auth/authSlice'
 
 const RankingsPage = () => {
   const [selectedTemplate, setSelectedTemplate] = useState()
