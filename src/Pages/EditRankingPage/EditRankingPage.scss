@@ -1,9 +1,6 @@
 .edit-ranking-page {
-    .content {
-        max-width: 700px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+    width: 100%;
+    
     .updated-wrapper {
         margin-top: 10px;
         font-size: 11pt;
@@ -84,11 +81,9 @@
     }
     .drag-drop-rankings {
         width: 100%;
-        max-width: 80vw;
         justify-content: center;
 
         .table-header {
-            max-width: max(700px, 80%);
             padding: 8px;
             font-size: 10pt;
             background-color: white;

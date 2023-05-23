@@ -252,7 +252,7 @@ const EditRankingPage = () => {
   return (
     <div className='edit-ranking-page'>
       <Nav />
-      <div className='content'>
+      <main>
         <div className='title-wrapper'>
           {editingTitle ?
             <>
@@ -319,7 +319,7 @@ const EditRankingPage = () => {
         <div className='drag-drop-rankings-wrapper'>
           {content}
         </div>
-      </div>
+      </main>
     </div>
   )
 }

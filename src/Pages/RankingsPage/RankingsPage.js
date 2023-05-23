@@ -68,7 +68,7 @@ const RankingsPage = () => {
   return (
     <div className="rankings-page">
       <Nav />
-      <div className="content">
+      <main>
         <h1>2023 NFL Draft Rankings</h1>
         <p className='description'>Select Customize to edit these rankings.</p>
         <div className="options-wrapper">
@@ -89,7 +89,7 @@ const RankingsPage = () => {
           </button>
         </div>
         {content}
-      </div>
+      </main>
     </div>
   )
 }

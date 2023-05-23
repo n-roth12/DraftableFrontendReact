@@ -1,6 +1,4 @@
 .custom-rankings-list {
-    width: 700px;
-    max-width: 90vw;
     margin: auto;
 
     .row {
@@ -104,7 +102,6 @@
         }
     }
     .sport-icon-wrapper {
-        // background-color: #b05902;
         background-color: var(--grey);
         height: 50%;
         display: flex;
@@ -122,6 +119,7 @@
         margin-right: 4px;
     }
     .col-labels {
+        
         .last-update {
             color: var(--grey);
         }

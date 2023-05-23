@@ -64,7 +64,7 @@ const CustomRankingsPage = () => {
     <div className="custom-rankings-page">
       <Nav />
       {templatesContent}
-      <div className='content'>
+      <main>
         <h1>Custom Rankings</h1>
         <p className='description'>Create and customize your own tiered draft rankings.</p>
         <div className='rankings-options'>
@@ -73,7 +73,7 @@ const CustomRankingsPage = () => {
             onClick={() => setShowRankingsDialog(true)}>Create Ranking <FaAngleRight /></button>
         </div>
         {rankingsContent}
-      </div>
+      </main>
     </div>
   )
 }

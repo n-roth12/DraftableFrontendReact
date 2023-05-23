@@ -1,4 +1,6 @@
 .rankings-page {
+    width: 100%;
+
     h1 {
         margin-bottom: 10px;
     }
@@ -26,16 +28,9 @@
             justify-self: flex-end;
         }
     }
-    .content {
-        display: flex;
-        flex-direction: column;
-        max-width: 700px;
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 4px;
-    }
     .rankings-table {
         margin-top: 20px;
+        width: 100%;
     }
     .position-filter {
         margin-top: 10px;
