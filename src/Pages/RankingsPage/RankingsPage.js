@@ -16,9 +16,12 @@ import { useState, useEffect } from 'react'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { useCreateNewCustomRankingsMutation } from '../../features/rankings/customRankingsApiSlice'
 import { FaAngleRight } from 'react-icons/fa'
+import { selectCurrentToken } from '../../features/auth/authSlice'
 
 const RankingsPage = () => {
   const [selectedTemplate, setSelectedTemplate] = useState()
+  const token = useSelector(selectCurrentToken)
+  const navigate = useNavigate()
 
   const {
     data: rankingsTemplates,
@@ -41,7 +44,6 @@ const RankingsPage = () => {
   } = useGetRankingByIdQuery(selectedTemplate ? selectedTemplate : skipToken)
 
   const [createNewCustomRankings] = useCreateNewCustomRankingsMutation()
-  const navigate = useNavigate()
 
   const handleFormatChange = (e) => {
     setSelectedTemplate(e.target.value)
@@ -57,12 +59,15 @@ const RankingsPage = () => {
   }
 
   const customizeRanking = () => {
-
+    if (!token) {
+      return navigate('/login')
+    }
     createNewCustomRankings({
       title: "Custom Ranking",
-      template: selectedTemplate,
-      user: "6449a041b0bbf7e173737793"
-    }).unwrap().then(fulfilled => navigate(`/custom/${fulfilled._id}`)).catch(rejected => console.log(rejected))
+      template: selectedTemplate
+    }).unwrap().then(fulfilled => 
+      navigate(`/custom/${fulfilled._id}`))
+      .catch(rejected => navigate('/login'))
   }
 
   return (
