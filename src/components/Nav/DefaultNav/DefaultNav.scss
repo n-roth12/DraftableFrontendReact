@@ -1,7 +1,9 @@
 .default-nav {
     background-color: var(--nav-color);
-    margin-bottom: 35px;
     width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 2;
     
     nav {
         margin: auto;

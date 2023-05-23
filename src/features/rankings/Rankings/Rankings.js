@@ -2,21 +2,10 @@ import './Rankings.scss'
 import { useState } from 'react'
 import { FaAngleUp, FaAngleDown, FaInfoCircle } from 'react-icons/fa'
 import { Tooltip } from '@mui/material'
-import { useCreateNewCustomRankingsMutation } from '../../customRankings/customRankingsApiSlice'
 
 const Rankings = ({ players }) => {
   const [sortColumn, setSortColumn] = useState("Rank")
   const [sortAsc, setSortAsc] = useState(true)
-  const [createNewCustomRankings] = useCreateNewCustomRankingsMutation()
-
-  // need to wait until this executes then navigate to the edit page
-  const createNewLineup = async (title, template) => {
-    await createNewCustomRankings({
-      "title": title,
-      "template": template,
-      "user": "6449a041b0bbf7e173737793"
-    })
-  }
 
   const toggleSort = (col) => {
     if (sortColumn === col) {
@@ -43,7 +32,6 @@ const Rankings = ({ players }) => {
           {["Rank", "Name", "Pos", "Team", "Bye"].map(col =>
             <th onClick={() => toggleSort(col)}
               className={col === "Name" ? "name-header" : ""}>{getSortIcon(col)} {col}
-              {col === "Rank" ? <Tooltip title="Expert Consensus"><FaInfoCircle className='info-icon' /></Tooltip> : ""}
             </th>
           )}
         </tr>
