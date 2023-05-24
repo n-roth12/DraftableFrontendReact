@@ -7,16 +7,15 @@
         background-color: var(--lightgrey);
     }
     .name {
-        color: var(--btn-blue-1);
         font-weight: 600;
-        cursor: pointer;
     }
     tbody td, thead th {
-        padding: 6px;
-        font-size: 11pt;
+        padding: 8px;
+        font-size: 10pt;
     }
     tr {
         display: flex;
+
         td, th {
             flex: 1;
             text-align: center;
@@ -45,5 +44,16 @@
     }
     tbody tr:hover {
         background-color: var(--table-header-color);
+    }
+    @media (max-width: 499px) {
+        tbody td, thead th {
+            padding: 8px;
+            font-size: 9pt;
+        }
+        tr {
+            .name, .name-header {
+                flex: 4;
+            }
+        }
     }
 }

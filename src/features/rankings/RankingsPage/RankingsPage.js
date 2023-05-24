@@ -74,7 +74,7 @@ const RankingsPage = () => {
     <div className="rankings-page">
       <Nav />
       <main>
-        <h1>2023 NFL Draft Rankings</h1>
+        <h1>2023 NFL Fantasy Draft Rankings</h1>
         <p className='description'>Select Customize to edit these rankings.</p>
         <div className="options-wrapper">
           <div className='filters-wrapper'>

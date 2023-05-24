@@ -124,4 +124,22 @@
             color: var(--grey);
         }
     }
+    @media (max-width: 499px) {
+        .sport-icon-wrapper {
+            height: 40%;
+
+            .sport-icon {
+                font-size: 12pt;
+            }
+        }
+        .dropdown {
+            margin-right: 1%;
+        }
+        .rankings-title {
+            font-size: 11pt;
+        }
+        .last-update {
+            font-size: 9pt;
+        }
+    }
 }

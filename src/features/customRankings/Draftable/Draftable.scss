@@ -1,18 +1,26 @@
-.draftable, .tier {
+.draftable,
+.tier {
     padding: 8px;
     font-size: 10pt;
 
-    .drag-icon, .delete-icon {
+    .drag-icon,
+    .delete-icon {
         font-size: 1.5em;
     }
+
     .delete-icon:hover {
         cursor: pointer;
     }
 }
-.draftable, .tier:not(.top-tier) {
+
+.draftable,
+.tier:not(.top-tier) {
     cursor: grab;
 }
-.draftable, .tier, .table-header {
+
+.draftable,
+.tier,
+.table-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -22,7 +30,9 @@
         align-items: center;
     }
 }
-.draftable, .table-header {
+
+.draftable,
+.table-header {
     background-color: white;
     border: 1px solid var(--lightgrey);
     border-left: 2px solid var(--lightgrey);
@@ -32,14 +42,17 @@
         flex: 1;
         justify-content: flex-end;
     }
+
     .rank-wrapper {
         flex: 1;
         justify-content: flex-start;
     }
+
     .bye-wrapper {
         flex: 2;
         justify-content: center;
     }
+
     .name-wrapper {
         display: flex;
         flex: 4;
@@ -50,31 +63,38 @@
         span {
             margin-right: 4px;
         }
-    
+
     }
+
     .team-wrapper {
         flex: 2;
         justify-content: center;
     }
+
     .position-wrapper {
         flex: 2;
         justify-content: center;
     }
+
     .buttons-wrapper {
         flex: 2;
         justify-content: flex-end;
     }
+
     .delete-icon-wrapper {
         flex: 1;
         justify-content: flex-start;
     }
 }
+
 .draftable:hover {
     background-color: var(--table-header-color);
 }
+
 .tier:not(.top-tier):hover {
     background-color: var(--btn-blue-hover-1);
 }
+
 .tier {
     background-color: var(--btn-blue-1);
     border: 1px solid var(--btn-blue-1);
@@ -95,11 +115,13 @@
         justify-content: center;
         font-weight: 800;
     }
+
     .buttons-wrapper {
         flex: 1;
         justify-content: flex-start;
     }
 }
+
 .insert-tier-btn {
     color: white;
     background: var(--btn-blue-1);
@@ -118,14 +140,47 @@
 }
 
 @media (min-width: 499px) {
-    .name-wrapper {
-        flex-direction: row;
+
+    .draftable,
+    .table-header {
+        .name-wrapper {
+            flex-direction: row;
+        }
     }
 }
 
 @media (max-width: 500px) {
-	.name-wrapper {
-		flex-direction: column;
-        justify-content: flex-start;
-	}
+
+    .draftable,
+    .table-header {
+        font-size: 9pt;
+
+        .rank-wrapper {
+            flex: 2;
+            justify-content: center;
+        }
+
+        .name-wrapper {
+            flex-direction: column;
+            flex: 4;
+            justify-content: flex-start;
+        }
+
+        .delete-icon-wrapper {
+            justify-content: center;
+        }
+
+        .buttons-wrapper {
+            flex: 1;
+        }
+    }
+    .tier {
+        .rank-wrapper {
+            flex: 12;
+            justify-content: center;
+        }
+        .buttons-wrapper {
+            justify-content: center;
+        }
+    }
 }

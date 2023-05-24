@@ -1,6 +1,6 @@
 .edit-ranking-page {
     width: 100%;
-    
+
     .updated-wrapper {
         margin-top: 10px;
         font-size: 11pt;
@@ -10,35 +10,40 @@
             font-weight: 500;
         }
     }
+
     .title-wrapper {
         display: flex;
         align-items: center;
 
-        h1, input {
+        h1,
+        input {
             margin-right: 10px;
-            font-size: 20pt !important;
-            font-weight: 700;
         }
+
         .edit-btn {
             color: var(--btn-blue-1);
             cursor: pointer;
         }
+
         input {
             font-size: 16pt;
         }
     }
+
     .save-wrapper {
         display: flex;
         height: 60px;
         justify-content: space-between;
         align-items: center;
     }
+
     .save-wrapper-inner {
         display: flex;
         flex-direction: row;
         align-items: center;
         margin: 10px 0px 10px 0px;
     }
+
     .autosave-wrapper {
         margin-right: 10px;
 
@@ -46,7 +51,10 @@
             font-weight: 500;
         }
     }
-    .submit-btn, .cancel-btn, .add-tier-btn {
+
+    .submit-btn,
+    .cancel-btn,
+    .add-tier-btn {
         border: none;
         padding: 10px;
         border-radius: 4px;
@@ -54,31 +62,42 @@
         margin-right: 5px;
         margin-left: 5px;
     }
-    .submit-btn:not(.disabled), .cancel-btn:not(.disabled), .add-tier-btn:not(.disabled) {
+
+    .submit-btn:not(.disabled),
+    .cancel-btn:not(.disabled),
+    .add-tier-btn:not(.disabled) {
         cursor: pointer;
     }
+
     .submit-btn:not(.disabled) {
         background-color: var(--submit-btn-light-1);
         color: white;
     }
+
     .submit-btn:not(.disabled):hover {
         background-color: var(--submit-btn-hover-light-1);
     }
-    .cancel-btn, .submit-btn.disabled {
+
+    .cancel-btn,
+    .submit-btn.disabled {
         background-color: var(--lightgrey);
     }
+
     .add-tier-btn {
         background-color: var(--btn-green-1);
         color: white;
     }
+
     .add-tier-btn:hover {
         background-color: var(--btn-green-2);
     }
+
     .drag-drop-rankings-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
     }
+
     .drag-drop-rankings {
         width: 100%;
         justify-content: center;
@@ -95,12 +114,23 @@
                 color: var(--grey);
             }
         }
+
         .draftable:last-child {
             border-bottom: 2px solid var(--lightgrey);
         }
     }
+
     .description {
         margin-bottom: 10px;
         margin-left: 2px;
+    }
+
+    @media (max-width: 499px) {
+        .edit-button {
+            font-size: 9pt;
+        }
+        .last-update {
+             font-size: 9pt;
+        }
     }
 }

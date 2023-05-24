@@ -54,11 +54,28 @@ html {
   --dark-red: #880808;
 }
 
-// UTILITY CLASSES
 main {
   width: 800px;
   max-width: 94%;
   margin-right: auto;
   margin-left: auto;
   padding-top: 2vh;
+}
+
+@media (min-width: 500px) {
+  h1 {
+    font-size: 20pt;    
+  }
+  .description {
+    font-size: 11pt;
+  }
+}
+
+@media (max-width: 499px) {
+  h1 {
+    font-size: 16pt;
+  }
+  .description {
+    font-size: 10pt;
+  }
 }

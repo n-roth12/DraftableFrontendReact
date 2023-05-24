@@ -15,3 +15,14 @@
 .edit-button:hover {
     background-color: var(--link-color-hover-1);
 }
+
+@media (min-width: 500px) {
+    .edit-button {
+      font-size: 11pt;    
+    }
+}
+@media (max-width: 499px) {
+    .edit-button {
+        font-size: 9pt;
+    }
+}
