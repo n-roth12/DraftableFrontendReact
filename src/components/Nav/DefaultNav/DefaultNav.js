@@ -1,12 +1,14 @@
 import './DefaultNav.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import { useLogoutMutation } from '../../../features/auth/authApiSlice'
-import { logOut } from '../../../features/auth/authSlice'
+import { logOut, selectCurrentToken } from '../../../features/auth/authSlice'
 import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const DefaultNav = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const token = useSelector(selectCurrentToken)
   const [logout] = useLogoutMutation()
 
   const handleLogout = async () => {
@@ -27,7 +29,11 @@ const DefaultNav = () => {
           <div className='nav-links'>
             <Link className='nav-link' to='/rankings'>Rankings</Link>
             <Link className='nav-link' to='/custom'>Custom</Link>
-            <button className='nav-link' onClick={handleLogout}>Logout</button>
+            {token ? 
+              <button className='nav-link' onClick={handleLogout}>Logout</button>
+            :
+              <Link className='nav-link nav-link-outline' to='/login'>Login</Link>
+            }
           </div>
         }
       </nav>

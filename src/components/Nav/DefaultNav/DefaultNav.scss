@@ -30,6 +30,14 @@
     .nav-link:hover {
         color: var(--lightgrey);
     }
+    .nav-link-outline {
+        border: 1px solid white;
+        border-radius: 4px;
+        padding: 6px 8px 6px 8px;
+    }
+    .nav-link-outline:hover {
+        border: 1px solid var(--lightgrey);
+    }
 }
 
 @media (max-width: 499px) {
