@@ -4,7 +4,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { FaAngleRight } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { selectCurrentToken, logOut } from '../../../features/auth/authSlice'
+import { selectCurrentToken, logOut, selectCurrentUser } from '../../../features/auth/authSlice'
 import { useLogoutMutation } from '../../../features/auth/authApiSlice'
 import NavInfo from '../NavInfo/NavInfo'
 
@@ -12,6 +12,7 @@ const MobileNav = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const token = useSelector(selectCurrentToken)
+  const email = useSelector(selectCurrentUser)
   const [burgerClass, setBurgerClass] = useState("burger-bar unclicked")
   const [menuClass, setMenuClass] = useState("menu hidden")
   const [isMenuClicked, setIsMenuClicked] = useState(false)
@@ -54,6 +55,9 @@ const MobileNav = () => {
       }
 
       <div className={menuClass} onClick={updateMenu}>
+        {token && 
+          <Link className='mobile-nav-link' to={`/account`}>Account <FaAngleRight /></Link>
+        }
         <Link className='mobile-nav-link' to={`/rankings`}>Rankings <FaAngleRight /></Link>
         <Link className='mobile-nav-link' to={`/custom`}>Custom <FaAngleRight /></Link>
         {token ?
