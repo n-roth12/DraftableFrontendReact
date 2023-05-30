@@ -25,24 +25,26 @@ const RegisterForm = () => {
       setErrorMessage('Passwords do not match!')
       return
     }
+    if (!email || !password || !confirmPassword) {
+      setErrorMessage('Email and password required')
+      return 
+    }
     try {
       const userData = await register({ email, password }).unwrap()
-      console.log(userData)
       dispatch(setCredentials({ ...userData, email }))
       setEmail('')
       setPassword('')
       setConfirmPassword('')
       navigate('/rankings')
     } catch (err) {
-      console.log(err.originalStatus)
-      if (!err?.originalStatus) {
+      if (!err?.status && !err?.originalStatus) {
         setErrorMessage('No server response')
-      } else if (err.originalStatus === 400) {
+      } else if (err.status === 400) {
         setErrorMessage('Missing username or password')
-      } else if (err.originalStatus === 401) {
-        setErrorMessage('Unathorized')
-      } else if (err.originalStatus === 409) {
+      } else if (err?.originalStatus === 409) {
         setErrorMessage('Account already exists for email')
+      } else if (err.status === 422) {
+        setErrorMessage(err?.data?.error)
       } else {
         setErrorMessage('Login Failed')
       }

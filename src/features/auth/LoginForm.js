@@ -29,20 +29,21 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!email || !password) {
+      setErrorMessage('Email and password required')
+      return 
+    }
     try {
       const userData = await login({ email, password }).unwrap()
-      console.log(userData)
       dispatch(setCredentials({ ...userData, email }))
       setEmail('')
       setPassword('')
       navigate('/rankings')
     } catch (err) {
-      if (!err?.originalStatus) {
+      if (!err?.originalStatus && !err?.status) {
         setErrorMessage('No server response')
-      } else if (err.response?.originalStatus === 400) {
-        setErrorMessage('Missing username or password')
-      } else if (err.response?.originalStatus === 401) {
-        setErrorMessage('Unathorized')
+      } else if (err?.originalStatus === 401) {
+        setErrorMessage('Incorrect email or password')
       } else {
         setErrorMessage('Login Failed')
       }

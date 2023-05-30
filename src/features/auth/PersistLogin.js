@@ -41,11 +41,7 @@ const PersistLogin = () => {
   let content
   if (isLoading) { //persist: yes, token: no
     content = "Loading"
-  } else if (isError) { //persist: yes, token: no
-    content = <Navigate to="/login" state={{ from: location }} replace />
-  } else if (isSuccess && trueSuccess) { //persist: yes, token: yes
-    content = <Outlet />
-  } else if (token && isUninitialized) { //persist: yes, token: yes
+  } else {
     content = <Outlet />
   }
 
