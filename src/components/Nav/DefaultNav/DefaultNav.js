@@ -4,6 +4,7 @@ import { useLogoutMutation } from '../../../features/auth/authApiSlice'
 import { logOut, selectCurrentToken } from '../../../features/auth/authSlice'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
+import NavInfo from '../NavInfo/NavInfo'
 
 const DefaultNav = () => {
   const navigate = useNavigate()
@@ -37,6 +38,7 @@ const DefaultNav = () => {
           </div>
         }
       </nav>
+      <NavInfo />
     </header>
   )
 }

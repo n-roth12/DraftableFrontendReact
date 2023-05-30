@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { useRegisterMutation } from '../../features/auth/authApiSlice'
 import { setCredentials } from '../../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
+import { addInfo } from '../alerts/alertsApiSlice'
 
 const RegisterForm = () => {
   const navigate = useNavigate()
@@ -32,6 +33,7 @@ const RegisterForm = () => {
     try {
       const userData = await register({ email, password }).unwrap()
       dispatch(setCredentials({ ...userData, email }))
+      addInfo({ "value": "Successfully Registered!", "category": "success" })
       setEmail('')
       setPassword('')
       setConfirmPassword('')

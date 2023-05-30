@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { selectCurrentToken, logOut } from '../../../features/auth/authSlice'
 import { useLogoutMutation } from '../../../features/auth/authApiSlice'
+import NavInfo from '../NavInfo/NavInfo'
 
 const MobileNav = () => {
   const navigate = useNavigate()
@@ -47,6 +48,10 @@ const MobileNav = () => {
           <div className={burgerClass}></div>
         </div>
       </nav>
+      
+      {!isMenuClicked &&
+        <NavInfo />
+      }
 
       <div className={menuClass} onClick={updateMenu}>
         <Link className='mobile-nav-link' to={`/rankings`}>Rankings <FaAngleRight /></Link>
@@ -55,7 +60,7 @@ const MobileNav = () => {
           <a className='mobile-nav-link' onClick={handleLogout}>Logout <FaAngleRight /></a>
           :
           <Link className='mobile-nav-link' to={`/login`}>Login <FaAngleRight /></Link>
-        }  
+        }
       </div>
     </header>
   )

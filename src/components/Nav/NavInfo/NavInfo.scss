@@ -1,0 +1,26 @@
+.nav-info-wrapper {
+    width: 100%;
+}
+.nav-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    user-select: none;
+
+    p {
+        font-weight: 700;
+        float: inline-end;
+        text-align: center;
+        justify-self: center;
+        font-size: 11pt;
+    }
+
+    .close-icon {
+        cursor: pointer;
+    }
+}
+
+.nav-info.success {
+    color: white;
+    background-color: var(--submit-btn-light-1);
+}
