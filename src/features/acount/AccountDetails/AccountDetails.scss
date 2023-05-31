@@ -1,0 +1,94 @@
+.account-details-wrapper {
+    box-shadow: var(--box-shadow-1);
+    border-radius: 4px;
+
+    .account-detail:first-child {
+        border-radius: 6px 6px 0px 0px;
+    }
+
+    .account-detail:last-child {
+        border-radius: 0px 0px 6px 6px;
+        border-bottom: none;
+    }
+}
+
+.account-detail-inner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .label {
+        font-weight: 600;
+    }
+
+    .value {
+        margin-top: 10px;
+    }
+
+    .label, .value {
+        font-size: 10pt;
+    }
+}
+
+.edit-icon {
+    color: var(--btn-blue-1);
+    cursor: pointer;
+}
+
+.edit-icon:hover {
+    color: var(--btn-blue-hover-1);
+}
+
+.account-detail {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 16px;
+    border-bottom: 1px solid var(--lightgrey);
+}
+
+.account-changes-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+
+    .account-changes-inner {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+    }
+}
+
+.confirm-wrapper {
+    display: flex;
+}
+
+.text-input {
+    margin-bottom: 10px !important;
+}
+
+.cancel-btn, .save-btn {
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-right: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background-color: var(--lightgrey);
+}
+
+.save-btn {
+    background-color: var(--btn-blue-1);
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: var(--btn-blue-hover-1);
+}

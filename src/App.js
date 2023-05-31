@@ -5,10 +5,10 @@ import RegisterPage from './features/auth/RegisterPage/RegisterPage'
 import RankingsPage from './features/rankings/RankingsPage/RankingsPage'
 import CustomRankingsPage from './features/customRankings/CustomRankingsPage/CustomRankingsPage'
 import EditRankingPage from './features/customRankings/EditRankingPage/EditRankingPage'
-import WelcomePage from './features/welcome/WelcomePage'
 import RequireAuth from './features/auth/RequireAuth'
 import Layout from './components/Layout'
 import PersistLogin from './features/auth/PersistLogin'
+import AccountPage from './features/acount/AccountPage/AccountPage'
 
 function App() {
   return (
@@ -26,6 +26,9 @@ function App() {
               <Route path="custom">
                 <Route index element={<CustomRankingsPage />} />
                 <Route path=":rankingId" element={<EditRankingPage />} />
+              </Route>
+              <Route path="account">
+                <Route index element={<AccountPage />} />
               </Route>
             </Route>
 

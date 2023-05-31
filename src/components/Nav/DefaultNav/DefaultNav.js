@@ -5,7 +5,7 @@ import { logOut, selectCurrentToken, selectCurrentUser } from '../../../features
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import NavInfo from '../NavInfo/NavInfo'
-import { FaUserAlt } from 'react-icons/fa'
+import { FaAngleRight, FaUserAlt } from 'react-icons/fa'
 import { useState } from 'react'
 
 const DefaultNav = () => {
@@ -34,21 +34,29 @@ const DefaultNav = () => {
           <div className='nav-links'>
             <Link className='nav-link' to='/rankings'>Rankings</Link>
             <Link className='nav-link' to='/custom'>Custom</Link>
+
             {token ?
               <div 
                 className='profile-dropdown' 
                 onMouseOver={() => setShowProfileDropdown(true)} 
                 onMouseLeave={() => setShowProfileDropdown(false)}>
+
                 <FaUserAlt className='user-icon nav-link' />
                 <div className={`${!showProfileDropdown ? "hidden" : "dropdown-content"}`}>
                   <p className='user-email'>{email}</p>
-                  <a href="/profile">Profile</a>
-                  <a href="" onClick={handleLogout}>Logout</a>
+                  <Link 
+                    className='profile-dropdown-link' 
+                    to="/account">Account <FaAngleRight /></Link>
+                  <a 
+                    href="" 
+                    className='profile-dropdown-link' 
+                    onClick={handleLogout}>Logout <FaAngleRight /></a>
                 </div>
               </div>
               :
               <Link className='nav-link nav-link-outline' to='/login'>Login</Link>
             }
+            
           </div>
         }
       </nav>

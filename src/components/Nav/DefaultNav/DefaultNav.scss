@@ -77,10 +77,16 @@
 
             a, p {
                 color: black;
-                padding: 10px 12px;
                 text-decoration: none;
-                display: block;
                 font-size: 11pt;
+                color: black;
+                padding: 1.1em;
+                font-weight: 700;
+                border: none;
+                border-bottom: 1px solid var(--lightgrey);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
 
             .user-email {
