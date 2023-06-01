@@ -10,85 +10,107 @@
         border-radius: 0px 0px 6px 6px;
         border-bottom: none;
     }
-}
 
-.account-detail-inner {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-
-    .label {
-        font-weight: 600;
-    }
-
-    .value {
-        margin-top: 10px;
-    }
-
-    .label, .value {
-        font-size: 10pt;
-    }
-}
-
-.edit-icon {
-    color: var(--btn-blue-1);
-    cursor: pointer;
-}
-
-.edit-icon:hover {
-    color: var(--btn-blue-hover-1);
-}
-
-.account-detail {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    padding: 16px;
-    border-bottom: 1px solid var(--lightgrey);
-}
-
-.account-changes-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex-wrap: wrap;
-
-    .account-changes-inner {
+    .account-detail-inner {
         display: flex;
         flex-direction: column;
-        width: 300px;
+        width: 100%;
+
+        .label {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .value {
+            margin-left: 0.5em;
+        }
+
+        .label,
+        .value {
+            font-size: 11pt;
+        }
     }
-}
 
-.confirm-wrapper {
-    display: flex;
-}
+    .edit-icon {
+        color: var(--btn-blue-1);
+        cursor: pointer;
+    }
 
-.text-input {
-    margin-bottom: 10px !important;
-}
+    .edit-icon:hover {
+        color: var(--btn-blue-hover-1);
+    }
 
-.cancel-btn, .save-btn {
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    font-weight: 600;
-    margin-right: 5px;
-    margin-left: 5px;
-    cursor: pointer;
-}
+    .account-detail {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background-color: white;
+        padding: 1em;
+        border-bottom: 1px solid var(--lightgrey);
+    }
 
-.cancel-btn {
-    background-color: var(--lightgrey);
-}
+    .confirm-buttons-wrapper {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: nowrap;
+    }
 
-.save-btn {
-    background-color: var(--btn-blue-1);
-    color: white;
-}
+    .account-changes-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        flex-wrap: wrap;
 
-.save-btn:hover {
-    background-color: var(--btn-blue-hover-1);
+        .account-changes-inner {
+            display: flex;
+            flex-direction: column;
+            width: min(400px, 100%);
+        }
+    }
+
+    .confirm-wrapper {
+        display: flex;
+    }
+
+    .text-input {
+        margin: 0.5em !important;
+    }
+
+    .cancel-btn,
+    .save-btn {
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        font-weight: 600;
+        margin-right: 5px;
+        margin-left: 5px;
+        cursor: pointer;
+    }
+
+    .cancel-btn {
+        background-color: var(--lightgrey);
+    }
+
+    .save-btn {
+        background-color: var(--btn-blue-1);
+        color: white;
+    }
+
+    .save-btn:hover {
+        background-color: var(--btn-blue-hover-1);
+    }
+    .error-message-wrapper {
+        display: flex;
+        align-items: center;
+        color: red;
+        font-size: 10pt;
+        padding-left: 0.5em;
+        margin-bottom: 0.5em;
+        
+        .error-icon {
+            margin-right: 6px;
+        }
+    }
 }

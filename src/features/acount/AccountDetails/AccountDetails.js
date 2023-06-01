@@ -1,6 +1,7 @@
 import { useState } from "react"
 import './AccountDetails.scss'
 import { FaEdit } from "react-icons/fa"
+import { FiAlertCircle } from "react-icons/fi"
 import { useUpdateUserMutation } from "../accountSlice"
 import { TextField, InputAdornment, IconButton } from "@mui/material"
 import { VisibilityOff, Visibility } from '@mui/icons-material'
@@ -18,12 +19,11 @@ const AccountDetails = ({ data }) => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const handleClickShowCurrentPassword = () => setShowCurrentPassword((show) => !show);
-  const handleClickShowNewPassword = () => setShowNewPassword((show) => !show);
-  const handleClickShowConfirmPassword= () => setShowConfirmPassword((show) => !show);
+  const handleClickShowCurrentPassword = () => setShowCurrentPassword((show) => !show)
+  const handleClickShowNewPassword = () => setShowNewPassword((show) => !show)
+  const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show)
 
-
-  const [updateUser] = useUpdateUserMutation()
+  const [updateUser, { isLoading }] = useUpdateUserMutation()
 
   const handleChangeNewEmail = (e) => setNewEmail(e.target.value)
   const handleChangeConfirmNewEmail = (e) => setConfirmNewEmail(e.target.value)
@@ -34,15 +34,53 @@ const AccountDetails = ({ data }) => {
     event.preventDefault();
   }
 
-  const updateEmail = () => {
+  const updateEmail = async () => {
+    if (!newEmail?.length || !confirmNewEmail?.length) {
+      setEmailErrorMsg('Email and Confirm Email are required!')
+      return
+    }
     if (newEmail !== confirmNewEmail) {
       setEmailErrorMsg('Email values do not match!')
+      return
+    }
+    try {
+      const userData = await updateUser({ email: newEmail }).unwrap()
+      clearEditingEmail()
+    } catch (err) {
+      if (!err?.originalStatus && !err?.status) {
+        setEmailErrorMsg('No server response')
+      } else if (err?.originalStatus === 409) {
+        setEmailErrorMsg('Account already exists for email!')
+      } else if (err?.status === 422) {
+        setEmailErrorMsg(`Error: ${err?.data?.error}!`)
+      } else {
+        setEmailErrorMsg('Email change failed')
+      }
     }
   }
 
-  const updatePassword = () => {
+  const updatePassword = async () => {
+    if (!currentPassword?.length || !newPassword?.length || !confirmNewPassword?.length) {
+      setPasswordErrorMsg('Missing required field!')
+      return
+    }
     if (newPassword !== confirmNewPassword) {
       setPasswordErrorMsg('Password values do not match!')
+      return
+    }
+    try {
+      const userData = await updateUser({ password: newPassword, currentPassword }).unwrap()
+      clearEditingPassword()
+    } catch (err) {
+      if (!err?.originalStatus && !err?.status) {
+        setPasswordErrorMsg('No server response')
+      } else if (err?.status === 422) {
+        setPasswordErrorMsg(`Error: ${err?.data?.error}!`)
+      } else if (err?.originalStatus === 401) {
+        setPasswordErrorMsg('Incorrect current password!')
+      } else {
+        setPasswordErrorMsg('Email change failed')
+      }
     }
   }
 
@@ -59,15 +97,18 @@ const AccountDetails = ({ data }) => {
     setNewPassword('')
     setConfirmNewPassword('')
     setPasswordErrorMsg('')
+    setShowCurrentPassword(false)
+    setShowNewPassword(false)
+    setShowConfirmPassword(false)
   }
 
   return (
     <div className='account-details-wrapper'>
       <div className='account-detail'>
         <div className='account-detail-inner'>
+          <p className='label'>Email</p>
           {!editingEmail ?
             <>
-              <p className='label'>Email</p>
               <p className='value'>{data?.email}</p>
             </>
             :
@@ -89,7 +130,14 @@ const AccountDetails = ({ data }) => {
                   onChange={handleChangeConfirmNewEmail}
                   size='small'
                 />
-                {emailErrorMsg && <p>{emailErrorMsg}</p>}
+                {emailErrorMsg && !isLoading &&
+                  <div className='error-message-wrapper'>
+                    <FiAlertCircle className='error-icon' />
+                    <span className='error-message'>
+                      {emailErrorMsg}
+                    </span>
+                  </div>
+                }
               </div>
               <div className='confirm-buttons-wrapper'>
                 <button className='cancel-btn' onClick={clearEditingEmail}>Cancel</button>
@@ -104,9 +152,9 @@ const AccountDetails = ({ data }) => {
       </div>
       <div className='account-detail'>
         <div className='account-detail-inner'>
+        <p className='label'>Password</p>
           {!editingPassword ?
             <>
-              <p className='label'>Password</p>
               <p className='value'>**********</p>
             </>
             :
@@ -169,7 +217,14 @@ const AccountDetails = ({ data }) => {
                   onChange={handleChangeConfirmNewPassword}
                   size='small'
                 />
-                {passwordErrorMsg && <p>{passwordErrorMsg}</p>}
+                {passwordErrorMsg && !isLoading &&
+                  <div className='error-message-wrapper'>
+                    <FiAlertCircle className='error-icon' />
+                    <span className='error-message'>
+                      {passwordErrorMsg}
+                    </span>
+                  </div>
+                }
               </div>
               <div className='confirm-buttons-wrapper'>
                 <button

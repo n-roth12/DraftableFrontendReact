@@ -1,4 +1,5 @@
 import './AccountPage.scss'
+import { useState } from 'react'
 import Nav from '../../../components/Nav/Nav'
 import AccountDetails from '../AccountDetails/AccountDetails'
 import { useGetUserQuery } from '../accountSlice'
@@ -7,8 +8,10 @@ import { useDispatch } from 'react-redux'
 import { logOut } from '../../auth/authSlice'
 import { useNavigate } from 'react-router-dom'
 import { FiLogOut } from 'react-icons/fi'
+import DeleteAccountDialog from '../../../components/Dialogs/DeleteAccountDialog/DeleteAccountDialog'
 
 const AccountPage = () => {
+  const [showDeleteAccountDialog, setShowDeleteAccountDialog] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [logout] = useLogoutMutation()
@@ -43,6 +46,9 @@ const AccountPage = () => {
   return (
     <div className="account-page">
       <Nav />
+      <DeleteAccountDialog  
+        open={showDeleteAccountDialog} 
+        onClose={() => setShowDeleteAccountDialog(false)} />
       <main>
         <div className='title-wrapper'>
           <h1>Account</h1>
@@ -52,7 +58,7 @@ const AccountPage = () => {
         </div>
         {content}
         <div className='delete-account-wrapper'>
-          <button className='delete-account-btn'>Delete Account</button>
+          <button className='delete-account-btn' onClick={() => setShowDeleteAccountDialog(true)}>Delete Account</button>
         </div>
       </main>
     </div>

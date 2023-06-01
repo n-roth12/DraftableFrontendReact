@@ -1,0 +1,72 @@
+.dialog {
+    .dialog-title {
+        border-bottom: 1px solid var(--lightgrey);
+        padding: 14px;
+    }
+    h2 {
+        font-size: 13pt;
+        font-weight: 600;
+    }
+    .description {
+        margin-top: 5px;
+        margin-bottom: 15px;
+    }
+    .dialog-input {
+        padding-bottom: 14px;
+        margin-bottom: 5px;
+
+        label {
+            display: block;
+            font-size: 11pt;
+            font-weight: 600;
+            color: var(--dark-grey);
+            margin-bottom: 3px;
+        }
+        .dialog-input-select, .dialog-input-text {
+            width: 100%;
+        }
+    }
+    .dialog-actions {
+        border-top: 1px solid var(--lightgrey);
+        padding: 14px;
+    }
+    .submit-btn, .cancel-btn, .delete-btn {
+        cursor: pointer;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        font-weight: 600;
+    }
+    .submit-btn {
+        background-color: var(--submit-btn-light-1);
+        color: white;
+    }
+    .submit-btn:hover {
+        background-color: var(--submit-btn-hover-light-1);
+    }
+    .cancel-btn {
+        background-color: var(--lightgrey);
+    }
+    .delete-btn {
+        background-color: red;
+        color: white;
+    }
+    .delete-btn:hover {
+        background-color: var(--dark-red);
+    }
+    .error-message-wrapper {
+        display: flex;
+        align-items: center;
+        color: red;
+        font-size: 10pt;
+        padding-left: 0.5em;
+        margin-bottom: 0.5em;
+        
+        .error-icon {
+            margin-right: 6px;
+        }
+    }
+}
+.MuiDialog-paperWidthMd {
+    width: 400px;
+}

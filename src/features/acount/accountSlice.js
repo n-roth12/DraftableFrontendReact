@@ -14,11 +14,20 @@ export const accountApiSlice = apiSlice.injectEndpoints({
                 body
             }),
             invalidatesTags: ['User']
+        }),
+        deleteUser: builder.mutation({
+            query: (password) => ({
+                url: '/user',
+                method: 'DELETE',
+                body: password
+            }),
+            invalidatesTags: ['User']
         })
     })
 })
 
 export const {
     useGetUserQuery,
-    useUpdateUserMutation
+    useUpdateUserMutation,
+    useDeleteUserMutation
 } = accountApiSlice
