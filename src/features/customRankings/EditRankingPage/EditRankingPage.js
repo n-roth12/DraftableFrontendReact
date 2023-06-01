@@ -19,6 +19,7 @@ const EditRankingPage = () => {
   const [hasChanges, setHasChanges] = useState(false)
   const [showAddTier, setShowAddTier] = useState(false)
   const [maxTierIndex, setMaxTierIndex] = useState()
+  const [editingIndex, setEditingIndex] = useState()
 
   const {
     data: customRanking,
@@ -199,6 +200,7 @@ const EditRankingPage = () => {
                               maxTierIndex={maxTierIndex}
                               insertTier={insertTier}
                               showAddTier={showAddTier}
+                              setEditingIndex={setEditingIndex}
                             />
                         )}
                       </Draggable>

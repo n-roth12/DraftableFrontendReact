@@ -38,6 +38,7 @@
         background-color: var(--text-color-2);
         position: absolute;
         z-index: 3;
+        box-shadow: 0 10px 20px -10px var(--grey);
     }
 
     .hidden {
@@ -79,4 +80,8 @@
         align-items: center;
         text-decoration: none;
     }
+}
+
+.mobile-nav.shadow {
+    box-shadow: 0 10px 20px -10px var(--grey);
 }

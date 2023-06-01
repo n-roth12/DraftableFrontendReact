@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import NavInfo from '../NavInfo/NavInfo'
 import { FaAngleRight, FaUserAlt } from 'react-icons/fa'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const DefaultNav = () => {
   const navigate = useNavigate()
@@ -14,6 +14,7 @@ const DefaultNav = () => {
   const token = useSelector(selectCurrentToken)
   const email = useSelector(selectCurrentUser)
   const [logout] = useLogoutMutation()
+  const [atTop, setAtTop] = useState(true)
   const [showProfileDropdown, setShowProfileDropdown] = useState(false)
 
   const handleLogout = async () => {
@@ -26,8 +27,10 @@ const DefaultNav = () => {
     }
   }
 
+  window.addEventListener("scroll", () => {window.pageYOffset < 10 ? setAtTop(true) : setAtTop(false)})
+
   return (
-    <header className='default-nav'>
+    <header className={`default-nav${!atTop ? " shadow" : " no-shadow"}`}>
       <nav>
         <img onClick={() => navigate('/rankings')} src="/draftabl_word_blue.svg" alt="image" />
         {!window.location.pathname.startsWith("/login") && !window.location.pathname.startsWith("/register") &&

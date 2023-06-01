@@ -4,7 +4,7 @@ import { AiOutlineMinusCircle } from 'react-icons/ai'
 import { FaAngleDoubleLeft } from 'react-icons/fa'
 import { useEffect } from 'react'
 
-const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete, maxTierIndex }) => {
+const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete, maxTierIndex, setEditingIndex }) => {
 
   const nameSplit = (name) => {
     const names = name.split(/ (.*)/s)
@@ -29,7 +29,7 @@ const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete,
           onClick={() => onDelete(index)}
         />
       </div>
-      <div className='rank-wrapper'>
+      <div className='rank-wrapper' onDoubleClick={() => setEditingIndex(index)}>
         {player._rank}
       </div>
       {nameSplit(player.name)}

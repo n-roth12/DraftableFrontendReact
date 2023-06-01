@@ -17,6 +17,7 @@ const MobileNav = () => {
   const [menuClass, setMenuClass] = useState("menu hidden")
   const [isMenuClicked, setIsMenuClicked] = useState(false)
   const [logout] = useLogoutMutation()
+  const [atTop, setAtTop] = useState(true)
 
   const updateMenu = () => {
     if (!isMenuClicked) {
@@ -39,8 +40,10 @@ const MobileNav = () => {
     }
   }
 
+  window.addEventListener("scroll", () => {window.pageYOffset < 10 ? setAtTop(true) : setAtTop(false)})
+
   return (
-    <header className='mobile-nav'>
+    <header className={`mobile-nav${!atTop ? " shadow" : " no-shadow"}`}>
       <nav>
         <img onClick={() => navigate('/')} src="/draftabl_word_blue.svg" alt="image" />
         <div className='burger-menu' onClick={updateMenu}>
