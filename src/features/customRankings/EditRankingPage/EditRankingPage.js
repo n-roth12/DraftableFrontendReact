@@ -1,5 +1,6 @@
 import './EditRankingPage.scss'
 import Nav from '../../../components/Nav/Nav'
+import Footer from "../../../components/Footer/Footer"
 import { useParams } from 'react-router-dom'
 import { useGetCustomRankingByIdQuery, useGetCustomRankingById2Query } from '../customRankingsApiSlice'
 import { FaEdit } from 'react-icons/fa'
@@ -10,6 +11,7 @@ import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { StrictModeDroppable as Droppable } from '../../helpers/StrictModeDroppable'
 import Tier from '../Tier/Tier'
 import Draftable from '../Draftable/Draftable'
+import Helmet from "react-helmet"
 
 const EditRankingPage = () => {
   const { rankingId } = useParams()
@@ -60,6 +62,21 @@ const EditRankingPage = () => {
   useEffect(() => {
     setNewTitle(customRanking?.title && customRanking.title)
   }, [customRanking])
+
+  const handleEditRank = (oldIndex, newIndex) => {
+    const playersCopy = [...players]
+    const [reorderedItem] = playersCopy.splice(oldIndex, 1)
+    playersCopy.splice(newIndex, 0, reorderedItem)
+    setPlayers(playersCopy)
+    if (autoSave) {
+      updateCustomRanking({
+        rankings: playersCopy,
+        id: customRanking._id
+      })
+    } else {
+      setHasChanges(true)
+    }
+  }
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return
@@ -193,6 +210,7 @@ const EditRankingPage = () => {
                             />
                             :
                             <Draftable
+                              handleEditRank={handleEditRank}
                               provided={provided}
                               index={index}
                               player={player}
@@ -201,6 +219,7 @@ const EditRankingPage = () => {
                               insertTier={insertTier}
                               showAddTier={showAddTier}
                               setEditingIndex={setEditingIndex}
+                              editingIndex={editingIndex}
                             />
                         )}
                       </Draggable>
@@ -253,6 +272,10 @@ const EditRankingPage = () => {
 
   return (
     <div className='edit-ranking-page'>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Edit Custom Ranking | Draftabl</title>
+      </Helmet>
       <Nav />
       <main>
         <div className='title-wrapper'>
@@ -322,6 +345,7 @@ const EditRankingPage = () => {
           {content}
         </div>
       </main>
+      <Footer />
     </div>
   )
 }

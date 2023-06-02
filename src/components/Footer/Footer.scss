@@ -1,3 +1,30 @@
 footer {
-    
+    background-color: var(--lightgrey);
+    margin-top: 20px;
+
+    .footer-inner {
+        display: flex;
+        padding: 30px 30px 50px 30px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .footer-logo {
+        width: 150px;
+        cursor: pointer;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .footer-link {
+        font-size: 11pt;
+        margin: 5px;
+    }
 }

@@ -1,0 +1,15 @@
+.contact-form {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: var(--box-shadow-1);
+    border-radius: 4px;
+    padding: 10px;
+    background-color: white;
+
+
+    .input {
+        margin: 10px;
+    }
+}

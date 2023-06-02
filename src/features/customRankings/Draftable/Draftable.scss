@@ -46,6 +46,13 @@
     .rank-wrapper {
         flex: 1;
         justify-content: flex-start;
+
+        .rank-input {
+            width: 50%;
+        }
+        .rank-input.unselected {
+            border: none;
+        }
     }
 
     .bye-wrapper {

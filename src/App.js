@@ -9,6 +9,7 @@ import RequireAuth from './features/auth/RequireAuth'
 import Layout from './components/Layout'
 import PersistLogin from './features/auth/PersistLogin'
 import AccountPage from './features/acount/AccountPage/AccountPage'
+import ContactPage from './features/contact/ContactPage/ContactPage'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
             <Route path="rankings" element={<RankingsPage />} />
+            <Route path="contact" element={<ContactPage />} />
 
             <Route element={<RequireAuth />}>
               <Route path="custom">

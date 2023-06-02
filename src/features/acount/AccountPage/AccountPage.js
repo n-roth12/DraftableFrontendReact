@@ -9,6 +9,8 @@ import { logOut } from '../../auth/authSlice'
 import { useNavigate } from 'react-router-dom'
 import { FiLogOut } from 'react-icons/fi'
 import DeleteAccountDialog from '../../../components/Dialogs/DeleteAccountDialog/DeleteAccountDialog'
+import Helmet from "react-helmet"
+import Footer from '../../../components/Footer/Footer'
 
 const AccountPage = () => {
   const [showDeleteAccountDialog, setShowDeleteAccountDialog] = useState(false)
@@ -45,9 +47,13 @@ const AccountPage = () => {
 
   return (
     <div className="account-page">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Account | Draftabl</title>
+      </Helmet>
       <Nav />
-      <DeleteAccountDialog  
-        open={showDeleteAccountDialog} 
+      <DeleteAccountDialog
+        open={showDeleteAccountDialog}
         onClose={() => setShowDeleteAccountDialog(false)} />
       <main>
         <div className='title-wrapper'>
@@ -61,6 +67,7 @@ const AccountPage = () => {
           <button className='delete-account-btn' onClick={() => setShowDeleteAccountDialog(true)}>Delete Account</button>
         </div>
       </main>
+      <Footer />
     </div>
   )
 }

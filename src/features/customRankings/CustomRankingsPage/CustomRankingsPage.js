@@ -1,14 +1,17 @@
 import './CustomRankingsPage.scss'
+import '../../../components/EditButton/EditButton.scss'
 import Nav from "../../../components/Nav/Nav"
+import Footer from "../../../components/Footer/Footer"
 import CustomRankingsList from "../CustomRankingsList/CustomRankingsList"
-import Search from "../../../components/Search/Search"
-import EditButton from '../../../components/EditButton/EditButton'
 import NewRankingsDialog from '../../../components/Dialogs/NewRankingsDialog/NewRankingsDialog'
-import { useGetUserCustomRankingsQuery, 
-  useCreateNewCustomRankingsMutation } from '../customRankingsApiSlice'
+import {
+  useGetUserCustomRankingsQuery,
+  useCreateNewCustomRankingsMutation
+} from '../customRankingsApiSlice'
 import { useState } from 'react'
 import { useGetCurrentRankingTemplatesQuery } from '../../rankings/rankingsApiSlice'
 import { FaAngleRight } from 'react-icons/fa'
+import Helmet from "react-helmet"
 
 const CustomRankingsPage = () => {
   const [showNewRankingsDialog, setShowRankingsDialog] = useState(false)
@@ -62,18 +65,23 @@ const CustomRankingsPage = () => {
 
   return (
     <div className="custom-rankings-page">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Custom Fantasy Rankings | Draftabl</title>
+      </Helmet>
       <Nav />
       {templatesContent}
       <main>
         <h1>Custom Rankings</h1>
         <p className='description'>Create and customize your own tiered draft rankings.</p>
         <div className='rankings-options'>
-          <button 
+          <button
             className='edit-button'
             onClick={() => setShowRankingsDialog(true)}>Create Ranking <FaAngleRight /></button>
         </div>
         {rankingsContent}
       </main>
+      <Footer />
     </div>
   )
 }

@@ -2,9 +2,18 @@ import './Draftable.scss'
 import { MdDragIndicator } from 'react-icons/md'
 import { AiOutlineMinusCircle } from 'react-icons/ai'
 import { FaAngleDoubleLeft } from 'react-icons/fa'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete, maxTierIndex, setEditingIndex }) => {
+const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete, maxTierIndex, handleEditRank }) => {
+
+  const [editingRank, setEditingRank] = useState(false)
+  const [rank, setRank] = useState(player._rank)
+
+  const handleChangeRank = (e) => setRank(e.target.value) 
+
+  useEffect(() => {
+    setRank(player._rank)
+  }, [index])
 
   const nameSplit = (name) => {
     const names = name.split(/ (.*)/s)
@@ -14,6 +23,18 @@ const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete,
       </div>
     )
   }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleEditRank(index, rank - 1)
+    }
+  }
+
+  const cancelEditRank = () => {
+    setEditingRank(false)
+    setRank(player._rank)
+  }
+
   useEffect(() => {
     nameSplit(player.name)
   }, [])
@@ -29,8 +50,14 @@ const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete,
           onClick={() => onDelete(index)}
         />
       </div>
-      <div className='rank-wrapper' onDoubleClick={() => setEditingIndex(index)}>
-        {player._rank}
+      <div className='rank-wrapper'>
+        <input 
+          onBlur={cancelEditRank} 
+          onFocus={() => setEditingRank(true)}
+          onChange={handleChangeRank}
+          onKeyDown={handleKeyDown}
+          className={`rank-input${editingRank ? " selected" : " unselected"}`} 
+          value={rank} />
       </div>
       {nameSplit(player.name)}
       <div className='position-wrapper'>

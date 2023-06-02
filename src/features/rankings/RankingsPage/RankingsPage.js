@@ -1,22 +1,18 @@
 import './RankingsPage.scss'
 import Nav from "../../../components/Nav/Nav"
+import Footer from '../../../components/Footer/Footer'
 import Rankings from "../Rankings/Rankings"
-import PositionFilter from "../../../components/PositionFilter/PositionFilter"
 import SelectFilter from "../../../components/SelectFilter/SelectFilter"
-import Search from '../../../components/Search/Search'
-import EditButton from '../../../components/EditButton/EditButton'
-import { useGetCurrentRankingQuery } from '../rankingsApiSlice'
 import { useNavigate } from 'react-router-dom'
-import NewRankingsDialog from '../../../components/Dialogs/NewRankingsDialog/NewRankingsDialog'
 import { useGetCurrentRankingTemplatesQuery } from '../rankingsApiSlice'
 import { useGetRankingByIdQuery } from '../rankingsApiSlice'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { useCreateNewCustomRankingsMutation } from '../../customRankings/customRankingsApiSlice'
 import { FaAngleRight } from 'react-icons/fa'
 import { selectCurrentToken } from '../../auth/authSlice'
+import Helmet from 'react-helmet'
 
 const RankingsPage = () => {
   const [selectedTemplate, setSelectedTemplate] = useState()
@@ -72,6 +68,10 @@ const RankingsPage = () => {
 
   return (
     <div className="rankings-page">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>NFL Fantasy Rankings | Draftabl</title>
+      </Helmet>
       <Nav />
       <main>
         <h1>2023 NFL Fantasy Draft Rankings</h1>
@@ -95,6 +95,7 @@ const RankingsPage = () => {
         </div>
         {content}
       </main>
+      <Footer />
     </div>
   )
 }
