@@ -10,6 +10,7 @@ import Layout from './components/Layout'
 import PersistLogin from './features/auth/PersistLogin'
 import AccountPage from './features/acount/AccountPage/AccountPage'
 import ContactPage from './features/contact/ContactPage/ContactPage'
+import FourOFourPage from './components/FourOFourPage/FourOFourPage'
 import { ScrollToTop } from './ScrollToTop'
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
             </Route>
 
           </Route>
+          <Route path="*" element={<FourOFourPage />} />
         </Route>
       </Routes>
     </div>

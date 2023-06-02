@@ -1,0 +1,54 @@
+.four-o-four-page {
+
+    .four-o-four-page-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 10vh;
+    }
+
+    h1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: fit-content;
+        font-size: 50pt;
+    }
+
+    .description-wrapper {
+        margin-top: 10px;
+    }
+
+    .rankings-link-wrapper {
+        margin-top: 40px;
+    }
+
+    .rankings-link {
+        color: white;
+        background-color: var(--btn-blue-1);
+        text-decoration: none;
+        padding: 12px;
+        border-collapse: none;
+        border-radius: 4px;
+        font-weight: 600;
+    }
+
+    .rankings-link:hover {
+        background-color: var(--btn-blue-hover-1);
+    }
+
+    @media (min-width: 500px) {
+        h1 {
+          font-size: 120pt;    
+        }
+        h2 {
+            font-size: 20pt;
+        }
+        .description-wrapper {
+            font-size: 14pt;
+        }
+        .rankings-link {
+            font-size: 14pt;
+        }
+      }
+}
