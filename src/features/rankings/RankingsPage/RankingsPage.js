@@ -12,12 +12,16 @@ import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { useCreateNewCustomRankingsMutation } from '../../customRankings/customRankingsApiSlice'
 import { FaAngleRight } from 'react-icons/fa'
 import { selectCurrentToken } from '../../auth/authSlice'
+import PositionFilter from '../../../components/PositionFilter/PositionFilter'
 import Helmet from 'react-helmet'
 
 const RankingsPage = () => {
-  const [selectedTemplate, setSelectedTemplate] = useState()
   const token = useSelector(selectCurrentToken)
+  const [selectedTemplate, setSelectedTemplate] = useState()
+  const [positions, setPositions] = useState([])
+  const [selectedPosition, setSelectedPosition] = useState("ALL")
   const navigate = useNavigate()
+  const [createNewCustomRankings] = useCreateNewCustomRankingsMutation()
 
   const {
     data: rankingsTemplates,
@@ -27,10 +31,6 @@ const RankingsPage = () => {
     error: templatesError
   } = useGetCurrentRankingTemplatesQuery()
 
-  useEffect(() => {
-    setSelectedTemplate(rankingsTemplates && rankingsTemplates.length > 0 && rankingsTemplates[0]._id)
-  }, [rankingsTemplates])
-
   const {
     data: rankings,
     isLoading,
@@ -39,17 +39,32 @@ const RankingsPage = () => {
     error
   } = useGetRankingByIdQuery(selectedTemplate ? selectedTemplate : skipToken)
 
-  const [createNewCustomRankings] = useCreateNewCustomRankingsMutation()
+  useEffect(() => {
+    setSelectedTemplate(rankingsTemplates && rankingsTemplates.length > 0 && rankingsTemplates[0]._id)
+  }, [rankingsTemplates])
+
+  useEffect(() => {
+    setPositions(Array.from(getPositions(rankings?.rankings)))
+  }, [rankings])
 
   const handleFormatChange = (e) => {
     setSelectedTemplate(e.target.value)
+  }
+
+  const filteredPlayers = (players) => {
+    if (selectedPosition === "ALL") {
+      return players
+    }
+    return players.filter(player =>
+      player?.position === selectedPosition
+    )
   }
 
   let content
   if (isLoading) {
     content = <p>"Loading..."</p>
   } else if (isSuccess) {
-    content = <Rankings players={rankings} />
+    content = <Rankings players={filteredPlayers(rankings?.rankings)} />
   } else if (isError) {
     content = <p>{JSON.stringify(error)}</p>
   }
@@ -61,9 +76,19 @@ const RankingsPage = () => {
     createNewCustomRankings({
       title: "Custom Ranking",
       template: selectedTemplate
-    }).unwrap().then(fulfilled => 
+    }).unwrap().then(fulfilled =>
       navigate(`/custom/${fulfilled._id}`))
       .catch(rejected => navigate('/login'))
+  }
+
+  const getPositions = (players) => {
+    let positions = new Set()
+    players?.forEach(player => {
+      if (!positions.has(player?.position)) {
+        positions.add(player?.position)
+      }
+    })
+    return positions
   }
 
   return (
@@ -77,21 +102,25 @@ const RankingsPage = () => {
         <h1>2023 NFL Fantasy Draft Rankings</h1>
         <p className='description'>Select Customize to edit these rankings.</p>
         <div className="options-wrapper">
-          <div className='filters-wrapper'>
-            {rankingsTemplates && rankingsTemplates.length > 0 &&
-              <SelectFilter
-                templates={rankingsTemplates}
-                defaultTemplate={rankingsTemplates[0]._id}
-                handleChange={handleFormatChange}
-                selectedTemplate={selectedTemplate}
-              />
-            }
+          {rankingsTemplates && rankingsTemplates.length > 0 &&
+            <SelectFilter
+              templates={rankingsTemplates}
+              defaultTemplate={rankingsTemplates[0]._id}
+              handleChange={handleFormatChange}
+              selectedTemplate={selectedTemplate}
+            />
+          }
+          <div className='options-row'>
+            <PositionFilter 
+              positions={positions} 
+              selectedPos={selectedPosition} 
+              onChange={setSelectedPosition} />
+            <button
+              className='edit-button'
+              onClick={customizeRanking}>
+              Customize <FaAngleRight />
+            </button>
           </div>
-          <button
-            className='edit-button'
-            onClick={customizeRanking}>
-            Customize <FaAngleRight />
-          </button>
         </div>
         {content}
       </main>

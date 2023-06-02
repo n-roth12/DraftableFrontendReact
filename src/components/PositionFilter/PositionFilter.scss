@@ -6,6 +6,8 @@
         color: var(--dark-grey);
     }
     .position-filter {
+        display: flex;
+        width: 100%;
 
         button {
             background: var(--background-color);
@@ -15,8 +17,11 @@
             border-right: 1px solid var(--lightgrey);
             cursor: pointer;
         }
-        button.active {
+        button:hover {
             background-color: var(--table-header-color);
+        }
+        button.active {
+            background-color: var(--lightgrey);
             color: var(--text-color-1);
         }
         :nth-child(1) {
