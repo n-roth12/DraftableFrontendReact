@@ -11,6 +11,7 @@ import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { StrictModeDroppable as Droppable } from '../../helpers/StrictModeDroppable'
 import Tier from '../Tier/Tier'
 import Draftable from '../Draftable/Draftable'
+import PositionFilter from '../../../components/PositionFilter/PositionFilter'
 import Helmet from "react-helmet"
 
 const EditRankingPage = () => {
@@ -22,6 +23,8 @@ const EditRankingPage = () => {
   const [showAddTier, setShowAddTier] = useState(false)
   const [maxTierIndex, setMaxTierIndex] = useState()
   const [editingIndex, setEditingIndex] = useState()
+  const [positions, setPositions] = useState([])
+  const [selectedPosition, setSelectedPosition] = useState("ALL")
 
   const {
     data: customRanking,
@@ -78,6 +81,15 @@ const EditRankingPage = () => {
     }
   }
 
+  const filterPlayers = (x) => {
+    if (selectedPosition === "ALL") {
+      return x
+    }
+    return x.filter(player =>
+      player?.position === selectedPosition
+    )
+  }
+
   const handleOnDragEnd = (result) => {
     if (!result.destination) return
     if (result.source.index === result.destination.index) return
@@ -128,8 +140,7 @@ const EditRankingPage = () => {
   const insertTier = (index) => {
     const playersCopy = [...players]
     const [reorderedItem] = [{
-      "tier": players.filter(x => x?.tier).length + 2,
-      "position": "ALL"
+      "tier": players.filter(x => x?.tier).length + 2
     }]
     playersCopy.splice(index, 0, reorderedItem)
     setPlayers(playersCopy)
@@ -190,12 +201,12 @@ const EditRankingPage = () => {
               <div className='buttons-wrapper col-label'>
               </div>
             </div>
-            <Tier tier={{ "tier": 1, "position": "ALL" }} />
+            <Tier tier={{ "tier": 1 }} />
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId="players">
                 {(provided) => (
                   <section {...provided.droppableProps} ref={provided.innerRef} >
-                    {addRankings(players).map((player, index) => (
+                    {filterPlayers(addRankings(players)).map((player, index) => (
                       <Draggable
                         key={player?.name || `${player?.position}-${player?.tier?.toString()}`}
                         draggableId={player?.name || `${player?.position}-${player?.tier?.toString()}`}
@@ -270,6 +281,20 @@ const EditRankingPage = () => {
     setHasChanges(false)
   }
 
+  const getPositions = (x) => {
+    let positions = new Set()
+    x?.forEach(player => {
+      if (player?.position && !positions.has(player?.position)) {
+        positions.add(player?.position)
+      }
+    })
+    return positions
+  }
+
+  useEffect(() => {
+    setPositions(Array.from(getPositions(players)))
+  }, [players])
+
   return (
     <div className='edit-ranking-page'>
       <Helmet>
@@ -342,7 +367,10 @@ const EditRankingPage = () => {
         <p className='description'>Drag and drop players and tiers to adjust rankings.</p>
         <p className='description'>You can also click on a players rank and type to adjust their ranking.
         </p>
-
+        <PositionFilter
+          positions={positions}
+          selectedPos={selectedPosition}
+          onChange={setSelectedPosition} />
         <div className='drag-drop-rankings-wrapper'>
           {content}
         </div>

@@ -37,9 +37,9 @@ const Rankings = ({ players }) => {
         </tr>
       </thead>
       <tbody>
-        {players.map(player =>
-          <tr>
-            <td>{player.rank}</td>
+        {players.map((player, index) =>
+          <tr key={index}>
+            <td>{index + 1}</td>
             <td className='name'>{player.name}</td>
             <td>{player.position}</td>
             <td>{player.team}</td>

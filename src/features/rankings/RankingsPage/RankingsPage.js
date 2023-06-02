@@ -51,7 +51,7 @@ const RankingsPage = () => {
     setSelectedTemplate(e.target.value)
   }
 
-  const filteredPlayers = (players) => {
+  const filterPlayers = (players) => {
     if (selectedPosition === "ALL") {
       return players
     }
@@ -64,7 +64,7 @@ const RankingsPage = () => {
   if (isLoading) {
     content = <p>"Loading..."</p>
   } else if (isSuccess) {
-    content = <Rankings players={filteredPlayers(rankings?.rankings)} />
+    content = <Rankings players={filterPlayers(rankings?.rankings)} />
   } else if (isError) {
     content = <p>{JSON.stringify(error)}</p>
   }
@@ -84,7 +84,7 @@ const RankingsPage = () => {
   const getPositions = (players) => {
     let positions = new Set()
     players?.forEach(player => {
-      if (!positions.has(player?.position)) {
+      if (player?.position && !positions.has(player?.position)) {
         positions.add(player?.position)
       }
     })

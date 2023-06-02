@@ -4,7 +4,7 @@ const PositionFilter = ({ positions, onChange, selectedPos }) => {
   return (
     <div className='position-filter-wrapper'>
       <div className="position-filter">
-        {["ALL", ...positions].map(pos =>
+        {positions?.length && ["ALL", ...positions].map(pos =>
           <button
             className={selectedPos === pos ? "active" : ""}
             key={pos}
