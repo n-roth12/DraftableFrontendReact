@@ -7,13 +7,13 @@ import { useEffect, useState } from 'react'
 const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete, maxTierIndex, handleEditRank }) => {
 
   const [editingRank, setEditingRank] = useState(false)
-  const [rank, setRank] = useState(player._rank)
-
-  const handleChangeRank = (e) => setRank(e.target.value) 
+  const [inputRank, setInputRank] = useState(index + 1)
 
   useEffect(() => {
-    setRank(player._rank)
+    setInputRank(index + 1)    
   }, [index])
+
+  const handleChangeRank = (e) => setInputRank(e.target.value) 
 
   const nameSplit = (name) => {
     const names = name.split(/ (.*)/s)
@@ -26,13 +26,14 @@ const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete,
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      handleEditRank(index, rank - 1)
+      handleEditRank(index, inputRank - 1)
     }
+    setInputRank()
   }
 
   const cancelEditRank = () => {
     setEditingRank(false)
-    setRank(player._rank)
+    setInputRank(index + 1)
   }
 
   useEffect(() => {
@@ -57,11 +58,11 @@ const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete,
           onChange={handleChangeRank}
           onKeyDown={handleKeyDown}
           className={`rank-input${editingRank ? " selected" : " unselected"}`} 
-          value={rank} />
+          value={!editingRank ? index + 1 : inputRank} />
       </div>
       {nameSplit(player.name)}
       <div className='position-wrapper'>
-        {player.position}{player._posRank}
+        {player.position}
       </div>
       <div className='team-wrapper'>
         {player.team}

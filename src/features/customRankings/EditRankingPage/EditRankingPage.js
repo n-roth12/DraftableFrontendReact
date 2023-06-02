@@ -67,9 +67,14 @@ const EditRankingPage = () => {
   }, [customRanking])
 
   const handleEditRank = (oldIndex, newIndex) => {
+    if (oldIndex === newIndex) return
+    const player = filterPlayers(players)[oldIndex]
+    const r = filterPlayers(players)[newIndex]
+    const sourceIndex = players.findIndex(x => x._id === player._id)
+    const destIndex = players.findIndex(x => x._id === r._id)
     const playersCopy = [...players]
-    const [reorderedItem] = playersCopy.splice(oldIndex, 1)
-    playersCopy.splice(newIndex, 0, reorderedItem)
+    const [reorderedItem] = playersCopy.splice(sourceIndex, 1)
+    playersCopy.splice(destIndex, 0, reorderedItem)
     setPlayers(playersCopy)
     if (autoSave) {
       updateCustomRanking({
@@ -91,7 +96,6 @@ const EditRankingPage = () => {
   }
 
   const handleOnDragEnd = (result) => {
-    console.log(result.destination.index, result.source.index)
     if (!result.destination) return
     if (result.source.index === result.destination.index) return
     const player = filterPlayers(players)[(result.source.index)]
