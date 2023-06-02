@@ -91,21 +91,25 @@ const EditRankingPage = () => {
   }
 
   const handleOnDragEnd = (result) => {
+    console.log(result.destination.index, result.source.index)
     if (!result.destination) return
     if (result.source.index === result.destination.index) return
-    const player = players[(result.source.index)]
+    const player = filterPlayers(players)[(result.source.index)]
+    const r = filterPlayers(players)[result.destination.index]
+    const sourceIndex = players.findIndex(x => x._id === player._id)
+    const destIndex = players.findIndex(x => x._id === r._id)
     if (player?.tier) {
-      if (result.source.index > result.destination.index) {
-        const temp = players.slice(result.destination.index, result.source.index)
+      if (sourceIndex > destIndex) {
+        const temp = players.slice(destIndex, sourceIndex)
         if (temp.find(x => x?.tier)) return
-      } else if (result.source.index < result.destination.index) {
-        const temp = players.slice(result.source.index + 1, result.destination.index + 1)
+      } else if (sourceIndex < destIndex) {
+        const temp = players.slice(sourceIndex + 1, destIndex + 1)
         if (temp.find(x => x?.tier)) return
       }
     }
     const playersCopy = [...players]
-    const [reorderedItem] = playersCopy.splice(result.source.index, 1)
-    playersCopy.splice(result.destination.index, 0, reorderedItem)
+    const [reorderedItem] = playersCopy.splice(sourceIndex, 1)
+    playersCopy.splice(destIndex, 0, reorderedItem)
     setPlayers(playersCopy)
     if (autoSave) {
       updateCustomRanking({
@@ -155,7 +159,7 @@ const EditRankingPage = () => {
   const addRankings = (playerList) => {
     let playersListCopy = []
     let totalCount = 0
-    let positionsCount = { "QB": 0, "RB": 0, "WR": 0, "TE": 0, "DST": 0 }
+    let positionsCount = { "QB": 0, "RB": 0, "WR": 0, "TE": 0, "DST": 0, "K": 0 }
     playerList.forEach(player => {
       if (!player?.tier) {
         totalCount += 1
@@ -184,7 +188,7 @@ const EditRankingPage = () => {
               <div className='drag-icon-wrapper'>
               </div>
               <div className='rank-wrapper col-label'>
-                RANK
+                OVR
               </div>
               <div className='name-wrapper col-label'>
                 NAME
