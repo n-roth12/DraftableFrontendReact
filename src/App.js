@@ -10,10 +10,12 @@ import Layout from './components/Layout'
 import PersistLogin from './features/auth/PersistLogin'
 import AccountPage from './features/acount/AccountPage/AccountPage'
 import ContactPage from './features/contact/ContactPage/ContactPage'
+import { ScrollToTop } from './ScrollToTop'
 
 function App() {
   return (
     <div className="App App-light">
+      <ScrollToTop />
       <Routes>
         <Route element={<PersistLogin />}>
 
