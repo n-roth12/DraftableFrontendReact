@@ -14,6 +14,7 @@ import { FaAngleRight } from 'react-icons/fa'
 import { selectCurrentToken } from '../../auth/authSlice'
 import PositionFilter from '../../../components/PositionFilter/PositionFilter'
 import Helmet from 'react-helmet'
+import LoadingBlock from '../../../components/Loading/LoadingBlock/LoadingBlock'
 
 const RankingsPage = () => {
   const token = useSelector(selectCurrentToken)
@@ -62,7 +63,7 @@ const RankingsPage = () => {
 
   let content
   if (isLoading) {
-    content = <p>"Loading..."</p>
+    content = <LoadingBlock />
   } else if (isSuccess) {
     content = <Rankings players={filterPlayers(rankings?.rankings)} />
   } else if (isError) {

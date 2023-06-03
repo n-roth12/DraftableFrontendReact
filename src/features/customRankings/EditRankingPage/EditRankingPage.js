@@ -13,6 +13,7 @@ import Tier from '../Tier/Tier'
 import Draftable from '../Draftable/Draftable'
 import PositionFilter from '../../../components/PositionFilter/PositionFilter'
 import Helmet from "react-helmet"
+import LoadingBlock from '../../../components/Loading/LoadingBlock/LoadingBlock'
 
 const EditRankingPage = () => {
   const { rankingId } = useParams()
@@ -196,7 +197,7 @@ const EditRankingPage = () => {
 
   let content
   if (isRankingLoading) {
-    content = <p>"Loading..."</p>
+    content = <LoadingBlock />
   } else if (isRankingSuccess) {
     content =
       <div className='drag-drop-rankings'>

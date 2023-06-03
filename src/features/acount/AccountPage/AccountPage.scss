@@ -15,8 +15,12 @@
         border: none;
         border-radius: 0.4rem;
         cursor: pointer;
+        color: var(--link-color-1);
         font-weight: 600;
         font-size: 0.9rem;
+    }
+    .logout-btn:hover {
+        color: var(--link-color-hover-1)
     }
     
     .delete-account-wrapper {
@@ -31,14 +35,15 @@
         padding: 0.7rem;
         font-weight: 600;
         font-size: 0.9rem;
-        color: red;
-        border: 1px solid red;
+        color: var(--red-1);
+        border: none;
         border-radius: 0.4rem;
-        background-color: white;
+        background-color: var(--lightgrey);
         cursor: pointer;
     }
 
     .delete-account-btn:hover {
-        background-color: var(--lightgrey);
+        color: var(--link-color-hover-1);
+
     }
 }

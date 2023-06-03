@@ -3,11 +3,12 @@ import { useEffect, useRef, useState } from "react"
 import { useRefreshMutation } from "./authApiSlice"
 import { useSelector } from "react-redux"
 import { selectCurrentToken } from "./authSlice"
+import LoadingScreen from "../../components/Loading/LoadingScreen/LoadingScreen"
 
 const PersistLogin = () => {
-  const location = useLocation()
   const token = useSelector(selectCurrentToken)
   const effectRan = useRef(false)
+  const location = useLocation()
   const [trueSuccess, setTrueSuccess] = useState(false)
 
   const [refresh, {
@@ -39,8 +40,12 @@ const PersistLogin = () => {
   }, [])
 
   let content
-  if (isLoading) { //persist: yes, token: no
-    content = "Loading"
+  if (!token) { //persist: yes, token: no
+    content = <LoadingScreen />
+  } else if (isSuccess && trueSuccess) {
+    content = <Outlet />
+  } else if (token && isUninitialized) {
+    content = <Outlet />
   } else {
     content = <Outlet />
   }

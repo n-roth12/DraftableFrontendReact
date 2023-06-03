@@ -6,7 +6,7 @@ import { useDeleteCustomRankingMutation } from '../customRankingsApiSlice'
 import { useNavigate } from 'react-router-dom'
 import { epochToTimeAgo } from '../../helpers/EpochToTimeAgo'
 
-const RankingsList = ({ rankings }) => {
+const CustomRankingsList = ({ rankings }) => {
   const navigate = useNavigate()
   const [showOptionsDropdown, setShowOptionsDropdown] = useState('')
 
@@ -19,7 +19,7 @@ const RankingsList = ({ rankings }) => {
         <p className='last-update'>LAST UPDATED</p>
       </div>
       {rankings.map(ranking =>
-        <div className='row'>
+        <div key={ranking._id} className='row'>
           <div className='dropdown' 
             onClick={() => setShowOptionsDropdown(ranking._id)} 
             onMouseLeave={() => setShowOptionsDropdown('')}>
@@ -49,4 +49,4 @@ const RankingsList = ({ rankings }) => {
   )
 }
 
-export default RankingsList
+export default CustomRankingsList

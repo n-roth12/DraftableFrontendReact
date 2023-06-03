@@ -3,14 +3,9 @@
   "name": "Draftabl Web App",
   "icons": [
     {
-      "src": "Draftabl_black_outlined.png",
+      "src": "draftabl_logo_blue.png",
       "type": "image/png",
       "sizes": "192x192"
-    },
-    {
-      "src": "Draftabl_white_outlined.png",
-      "type": "image/png",
-      "sizes": "512x512"
     }
   ],
   "start_url": ".",

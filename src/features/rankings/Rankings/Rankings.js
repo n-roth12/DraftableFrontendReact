@@ -30,7 +30,7 @@ const Rankings = ({ players }) => {
       <thead>
         <tr>
           {["Rank", "Name", "Pos", "Team", "Bye"].map(col =>
-            <th onClick={() => toggleSort(col)}
+            <th key={col} onClick={() => toggleSort(col)}
               className={col === "Name" ? "name-header" : ""}>{getSortIcon(col)} {col}
             </th>
           )}

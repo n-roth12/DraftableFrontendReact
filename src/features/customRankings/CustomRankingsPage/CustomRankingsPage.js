@@ -11,6 +11,7 @@ import {
 import { useState } from 'react'
 import { useGetCurrentRankingTemplatesQuery } from '../../rankings/rankingsApiSlice'
 import { FaAngleRight } from 'react-icons/fa'
+import LoadingBlock from '../../../components/Loading/LoadingBlock/LoadingBlock'
 import Helmet from "react-helmet"
 
 const CustomRankingsPage = () => {
@@ -43,7 +44,7 @@ const CustomRankingsPage = () => {
 
   let rankingsContent
   if (isRankingsLoading) {
-    rankingsContent = <p>"Loading..."</p>
+    rankingsContent = <LoadingBlock />
   } else if (isRankingsSuccess) {
     rankingsContent = <CustomRankingsList rankings={customRankings} />
   } else if (isRankingsError) {

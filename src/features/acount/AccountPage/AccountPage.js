@@ -11,6 +11,7 @@ import { FiLogOut } from 'react-icons/fi'
 import DeleteAccountDialog from '../../../components/Dialogs/DeleteAccountDialog/DeleteAccountDialog'
 import Helmet from "react-helmet"
 import Footer from '../../../components/Footer/Footer'
+import LoadingBlock from '../../../components/Loading/LoadingBlock/LoadingBlock'
 
 const AccountPage = () => {
   const [showDeleteAccountDialog, setShowDeleteAccountDialog] = useState(false)
@@ -38,7 +39,7 @@ const AccountPage = () => {
 
   let content
   if (isLoading) {
-    content = <p>Loading...</p>
+    content = <LoadingBlock />
   } else if (isSuccess) {
     content = <AccountDetails data={data} />
   } else if (isError) {
