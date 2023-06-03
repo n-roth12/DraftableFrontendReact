@@ -69,7 +69,9 @@ const EditRankingPage = () => {
 
   useEffect(() => {
     if (!hasRenderedPositions) {
-      setPositions(Array.from(getPositions(players)))
+      const p = Array.from(getPositions(players))
+      if (!p?.length) return
+      setPositions(p)
       setHasRenderedPositions(true)
     }
   }, [players])
@@ -373,8 +375,7 @@ const EditRankingPage = () => {
               onClick={addTier}>Add Tier</button>
           </div>
         </div>
-        <p className='description'>Drag and drop players and tiers to adjust rankings.</p>
-        <p className='description'>You can also click on a players rank and type to adjust their ranking.</p>
+        <p className='description'>Drag and drop players and tiers, or type on their rank and hit enter to adjust rankings.</p>
         <PositionFilter
           positions={positions}
           selectedPos={selectedPosition}

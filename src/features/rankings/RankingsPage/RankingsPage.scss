@@ -2,10 +2,10 @@
     width: 100%;
 
     h1 {
-        margin-bottom: 10px;
+        margin-bottom: 0.8rem;
     }
     .description {
-        margin-bottom: 10px;
+        margin-bottom: 0.8rem;
     }
 
     .options-wrapper {
@@ -18,23 +18,22 @@
             flex-direction: row;
             width: 100%;
             justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .select-filter, .position-filter-wrapper, .edit-button {
+            margin-bottom: 0.5rem;
         }
 
         .search, .position-filter, .edit-button {
             align-self: flex-end;
         }
-        .select-filter {
-            margin-right: 20px;
-        }
+
         .edit-button {
             justify-self: flex-end;
         }
     }
     .rankings-table {
-        margin-top: 20px;
         width: 100%;
-    }
-    .position-filter {
-        margin-top: 10px;
     }
 }

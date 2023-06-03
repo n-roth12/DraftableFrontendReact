@@ -63,20 +63,18 @@ main {
   padding-top: 2vh;
 }
 
+h1 {
+  font-size: 1.8em;
+}
+
 @media (min-width: 500px) {
-  h1 {
-    font-size: 20pt;    
-  }
-  .description {
-    font-size: 11pt;
+  html {
+    font-size: 12pt;
   }
 }
 
 @media (max-width: 499px) {
-  h1 {
-    font-size: 16pt;
-  }
-  .description {
+  html {
     font-size: 10pt;
   }
 }

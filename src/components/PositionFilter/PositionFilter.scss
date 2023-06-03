@@ -1,38 +1,38 @@
 .position-filter-wrapper {
-    label {
-        display: block;
-        font-size: 11pt;
-        font-weight: 600;
-        color: var(--dark-grey);
-    }
     .position-filter {
         display: flex;
         width: 100%;
 
         button {
+            font-size: 0.9rem;
             background: var(--background-color);
-            padding: 11px 20px 11px 20px;
+            padding: 0.5rem 1rem 0.5rem 1rem;
             border-top: 1px solid var(--lightgrey);
             border-bottom: 1px solid var(--lightgrey);
             border-right: 1px solid var(--lightgrey);
             cursor: pointer;
         }
+
         button:hover {
             background-color: var(--table-header-color);
         }
+
         button.active {
             background-color: var(--lightgrey);
             color: var(--text-color-1);
         }
+
         :nth-child(1) {
             border-left: 1px solid var(--lightgrey);
-            border-radius: 4px 0px 0px 4px;
+            border-radius: 0.4rem 0 0 0.4rem;
         }
+
         :nth-child(n + 2) {
             border-left: none;
         }
+
         :last-child {
-            border-radius: 0px 4px 4px 0px;
+            border-radius: 0 0.4rem 0.4rem 0;
         }
     }
 }

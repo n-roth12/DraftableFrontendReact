@@ -4,7 +4,7 @@
         padding: 14px;
     }
     h2 {
-        font-size: 13pt;
+        font-size: 1.2rem;
         font-weight: 600;
     }
     .description {
@@ -12,12 +12,11 @@
         margin-bottom: 15px;
     }
     .dialog-input {
-        padding-bottom: 14px;
-        margin-bottom: 5px;
+        padding-bottom: 1.2rem;
 
         label {
             display: block;
-            font-size: 11pt;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--dark-grey);
             margin-bottom: 3px;
@@ -28,14 +27,15 @@
     }
     .dialog-actions {
         border-top: 1px solid var(--lightgrey);
-        padding: 14px;
+        padding: 1rem;
     }
     .submit-btn, .cancel-btn {
         cursor: pointer;
         border: none;
-        padding: 10px;
+        padding: 0.7rem;
         border-radius: 4px;
         font-weight: 600;
+        font-size: 0.8rem;
     }
     .submit-btn {
         background-color: var(--submit-btn-light-1);
