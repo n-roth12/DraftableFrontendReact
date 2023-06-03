@@ -25,6 +25,7 @@ const EditRankingPage = () => {
   const [editingIndex, setEditingIndex] = useState()
   const [positions, setPositions] = useState([])
   const [selectedPosition, setSelectedPosition] = useState("ALL")
+  const [hasRenderedPositions, setHasRenderedPositions] = useState(false)
 
   const {
     data: customRanking,
@@ -66,12 +67,18 @@ const EditRankingPage = () => {
     setNewTitle(customRanking?.title && customRanking.title)
   }, [customRanking])
 
-  const handleEditRank = (oldIndex, newIndex) => {
-    if (oldIndex === newIndex) return
-    const player = filterPlayers(players)[oldIndex]
+  useEffect(() => {
+    if (!hasRenderedPositions) {
+      setPositions(Array.from(getPositions(players)))
+      setHasRenderedPositions(true)
+    }
+  }, [players])
+
+  const handleEditRank = (playerId, newIndex) => {
     const r = filterPlayers(players)[newIndex]
-    const sourceIndex = players.findIndex(x => x._id === player._id)
+    const sourceIndex = players.findIndex(x => x._id === playerId)
     const destIndex = players.findIndex(x => x._id === r._id)
+    if (sourceIndex === destIndex) return
     const playersCopy = [...players]
     const [reorderedItem] = playersCopy.splice(sourceIndex, 1)
     playersCopy.splice(destIndex, 0, reorderedItem)
@@ -87,28 +94,27 @@ const EditRankingPage = () => {
   }
 
   const filterPlayers = (x) => {
-    if (selectedPosition === "ALL") {
-      return x
-    }
-    return x.filter(player =>
-      player?.position === selectedPosition
+    const res = x.filter(player =>
+      player?.position === selectedPosition || 
+      (selectedPosition === "ALL" && (!player?.tier || player?.position === "ALL"))
     )
+    return res
   }
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return
     if (result.source.index === result.destination.index) return
-    const player = filterPlayers(players)[(result.source.index)]
+    const player = filterPlayers(players)[result.source.index]
     const r = filterPlayers(players)[result.destination.index]
     const sourceIndex = players.findIndex(x => x._id === player._id)
     const destIndex = players.findIndex(x => x._id === r._id)
     if (player?.tier) {
       if (sourceIndex > destIndex) {
         const temp = players.slice(destIndex, sourceIndex)
-        if (temp.find(x => x?.tier)) return
+        if (temp.find(x => { return x?.tier && x?.position === player?.position })) return
       } else if (sourceIndex < destIndex) {
         const temp = players.slice(sourceIndex + 1, destIndex + 1)
-        if (temp.find(x => x?.tier)) return
+        if (temp.find(x => { return x?.tier && x?.position === player?.position })) return
       }
     }
     const playersCopy = [...players]
@@ -145,19 +151,25 @@ const EditRankingPage = () => {
     setHasChanges(true)
   }
 
-  const insertTier = (index) => {
+  const addTier = () => {
+    let lowestTierIndex = -1
+    let tierCount = 1
+    players.forEach((x, index) => {
+      if (x?.tier && ((x?.position === selectedPosition) || (selectedPosition === "ALL" && !x?.position))) {
+        lowestTierIndex = index
+        tierCount += 1
+      }
+    })
     const playersCopy = [...players]
     const [reorderedItem] = [{
-      "tier": players.filter(x => x?.tier).length + 2
+      "tier": tierCount + 1,
+      "position": selectedPosition,
+      "_id": `${selectedPosition}-${tierCount + 1}`
     }]
-    playersCopy.splice(index, 0, reorderedItem)
+    playersCopy.splice(lowestTierIndex + 1, 0, reorderedItem)
     setPlayers(playersCopy)
     setShowAddTier(false)
     setHasChanges(true)
-  }
-
-  const cancelAddTier = () => {
-    setShowAddTier(false)
   }
 
   const addRankings = (playerList) => {
@@ -209,7 +221,7 @@ const EditRankingPage = () => {
               <div className='buttons-wrapper col-label'>
               </div>
             </div>
-            <Tier tier={{ "tier": 1 }} />
+            <Tier tier={{ "tier": 1, "position": selectedPosition !== "ALL" && selectedPosition }} />
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId="players">
                 {(provided) => (
@@ -235,7 +247,6 @@ const EditRankingPage = () => {
                               player={player}
                               onDelete={deleteDraftable}
                               maxTierIndex={maxTierIndex}
-                              insertTier={insertTier}
                               showAddTier={showAddTier}
                               setEditingIndex={setEditingIndex}
                               editingIndex={editingIndex}
@@ -292,16 +303,12 @@ const EditRankingPage = () => {
   const getPositions = (x) => {
     let positions = new Set()
     x?.forEach(player => {
-      if (player?.position && !positions.has(player?.position)) {
+      if (player?.position && !positions.has(player?.position) && player?.position !== "ALL") {
         positions.add(player?.position)
       }
     })
     return positions
   }
-
-  useEffect(() => {
-    setPositions(Array.from(getPositions(players)))
-  }, [players])
 
   return (
     <div className='edit-ranking-page'>
@@ -361,20 +368,13 @@ const EditRankingPage = () => {
             }
           </div>
           <div className='add-tier-wrapper'>
-            {!showAddTier ?
-              <button
-                className='add-tier-btn'
-                onClick={() => setShowAddTier(true)}>Add Tier</button>
-              :
-              <button
-                className='cancel-btn'
-                onClick={cancelAddTier}>Cancel Add Tier</button>
-            }
+            <button
+              className='add-tier-btn'
+              onClick={addTier}>Add Tier</button>
           </div>
         </div>
         <p className='description'>Drag and drop players and tiers to adjust rankings.</p>
-        <p className='description'>You can also click on a players rank and type to adjust their ranking.
-        </p>
+        <p className='description'>You can also click on a players rank and type to adjust their ranking.</p>
         <PositionFilter
           positions={positions}
           selectedPos={selectedPosition}

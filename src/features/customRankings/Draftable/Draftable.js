@@ -1,10 +1,9 @@
 import './Draftable.scss'
 import { MdDragIndicator } from 'react-icons/md'
 import { AiOutlineMinusCircle } from 'react-icons/ai'
-import { FaAngleDoubleLeft } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 
-const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete, maxTierIndex, handleEditRank }) => {
+const Draftable = ({ player, provided, index, onDelete, handleEditRank }) => {
 
   const [editingRank, setEditingRank] = useState(false)
   const [inputRank, setInputRank] = useState(index + 1)
@@ -26,7 +25,11 @@ const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete,
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      handleEditRank(index, inputRank - 1)
+      if (isNaN(inputRank)) {
+        setInputRank()
+        return
+      }
+      handleEditRank(player._id, inputRank - 1)
     }
     setInputRank()
   }
@@ -71,15 +74,9 @@ const Draftable = ({ player, provided, showAddTier, insertTier, index, onDelete,
         {player.bye}
       </div>
       <div className='buttons-wrapper'>
-        {showAddTier && index > maxTierIndex ?
-          <button
-            className='insert-tier-btn'
-            onClick={() => insertTier(index)}><FaAngleDoubleLeft className='insert-icon' /> Insert Tier</button>
-          :
-          <div className="drag-icon-wrapper">
-            <MdDragIndicator className='drag-icon' />
-          </div>
-        }
+        <div className="drag-icon-wrapper">
+          <MdDragIndicator className='drag-icon' />
+        </div>
       </div>
     </div>
   )

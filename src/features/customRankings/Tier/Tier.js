@@ -9,7 +9,7 @@ const Tier = ({ tier, provided, index, onDelete }) => {
       {...provided?.draggableProps}
       {...provided?.dragHandleProps}
       ref={provided?.innerRef}>
-              <div className='buttons-wrapper'>
+      <div className='buttons-wrapper'>
         {tier.tier !== 1 &&
           <AiOutlineMinusCircle
             className='delete-icon'
@@ -18,7 +18,7 @@ const Tier = ({ tier, provided, index, onDelete }) => {
         }
       </div>
       <div className='rank-wrapper'>
-        TIER {tier.tier}
+        {tier?.position !== "ALL" && tier.position} TIER {tier.tier}
       </div>
       <div className='drag-icon-wrapper'>
         {tier.tier !== 1 &&
