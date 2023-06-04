@@ -20,6 +20,7 @@ const PersistLogin = () => {
   }] = useRefreshMutation()
 
   useEffect(() => {
+    console.log(process.env.NODE_ENV, effectRan.current)
     if (effectRan.current === true || process.env.NODE_ENV !== 'development') { // React 18 Strict Mode
 
       const verifyRefreshToken = async () => {
@@ -40,13 +41,21 @@ const PersistLogin = () => {
   }, [])
 
   let content
-  if (!token) { //persist: yes, token: no
+  console.log("isSuccess", isSuccess)
+  console.log("token", token)
+  console.log("trueSucces", trueSuccess)
+  console.log("isuninit", isUninitialized)
+  console.log("isLoading", isLoading)
+  console.log("isError", isError)
+  if (token) { //persist: yes, token: no
+    content = <Outlet />
+  } else if (isLoading) {
     content = <LoadingScreen />
   } else if (isSuccess && trueSuccess) {
     content = <Outlet />
   } else if (token && isUninitialized) {
     content = <Outlet />
-  } else {
+  } else if (isError) {
     content = <Outlet />
   }
 
