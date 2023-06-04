@@ -59,9 +59,10 @@ const AccountPage = () => {
       <main>
         <div className='title-wrapper'>
           <h1>Account</h1>
-          <button
+          <a
+            href=""
             className='logout-btn'
-            onClick={handleLogout}><FiLogOut /> Logout</button>
+            onClick={handleLogout}><FiLogOut /> Logout</a>
         </div>
         {content}
         <div className='delete-account-wrapper'>
