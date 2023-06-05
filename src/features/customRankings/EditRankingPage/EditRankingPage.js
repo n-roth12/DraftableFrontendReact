@@ -2,8 +2,7 @@ import './EditRankingPage.scss'
 import Nav from '../../../components/Nav/Nav'
 import Footer from "../../../components/Footer/Footer"
 import { useParams } from 'react-router-dom'
-import { useGetCustomRankingByIdQuery, useGetCustomRankingById2Query } from '../customRankingsApiSlice'
-import { FaEdit } from 'react-icons/fa'
+import { useGetCustomRankingByIdQuery } from '../customRankingsApiSlice'
 import { useEffect, useState } from 'react'
 import { useUpdateCustomRankingMutation } from '../customRankingsApiSlice'
 import { Switch } from '@mui/material'
@@ -41,7 +40,7 @@ const EditRankingPage = () => {
   const handleChangeTitle = (e) => setTitle(e.target.value)
 
   useEffect(() => {
-    setTitle(customRanking?.title)
+    setTitle(customRanking?.title || '')
   }, [customRanking])
 
   useEffect(() => {
@@ -67,23 +66,17 @@ const EditRankingPage = () => {
     setMaxTierIndex(maxIndex)
   }, [players])
 
-  const [newTitle, setNewTitle] = useState(customRanking?.title ? customRanking.title : '')
-
-  useEffect(() => {
-    setNewTitle(customRanking?.title && customRanking.title)
-  }, [customRanking])
-
   useEffect(() => {
     if (!hasRenderedPositions) {
-      const p = Array.from(getPositions(players))
-      if (!p?.length) return
-      setPositions(p)
+      const pos = Array.from(getPositions(players))
+      if (!pos?.length) return
+      setPositions(pos)
       setHasRenderedPositions(true)
     }
-  }, [players])
+  }, [players, hasRenderedPositions])
 
   const handleEditRank = (playerId, newIndex) => {
-    const r = filterPlayers(players)[newIndex]
+    const r = filterPlayers(players).filter(x => !x?.tier)[newIndex]
     const sourceIndex = players.findIndex(x => x._id === playerId)
     const destIndex = players.findIndex(x => x._id === r._id)
     if (sourceIndex === destIndex) return
@@ -200,6 +193,43 @@ const EditRankingPage = () => {
     return playersListCopy
   }
 
+  const handleChangeAutosave = () => {
+    setAutoSave(!autoSave)
+  }
+
+  const cancelEdit = () => {
+    setPlayers(customRanking.rankings)
+    setHasChanges(false)
+    setShowAddTier(false)
+  }
+
+  const saveEdit = () => {
+    updateCustomRanking({
+      id: customRanking._id,
+      rankings: players
+    })
+    setHasChanges(false)
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      if (!title.length) {
+        return
+      }
+      updateTitle(title)
+    }
+  }
+
+  const getPositions = (x) => {
+    let positions = new Set()
+    x?.forEach(player => {
+      if (player?.position && !positions.has(player?.position) && player?.position !== "ALL") {
+        positions.add(player?.position)
+      }
+    })
+    return positions
+  }
+
   let content
   if (isRankingLoading) {
     content = <LoadingBlock />
@@ -258,6 +288,7 @@ const EditRankingPage = () => {
                               showAddTier={showAddTier}
                               setEditingIndex={setEditingIndex}
                               editingIndex={editingIndex}
+                              isPositionFiltered={selectedPosition !== "ALL"}
                             />
                         )}
                       </Draggable>
@@ -274,43 +305,6 @@ const EditRankingPage = () => {
       </div>
   } else if (isRankingError) {
     content = <p>{JSON.stringify(rankingError)}</p>
-  }
-
-  const handleChangeAutosave = () => {
-    setAutoSave(!autoSave)
-  }
-
-  const cancelEdit = () => {
-    setPlayers(customRanking.rankings)
-    setHasChanges(false)
-    setShowAddTier(false)
-  }
-
-  const saveEdit = () => {
-    updateCustomRanking({
-      id: customRanking._id,
-      rankings: players
-    })
-    setHasChanges(false)
-  }
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      if (!title.length) {
-        return
-      }
-      updateTitle(title)
-    }
-  }
-
-  const getPositions = (x) => {
-    let positions = new Set()
-    x?.forEach(player => {
-      if (player?.position && !positions.has(player?.position) && player?.position !== "ALL") {
-        positions.add(player?.position)
-      }
-    })
-    return positions
   }
 
   return (

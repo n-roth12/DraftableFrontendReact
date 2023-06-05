@@ -3,13 +3,13 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setCredentials } from '../../features/auth/authSlice'
-import { useLoginMutation } from '../../features/auth/authApiSlice'
+import { useLoginMutation, useGoogleLoginMutation } from '../../features/auth/authApiSlice'
 
 import { FiAlertCircle } from 'react-icons/fi'
 import { Ellipsis } from 'react-awesome-spinners'
 import { TextField, InputAdornment, IconButton } from '@mui/material'
 import { VisibilityOff, Visibility } from '@mui/icons-material'
-import { GoogleLogin } from '@react-oauth/google'
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google'
 
 const LoginForm = () => {
   const errRef = useRef()
@@ -19,8 +19,9 @@ const LoginForm = () => {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [googleLogin, { isLoading }] = useGoogleLoginMutation()
 
-  const [login, { isLoading }] = useLoginMutation()
+  const [login, { isLoadingGoogle }] = useLoginMutation()
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -51,6 +52,25 @@ const LoginForm = () => {
     }
   }
 
+  const handleGoogleLogin = async (credentials) => {
+    try {
+      const { accessToken, email } = await googleLogin(credentials).unwrap()
+      dispatch(setCredentials({ accessToken, email }))
+      setEmail('')
+      setPassword('')
+      navigate('/rankings')
+    } catch (err) {
+      if (!err?.originalStatus && !err?.status) {
+        setErrorMessage('No server response')
+      } else if (err?.originalStatus === 401) {
+        setErrorMessage('Incorrect email or password')
+      } else {
+        setErrorMessage('Login Failed')
+      }
+      errRef.current.focus()
+    }
+  }
+
   const handleChangeEmail = (e) => setEmail(e.target.value)
   const handleChangePassword = (e) => setPassword(e.target.value)
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -59,8 +79,6 @@ const LoginForm = () => {
     event.preventDefault();
   };
 
-
-
   return (
     <form className="auth-form" >
       <div className='form-header'>
@@ -68,8 +86,10 @@ const LoginForm = () => {
       </div>
       <div className='google-auth-wrapper'>
         <GoogleLogin
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          cookiePolicy={'single-host-origin'}
           onSuccess={credentialResponse => {
-            console.log(credentialResponse);
+            handleGoogleLogin(credentialResponse)
           }}
           onError={() => {
             console.log('Login Failed');

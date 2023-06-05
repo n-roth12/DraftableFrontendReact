@@ -3,13 +3,13 @@ import { MdDragIndicator } from 'react-icons/md'
 import { AiOutlineMinusCircle } from 'react-icons/ai'
 import { useEffect, useState } from 'react'
 
-const Draftable = ({ player, provided, index, onDelete, handleEditRank }) => {
+const Draftable = ({ player, provided, index, onDelete, handleEditRank, isPositionFiltered }) => {
 
   const [editingRank, setEditingRank] = useState(false)
-  const [inputRank, setInputRank] = useState(index + 1)
+  const [inputRank, setInputRank] = useState(!isPositionFiltered ? player._rank : player._posRank)
 
   useEffect(() => {
-    setInputRank(index + 1)    
+    setInputRank(!isPositionFiltered ? player._rank : player._posRank)    
   }, [index])
 
   const handleChangeRank = (e) => setInputRank(e.target.value) 
@@ -61,11 +61,11 @@ const Draftable = ({ player, provided, index, onDelete, handleEditRank }) => {
           onChange={handleChangeRank}
           onKeyDown={handleKeyDown}
           className={`rank-input${editingRank ? " selected" : " unselected"}`} 
-          value={!editingRank ? index + 1 : inputRank} />
+          value={!editingRank ? (!isPositionFiltered ? player._rank : player._posRank) : inputRank} />
       </div>
       {nameSplit(player.name)}
       <div className='position-wrapper'>
-        {player.position}
+        {player.position}{!isPositionFiltered ? player._posRank : ""}
       </div>
       <div className='team-wrapper'>
         {player.team}
