@@ -9,6 +9,7 @@ const RegisterPage = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>Sign Up | Draftabl</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
       </Helmet>
       <Nav />
       <div className='register-form-wrapper form-wrapper'>

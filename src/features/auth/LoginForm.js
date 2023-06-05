@@ -62,7 +62,7 @@ const LoginForm = () => {
 
 
   return (
-    <form className="auth-form">
+    <form className="auth-form" >
       <div className='form-header'>
         <h2>Login</h2>
       </div>
