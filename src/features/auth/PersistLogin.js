@@ -40,7 +40,7 @@ const PersistLogin = () => {
   }, [])
 
   let content
-  if (token) { //persist: yes, token: no
+  if (token) {
     content = <Outlet />
   } else if (isLoading) {
     content = <LoadingScreen />
@@ -48,7 +48,7 @@ const PersistLogin = () => {
     content = <Outlet />
   } else if (token && isUninitialized) {
     content = <Outlet />
-  } else if (isError) {
+  } else if (isError || (!isSuccess && trueSuccess)) {
     content = <Outlet />
   }
 

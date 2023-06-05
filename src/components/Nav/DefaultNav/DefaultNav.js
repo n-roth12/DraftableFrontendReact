@@ -13,19 +13,19 @@ const DefaultNav = () => {
   const dispatch = useDispatch()
   const token = useSelector(selectCurrentToken)
   const email = useSelector(selectCurrentUser)
-  const [logout] = useLogoutMutation()
   const [atTop, setAtTop] = useState(true)
   const [showProfileDropdown, setShowProfileDropdown] = useState(false)
 
-  const handleLogout = async () => {
-    try {
-      await logout().unwrap()
-      dispatch(logOut())
-      navigate('/login')
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  const [logout, {
+    isLoading, 
+    isSuccess,
+    isError,
+    error
+  }] = useLogoutMutation()
+
+  useEffect(() => {
+    if (isSuccess) navigate('/login')
+}, [isSuccess, navigate])
 
   window.addEventListener("scroll", () => {window.pageYOffset < 10 ? setAtTop(true) : setAtTop(false)})
 
@@ -50,10 +50,9 @@ const DefaultNav = () => {
                   <Link 
                     className='profile-dropdown-link' 
                     to="/account">Account <FaAngleRight /></Link>
-                  <a 
-                    href="" 
+                  <button 
                     className='profile-dropdown-link' 
-                    onClick={handleLogout}>Logout <FaAngleRight /></a>
+                    onClick={logout}>Logout <FaAngleRight /></button>
                 </div>
               </div>
               :

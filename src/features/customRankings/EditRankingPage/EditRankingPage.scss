@@ -14,19 +14,16 @@
     .title-wrapper {
         display: flex;
         align-items: center;
-
-        h1,
-        input {
-            margin-right: 10px;
+        
+        .title-input-text {
+            font-size: 1.8em;
+            background: none;
+            font-weight: 600;
         }
 
-        .edit-btn {
-            color: var(--btn-blue-1);
-            cursor: pointer;
-        }
-
-        input {
-            font-size: 16pt;
+        .unselected {
+            padding: 2px;
+            border: none;
         }
     }
 

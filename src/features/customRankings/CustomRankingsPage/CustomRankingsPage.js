@@ -69,6 +69,8 @@ const CustomRankingsPage = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>Custom Fantasy Rankings | Draftabl</title>
+        <meta name='description' content="View and edit multiple custom rankings for your upcoming fantasy football 
+        drafts with Draftabl's convenient and free drag-and-drop tiered ranking interface." />
       </Helmet>
       <Nav />
       {templatesContent}

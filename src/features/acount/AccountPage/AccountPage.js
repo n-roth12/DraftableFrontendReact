@@ -1,5 +1,5 @@
 import './AccountPage.scss'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Nav from '../../../components/Nav/Nav'
 import AccountDetails from '../AccountDetails/AccountDetails'
 import { useGetUserQuery } from '../accountSlice'
@@ -17,7 +17,6 @@ const AccountPage = () => {
   const [showDeleteAccountDialog, setShowDeleteAccountDialog] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [logout] = useLogoutMutation()
 
   const {
     data,
@@ -27,15 +26,16 @@ const AccountPage = () => {
     error
   } = useGetUserQuery()
 
-  const handleLogout = async () => {
-    try {
-      await logout().unwrap()
-      dispatch(logOut())
-      navigate('/login')
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  const [logout, {
+    isLoadingLogout, 
+    isSuccessLogout,
+    isErrorLogout,
+    errorLogout
+  }] = useLogoutMutation()
+
+  useEffect(() => {
+    if (isSuccess) navigate('/login')
+}, [isSuccessLogout, navigate])
 
   let content
   if (isLoading) {
@@ -59,10 +59,9 @@ const AccountPage = () => {
       <main>
         <div className='title-wrapper'>
           <h1>Account</h1>
-          <a
-            href=""
+          <button
             className='logout-btn'
-            onClick={handleLogout}><FiLogOut /> Logout</a>
+            onClick={logout}><FiLogOut /> Logout</button>
         </div>
         {content}
         <div className='delete-account-wrapper'>

@@ -97,6 +97,8 @@ const RankingsPage = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>NFL Fantasy Rankings | Draftabl</title>
+        <meta name='description' content="Customize your own FREE fantasy football draft rankings with Draftabl's 
+        easy to use drag-and-drop interface. Create tiers for each position, as well as overall ranking." />
       </Helmet>
       <Nav />
       <main>

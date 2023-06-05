@@ -24,6 +24,7 @@ const EditRankingPage = () => {
   const [showAddTier, setShowAddTier] = useState(false)
   const [maxTierIndex, setMaxTierIndex] = useState()
   const [editingIndex, setEditingIndex] = useState()
+  const [title, setTitle] = useState('')
   const [positions, setPositions] = useState([])
   const [selectedPosition, setSelectedPosition] = useState("ALL")
   const [hasRenderedPositions, setHasRenderedPositions] = useState(false)
@@ -37,18 +38,22 @@ const EditRankingPage = () => {
   } = useGetCustomRankingByIdQuery(rankingId)
 
   const [players, setPlayers] = useState(customRanking?.rankings || [])
+  const handleChangeTitle = (e) => setTitle(e.target.value)
+
+  useEffect(() => {
+    setTitle(customRanking?.title)
+  }, [customRanking])
 
   useEffect(() => {
     setPlayers(customRanking?.rankings)
   }, [customRanking])
 
-  const updateRanking = (title, rankings) => {
+  const updateTitle = (title) => {
     updateCustomRanking({
       title: title,
-      rankings: rankings,
       id: customRanking._id
     })
-    setNewTitle(title)
+    setEditingTitle(false)
   }
 
   useEffect(() => {
@@ -98,7 +103,7 @@ const EditRankingPage = () => {
 
   const filterPlayers = (x) => {
     const res = x.filter(player =>
-      player?.position === selectedPosition || 
+      player?.position === selectedPosition ||
       (selectedPosition === "ALL" && (!player?.tier || player?.position === "ALL"))
     )
     return res
@@ -271,23 +276,9 @@ const EditRankingPage = () => {
     content = <p>{JSON.stringify(rankingError)}</p>
   }
 
-  const saveRanking = () => {
-    if (newTitle) {
-      updateRanking(newTitle, customRanking.rankings)
-    }
-    setEditingTitle(false)
-  }
-
   const handleChangeAutosave = () => {
     setAutoSave(!autoSave)
   }
-
-  const cancelChangeTitle = () => {
-    setNewTitle(customRanking.title)
-    setEditingTitle(false)
-  }
-
-  const handleChangeNewTitle = (e) => setNewTitle(e.target.value)
 
   const cancelEdit = () => {
     setPlayers(customRanking.rankings)
@@ -301,6 +292,15 @@ const EditRankingPage = () => {
       rankings: players
     })
     setHasChanges(false)
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      if (!title.length) {
+        return
+      }
+      updateTitle(title)
+    }
   }
 
   const getPositions = (x) => {
@@ -318,31 +318,20 @@ const EditRankingPage = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>Edit Custom Ranking | Draftabl</title>
+        <meta name='description' content="Edit your custom fantasy rankings for free here. Add tiers and drag-and-drop 
+        players to create your own draft cheatsheet." />
       </Helmet>
       <Nav />
       <main>
         <div className='title-wrapper'>
-          {editingTitle ?
-            <>
-              <input
-                type="text"
-                className='dialog-input-text'
-                onChange={handleChangeNewTitle}
-                value={newTitle}
-              />
-              <button className='cancel-btn' onClick={cancelChangeTitle}>Cancel</button>
-              <button className='submit-btn' onClick={() => saveRanking()}>Save</button>
-            </>
-            :
-            <>
-              <h1>{customRanking?.title}</h1>
-              <span>
-                <FaEdit
-                  className='edit-btn'
-                  onClick={() => setEditingTitle(true)} />
-              </span>
-            </>
-          }
+          <input
+            type="text"
+            onBlur={() => updateTitle(title)}
+            onFocus={() => setEditingTitle(true)}
+            onChange={handleChangeTitle}
+            onKeyDown={handleKeyDown}
+            className={`title-input-text${editingTitle ? " selected" : " unselected"}`}
+            value={!editingTitle ? customRanking?.title : title} />
         </div>
         <div className='updated-wrapper'>
           <p className='last-update'>Last updated {new Date(customRanking?.updatedAt).getMonth() + 1}
