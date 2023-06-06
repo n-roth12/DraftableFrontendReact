@@ -146,99 +146,101 @@ const AccountDetails = ({ data }) => {
             </div>
           }
         </div>
-        {!editingEmail &&
+        {!editingEmail && !data.hasGoogleAuth &&
           <FaEdit className='edit-icon' onClick={() => setEditingEmail(true)} />
         }
       </div>
-      <div className='account-detail'>
-        <div className='account-detail-inner'>
-        <p className='label'>Password</p>
-          {!editingPassword ?
-            <>
-              <p className='value'>**********</p>
-            </>
-            :
-            <div className='account-changes-wrapper'>
-              <div className='account-changes-inner'>
-                <TextField
-                  className='text-input'
-                  type={showCurrentPassword ? 'text' : 'password'}
-                  InputProps={{
-                    endAdornment: <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowCurrentPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showCurrentPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }}
-                  variant='outlined'
-                  label='Current Password'
-                  onChange={handleChangeCurrentPassword}
-                  size='small'
-                />
-                <TextField
-                  className='text-input'
-                  type={showNewPassword ? 'text' : 'password'}
-                  InputProps={{
-                    endAdornment: <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowNewPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showNewPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }}
-                  variant='outlined'
-                  label='New Password'
-                  onChange={handleChangeNewPassword}
-                  size='small'
-                />
-                <TextField
-                  className='text-input'
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  InputProps={{
-                    endAdornment: <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowConfirmPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }}
-                  variant='outlined'
-                  label='Confirm Password'
-                  onChange={handleChangeConfirmNewPassword}
-                  size='small'
-                />
-                {passwordErrorMsg && !isLoading &&
-                  <div className='error-message-wrapper'>
-                    <FiAlertCircle className='error-icon' />
-                    <span className='error-message'>
-                      {passwordErrorMsg}
-                    </span>
-                  </div>
-                }
+      {!data.hasGoogleAuth &&
+        <div className='account-detail'>
+          <div className='account-detail-inner'>
+            <p className='label'>Password</p>
+            {!editingPassword ?
+              <>
+                <p className='value'>**********</p>
+              </>
+              :
+              <div className='account-changes-wrapper'>
+                <div className='account-changes-inner'>
+                  <TextField
+                    className='text-input'
+                    type={showCurrentPassword ? 'text' : 'password'}
+                    InputProps={{
+                      endAdornment: <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowCurrentPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showCurrentPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }}
+                    variant='outlined'
+                    label='Current Password'
+                    onChange={handleChangeCurrentPassword}
+                    size='small'
+                  />
+                  <TextField
+                    className='text-input'
+                    type={showNewPassword ? 'text' : 'password'}
+                    InputProps={{
+                      endAdornment: <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowNewPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }}
+                    variant='outlined'
+                    label='New Password'
+                    onChange={handleChangeNewPassword}
+                    size='small'
+                  />
+                  <TextField
+                    className='text-input'
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    InputProps={{
+                      endAdornment: <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowConfirmPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }}
+                    variant='outlined'
+                    label='Confirm Password'
+                    onChange={handleChangeConfirmNewPassword}
+                    size='small'
+                  />
+                  {passwordErrorMsg && !isLoading &&
+                    <div className='error-message-wrapper'>
+                      <FiAlertCircle className='error-icon' />
+                      <span className='error-message'>
+                        {passwordErrorMsg}
+                      </span>
+                    </div>
+                  }
+                </div>
+                <div className='confirm-buttons-wrapper'>
+                  <button
+                    className='cancel-btn'
+                    onClick={clearEditingPassword}>Cancel</button>
+                  <button className='save-btn' onClick={updatePassword}>Save</button>
+                </div>
               </div>
-              <div className='confirm-buttons-wrapper'>
-                <button
-                  className='cancel-btn'
-                  onClick={clearEditingPassword}>Cancel</button>
-                <button className='save-btn' onClick={updatePassword}>Save</button>
-              </div>
-            </div>
+            }
+          </div>
+          {!editingPassword &&
+            <FaEdit className='edit-icon' onClick={() => setEditingPassword(true)} />
           }
         </div>
-        {!editingPassword &&
-          <FaEdit className='edit-icon' onClick={() => setEditingPassword(true)} />
-        }
-      </div>
+      }
       <div className='account-detail'>
         <div className='account-detail-inner'>
           <p className='label'>Account Created At</p>
