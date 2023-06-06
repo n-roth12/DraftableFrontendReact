@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import { useUpdateCustomRankingMutation } from '../customRankingsApiSlice'
 import { Switch } from '@mui/material'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
-import { StrictModeDroppable as Droppable } from '../../helpers/StrictModeDroppable'
+import { StrictModeDroppable as Droppable } from '../../../utilities/StrictModeDroppable'
 import Tier from '../Tier/Tier'
 import Draftable from '../Draftable/Draftable'
 import PositionFilter from '../../../components/PositionFilter/PositionFilter'
@@ -17,7 +17,7 @@ import LoadingBlock from '../../../components/Loading/LoadingBlock/LoadingBlock'
 const EditRankingPage = () => {
   const { rankingId } = useParams()
   const [editingTitle, setEditingTitle] = useState(false)
-  const [autoSave, setAutoSave] = useState(false)
+  const [autoSave, setAutoSave] = useState(true)
   const [updateCustomRanking] = useUpdateCustomRankingMutation()
   const [hasChanges, setHasChanges] = useState(false)
   const [showAddTier, setShowAddTier] = useState(false)
@@ -48,6 +48,7 @@ const EditRankingPage = () => {
   }, [customRanking])
 
   const updateTitle = (title) => {
+    if (title === customRanking.title) return
     updateCustomRanking({
       title: title,
       id: customRanking._id

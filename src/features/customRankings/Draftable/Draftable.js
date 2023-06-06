@@ -36,7 +36,7 @@ const Draftable = ({ player, provided, index, onDelete, handleEditRank, isPositi
 
   const cancelEditRank = () => {
     setEditingRank(false)
-    setInputRank(index + 1)
+    setInputRank(!isPositionFiltered ? player._rank : player._posRank)
   }
 
   useEffect(() => {

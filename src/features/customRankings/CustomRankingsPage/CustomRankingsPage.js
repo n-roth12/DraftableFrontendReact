@@ -46,7 +46,10 @@ const CustomRankingsPage = () => {
   if (isRankingsLoading) {
     rankingsContent = <LoadingBlock />
   } else if (isRankingsSuccess) {
-    rankingsContent = <CustomRankingsList rankings={customRankings} />
+    customRankings?.length ?
+      rankingsContent = <CustomRankingsList rankings={customRankings} />
+    :
+      rankingsContent = <p>You have not created any custom rankings yet!</p>
   } else if (isRankingsError) {
     rankingsContent = <p>{JSON.stringify(rankingsError)}</p>
   }

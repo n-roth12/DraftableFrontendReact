@@ -19,11 +19,18 @@
             font-size: 1.8em;
             background: none;
             font-weight: 600;
+            padding: 1px;
+            border: none;
         }
 
-        .unselected {
-            padding: 2px;
+        .title-input-text.unselected {
+            padding: 1px;
             border: none;
+        }
+        
+        .title-input-text:hover {
+            border: 1px solid var(--lightgrey);
+            padding: 0;
         }
     }
 

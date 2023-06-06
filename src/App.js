@@ -11,7 +11,7 @@ import PersistLogin from './features/auth/PersistLogin'
 import AccountPage from './features/acount/AccountPage/AccountPage'
 import ContactPage from './features/contact/ContactPage/ContactPage'
 import FourOFourPage from './components/FourOFourPage/FourOFourPage'
-import { ScrollToTop } from './ScrollToTop'
+import { ScrollToTop } from './utilities/ScrollToTop'
 
 function App() {
   return (

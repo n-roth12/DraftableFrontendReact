@@ -4,7 +4,7 @@ import { MdSportsFootball } from 'react-icons/md'
 import { useState } from 'react'
 import { useDeleteCustomRankingMutation } from '../customRankingsApiSlice'
 import { useNavigate } from 'react-router-dom'
-import { epochToTimeAgo } from '../../helpers/EpochToTimeAgo'
+import { epochToTimeAgo } from '../../../utilities/EpochToTimeAgo'
 
 const CustomRankingsList = ({ rankings }) => {
   const navigate = useNavigate()
