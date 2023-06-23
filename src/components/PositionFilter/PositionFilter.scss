@@ -17,13 +17,13 @@
             background-color: var(--table-header-color);
         }
 
-        button.active {
-            background-color: var(--lightgrey);
-            color: var(--text-color-1);
+        :nth-child(1):not(.active) {
+            border-left: 1px solid var(--lightgrey);
+            border-radius: 0.4rem 0 0 0.4rem;
         }
 
-        :nth-child(1) {
-            border-left: 1px solid var(--lightgrey);
+        :nth-child(1):is(.active) {
+            border-left: 1px solid var(--btn-blue-1);
             border-radius: 0.4rem 0 0 0.4rem;
         }
 
@@ -33,6 +33,14 @@
 
         :last-child {
             border-radius: 0 0.4rem 0.4rem 0;
+        }
+
+        button.active {
+            background-color: var(--btn-blue-1);
+            color: var(--text-color-2);
+            border-top: 1px solid var(--btn-blue-1);
+            border-bottom: 1px solid var(--btn-blue-1);
+            border-right: 1px solid var(--btn-blue-1);
         }
     }
 }

@@ -1,6 +1,6 @@
 .draftable,
 .tier {
-    padding: 8px;
+    padding: 0.5rem;
     font-size: 10pt;
 
     .drag-icon,
@@ -70,7 +70,6 @@
         span {
             margin-right: 4px;
         }
-
     }
 
     .team-wrapper {
@@ -108,8 +107,6 @@
     border-left: 2px solid var(--btn-blue-1);
     border-right: 2px solid var(--btn-blue-1);
     color: white;
-    padding-top: 3px;
-    padding-bottom: 3px;
     font-weight: 600;
 
     .drag-icon-wrapper {
@@ -157,6 +154,10 @@
 }
 
 @media (max-width: 500px) {
+
+    .draftable, .tier {
+        padding: 0.7rem;
+    }
 
     .draftable,
     .table-header {
