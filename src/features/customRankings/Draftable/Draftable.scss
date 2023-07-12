@@ -34,9 +34,9 @@
 .draftable,
 .table-header {
     background-color: white;
-    border: 1px solid var(--lightgrey);
-    border-left: 2px solid var(--lightgrey);
-    border-right: 2px solid var(--lightgrey);
+    border-top: 1px solid var(--lightgrey);
+    border-left: 1px solid var(--lightgrey);
+    border-right: 1px solid var(--lightgrey);
 
     .drag-icon-wrapper {
         flex: 1;
@@ -103,9 +103,9 @@
 
 .tier {
     background-color: var(--btn-blue-1);
-    border: 1px solid var(--btn-blue-1);
-    border-left: 2px solid var(--btn-blue-1);
-    border-right: 2px solid var(--btn-blue-1);
+    border-top: 1px solid var(--btn-blue-1);
+    border-left: 1px solid var(--btn-blue-1);
+    border-right: 1px solid var(--btn-blue-1);
     color: white;
     font-weight: 600;
 

@@ -4,7 +4,7 @@ import Footer from "../../../components/Footer/Footer"
 import { useParams } from 'react-router-dom'
 import { useGetCustomRankingByIdQuery, useUpdateCustomRankingMutation } from '../customRankingsApiSlice'
 import { useGetRankingByIdQuery } from '../../rankings/rankingsApiSlice'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Switch } from '@mui/material'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { StrictModeDroppable as Droppable } from '../../../utilities/StrictModeDroppable'
@@ -29,6 +29,8 @@ const EditRankingPage = () => {
   const [selectedPosition, setSelectedPosition] = useState("ALL")
   const [hasRenderedPositions, setHasRenderedPositions] = useState(false)
   const [aggregatedRanking, setAggregatedRanking] = useState()
+  const addPlayersRef = useRef(null)
+  const rankingsOptionsRef = useRef(null)
 
   const {
     data: customRanking,
@@ -361,11 +363,12 @@ const EditRankingPage = () => {
                 }
               </div>
             </div>
-            <div className='table-options-wrapper'>
+            <div className='table-options-wrapper' ref={rankingsOptionsRef}>
               <PositionFilter
                 positions={positions}
                 selectedPos={selectedPosition}
-                onChange={setSelectedPosition} />
+                onChange={setSelectedPosition}
+                parentRef={rankingsOptionsRef} />
               <button
                 className='add-tier-btn'
                 onClick={addTier}>Add Tier</button>
@@ -374,12 +377,13 @@ const EditRankingPage = () => {
               {content}
             </div>
           </div>
-          <div className='add-players-wrapper'>
+          <div className='add-players-wrapper' ref={addPlayersRef}>
             <h3>Add Players</h3>
             <PositionFilter
               positions={positions}
               selectedPos={selectedPosition}
-              onChange={setSelectedPosition} />
+              onChange={setSelectedPosition}
+              parentRef={addPlayersRef} />
             <AddPlayersList players={players} />
           </div>
         </div>

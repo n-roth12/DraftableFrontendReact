@@ -44,7 +44,8 @@
 
 .position-filter-small {
     select {
-        border: 2px solid var(--lightgrey);
+        cursor: pointer;
+        border: 1px solid var(--lightgrey);
         border-radius: 6px;
         padding: 0.4rem 1rem 0.4rem 1rem;
     }

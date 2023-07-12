@@ -140,8 +140,7 @@
             padding: 8px;
             font-size: 10pt;
             background-color: white;
-            border: 2px solid var(--lightgrey);
-            border-bottom: 1px solid var(--lightgrey);
+            border: 1px solid var(--lightgrey);
             border-radius: 6px 6px 0 0;
 
             .col-label {
@@ -151,7 +150,7 @@
         }
 
         .draftable:last-child {
-            border-bottom: 2px solid var(--lightgrey);
+            border-bottom: 1px solid var(--lightgrey);
             border-radius: 0 0 6px 6px;
         }
     }

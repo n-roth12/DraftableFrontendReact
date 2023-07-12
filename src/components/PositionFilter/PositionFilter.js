@@ -1,6 +1,8 @@
 import './PositionFilter.scss'
 
-const PositionFilter = ({ positions, onChange, selectedPos, size }) => {
+const PositionFilter = ({ positions, onChange, selectedPos, parentRef }) => {
+  console.log(parentRef?.current?.offsetWidth)
+  const size = parentRef?.current?.offsetWidth < 400 ? "small" : ""
   const handleChangePos = (e) => onChange(e.target.value)
   
   return (

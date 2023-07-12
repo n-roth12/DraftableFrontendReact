@@ -1,7 +1,7 @@
 .add-players-list {
     max-height: 70vh;
     overflow-y: auto;
-    border: 2px solid var(--lightgrey);
+    border: 1px solid var(--lightgrey);
     border-radius: 6px;
     margin-top: 6px;
     background-color: white;
@@ -11,7 +11,7 @@
         flex-direction: row;
         padding: 0.6rem;
         background-color: white;
-        border-bottom: 2px solid var(--lightgrey);
+        border-bottom: 1px solid var(--lightgrey);
     }
 
     .add-player:last-child {
