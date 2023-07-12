@@ -2,9 +2,9 @@ import './EditRankingPage.scss'
 import Nav from '../../../components/Nav/Nav'
 import Footer from "../../../components/Footer/Footer"
 import { useParams } from 'react-router-dom'
-import { useGetCustomRankingByIdQuery } from '../customRankingsApiSlice'
+import { useGetCustomRankingByIdQuery, useUpdateCustomRankingMutation } from '../customRankingsApiSlice'
+import { useGetRankingByIdQuery } from '../../rankings/rankingsApiSlice'
 import { useEffect, useState } from 'react'
-import { useUpdateCustomRankingMutation } from '../customRankingsApiSlice'
 import { Switch } from '@mui/material'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { StrictModeDroppable as Droppable } from '../../../utilities/StrictModeDroppable'
@@ -13,6 +13,7 @@ import Draftable from '../Draftable/Draftable'
 import PositionFilter from '../../../components/PositionFilter/PositionFilter'
 import Helmet from "react-helmet"
 import LoadingBlock from '../../../components/Loading/LoadingBlock/LoadingBlock'
+import AddPlayersList from '../AddPlayersList/AddPlayersList'
 
 const EditRankingPage = () => {
   const { rankingId } = useParams()
@@ -27,6 +28,7 @@ const EditRankingPage = () => {
   const [positions, setPositions] = useState([])
   const [selectedPosition, setSelectedPosition] = useState("ALL")
   const [hasRenderedPositions, setHasRenderedPositions] = useState(false)
+  const [aggregatedRanking, setAggregatedRanking] = useState()
 
   const {
     data: customRanking,
@@ -41,10 +43,10 @@ const EditRankingPage = () => {
 
   useEffect(() => {
     setTitle(customRanking?.title || '')
-  }, [customRanking])
-
-  useEffect(() => {
     setPlayers(customRanking?.rankings)
+    // if (customRanking?.createdFrom) {
+    //   setAggregatedRanking(useGetRankingByIdQuery(customRanking.createdFrom))
+    // }
   }, [customRanking])
 
   const updateTitle = (title) => {
@@ -243,7 +245,7 @@ const EditRankingPage = () => {
               <div className='drag-icon-wrapper'>
               </div>
               <div className='rank-wrapper col-label'>
-                OVR
+                RK
               </div>
               <div className='name-wrapper col-label'>
                 NAME
@@ -334,43 +336,56 @@ const EditRankingPage = () => {
             /{new Date(customRanking?.updatedAt).getFullYear()}
           </p>
         </div>
-        <div className='save-wrapper'>
-          <div className='save-wrapper-inner'>
-            <Switch
-              checked={autoSave}
-              onChange={handleChangeAutosave}
-              size='small' />
-            <p className='autosave-wrapper'>Autosave <span className='autosave'>{autoSave ? "On" : "Off"}</span></p>
-            {!autoSave &&
-              <>
-                <button
-                  className={`cancel-btn${!hasChanges ? ' disabled' : ''}`}
-                  onClick={cancelEdit}
-                  disabled={!hasChanges}>Cancel</button>
-                <button
-                  className={`submit-btn${!hasChanges ? ' disabled' : ''}`}
-                  onClick={saveEdit}
-                  disabled={!hasChanges}>Save</button>
-              </>
-            }
-          </div>
-          <div className='add-tier-wrapper'>
-            <button
-              className='add-tier-btn'
-              onClick={addTier}>Add Tier</button>
-          </div>
-        </div>
         <p className='description'>Drag and drop players and tiers, or type on their rank and hit enter to adjust rankings.</p>
-        <PositionFilter
-          positions={positions}
-          selectedPos={selectedPosition}
-          onChange={setSelectedPosition} />
-        <div className='drag-drop-rankings-wrapper'>
-          {content}
+        <div className='columns-wrapper'>
+          <div className='rankings-wrapper'>
+            <div className='save-wrapper'>
+              <div className='save-wrapper-inner'>
+                <h3>Rankings</h3>
+                <Switch
+                  checked={autoSave}
+                  onChange={handleChangeAutosave}
+                  size='small' />
+                <p className='autosave-wrapper'>Autosave <span className='autosave'>{autoSave ? "On" : "Off"}</span></p>
+                {!autoSave &&
+                  <>
+                    <button
+                      className={`cancel-btn${!hasChanges ? ' disabled' : ''}`}
+                      onClick={cancelEdit}
+                      disabled={!hasChanges}>Cancel</button>
+                    <button
+                      className={`submit-btn${!hasChanges ? ' disabled' : ''}`}
+                      onClick={saveEdit}
+                      disabled={!hasChanges}>Save</button>
+                  </>
+                }
+              </div>
+            </div>
+            <div className='table-options-wrapper'>
+              <PositionFilter
+                positions={positions}
+                selectedPos={selectedPosition}
+                onChange={setSelectedPosition} />
+              <button
+                className='add-tier-btn'
+                onClick={addTier}>Add Tier</button>
+            </div>
+            <div className='drag-drop-rankings-wrapper'>
+              {content}
+            </div>
+          </div>
+          <div className='add-players-wrapper'>
+            <h3>Add Players</h3>
+            <PositionFilter
+              positions={positions}
+              selectedPos={selectedPosition}
+              onChange={setSelectedPosition} />
+            <AddPlayersList players={players} />
+          </div>
         </div>
-      </main>
+      </main >
       <Footer />
-    </div>
+    </div >
   )
 }
 

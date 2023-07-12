@@ -1,6 +1,31 @@
 .edit-ranking-page {
     width: 100%;
 
+    main {
+        width: 1200px;
+    }
+
+    .columns-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        h3 {
+            padding-top: 0.7rem;
+            padding-bottom: 0.7rem;
+            font-size: 1.3rem;
+        }
+
+        .rankings-wrapper {
+            flex: 3 1 500px;
+        }
+
+        .add-players-wrapper {
+            margin-left: 10px;
+            flex: 1 1 300px;
+        }
+    }
+
     .updated-wrapper {
         margin-top: 10px;
         font-size: 11pt;
@@ -37,7 +62,6 @@
 
     .save-wrapper {
         display: flex;
-        height: 60px;
         justify-content: space-between;
         align-items: center;
     }
@@ -46,7 +70,6 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        margin: 10px 0px 10px 0px;
     }
 
     .autosave-wrapper {
@@ -64,8 +87,6 @@
         padding: 10px;
         border-radius: 4px;
         font-weight: 600;
-        margin-right: 5px;
-        margin-left: 5px;
     }
 
     .submit-btn:not(.disabled),
@@ -91,6 +112,7 @@
     .add-tier-btn {
         background-color: var(--btn-green-1);
         color: white;
+        font-size: 0.8rem;
     }
 
     .add-tier-btn:hover {
@@ -101,6 +123,13 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-top: 6px;
+    }
+
+    .table-options-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
 
     .drag-drop-rankings {
@@ -113,6 +142,7 @@
             background-color: white;
             border: 2px solid var(--lightgrey);
             border-bottom: 1px solid var(--lightgrey);
+            border-radius: 6px 6px 0 0;
 
             .col-label {
                 font-weight: 600;
@@ -122,6 +152,7 @@
 
         .draftable:last-child {
             border-bottom: 2px solid var(--lightgrey);
+            border-radius: 0 0 6px 6px;
         }
     }
 

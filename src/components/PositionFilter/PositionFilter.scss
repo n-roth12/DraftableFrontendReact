@@ -1,46 +1,51 @@
-.position-filter-wrapper {
-    .position-filter {
-        display: flex;
-        width: 100%;
+.position-filter {
+    display: flex;
 
-        button {
-            font-size: 0.9rem;
-            background: var(--background-color);
-            padding: 0.5rem 1rem 0.5rem 1rem;
-            border-top: 1px solid var(--lightgrey);
-            border-bottom: 1px solid var(--lightgrey);
-            border-right: 1px solid var(--lightgrey);
-            cursor: pointer;
-        }
+    button {
+        font-size: 0.8rem;
+        background: var(--background-color);
+        padding: 0.5rem 1rem 0.5rem 1rem;
+        border-top: 1px solid var(--lightgrey);
+        border-bottom: 1px solid var(--lightgrey);
+        border-right: 1px solid var(--lightgrey);
+        cursor: pointer;
+    }
 
-        button:hover {
-            background-color: var(--table-header-color);
-        }
+    button:hover {
+        background-color: var(--table-header-color);
+    }
 
-        :nth-child(1):not(.active) {
-            border-left: 1px solid var(--lightgrey);
-            border-radius: 0.4rem 0 0 0.4rem;
-        }
+    :nth-child(1):not(.active) {
+        border-left: 1px solid var(--lightgrey);
+        border-radius: 6px 0 0 6px;
+    }
 
-        :nth-child(1):is(.active) {
-            border-left: 1px solid var(--btn-blue-1);
-            border-radius: 0.4rem 0 0 0.4rem;
-        }
+    :nth-child(1):is(.active) {
+        border-left: 1px solid var(--btn-blue-1);
+        border-radius: 6px 0 0 6px;
+    }
 
-        :nth-child(n + 2) {
-            border-left: none;
-        }
+    :nth-child(n + 2) {
+        border-left: none;
+    }
 
-        :last-child {
-            border-radius: 0 0.4rem 0.4rem 0;
-        }
+    :last-child {
+        border-radius: 0 0.4rem 0.4rem 0;
+    }
 
-        button.active {
-            background-color: var(--btn-blue-1);
-            color: var(--text-color-2);
-            border-top: 1px solid var(--btn-blue-1);
-            border-bottom: 1px solid var(--btn-blue-1);
-            border-right: 1px solid var(--btn-blue-1);
-        }
+    button.active {
+        background-color: var(--btn-blue-1);
+        color: var(--text-color-2);
+        border-top: 1px solid var(--btn-blue-1);
+        border-bottom: 1px solid var(--btn-blue-1);
+        border-right: 1px solid var(--btn-blue-1);
+    }
+}
+
+.position-filter-small {
+    select {
+        border: 2px solid var(--lightgrey);
+        border-radius: 6px;
+        padding: 0.4rem 1rem 0.4rem 1rem;
     }
 }

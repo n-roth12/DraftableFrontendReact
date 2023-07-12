@@ -1,17 +1,25 @@
 import './PositionFilter.scss'
 
-const PositionFilter = ({ positions, onChange, selectedPos }) => {
+const PositionFilter = ({ positions, onChange, selectedPos, size }) => {
+  const handleChangePos = (e) => onChange(e.target.value)
+  
   return (
-    <div className='position-filter-wrapper'>
-      <div className="position-filter">
-        {positions?.length > 0 && ["ALL", ...positions].map(pos =>
+    <div className={`position-filter${size === "small" ? "-small" : ""}`}>
+      {size !== "small" ? 
+        positions?.length > 0 && ["ALL", ...positions].map(pos =>
           <button
             className={selectedPos === pos ? "active" : ""}
             key={pos}
             onClick={() => onChange(pos)}
           >{pos}</button>
+        )
+      :
+      <select onChange={handleChangePos} value={selectedPos}>
+        {positions?.length > 0 && ["ALL", ...positions].map(pos =>
+          <option value={pos}>{pos}</option>
         )}
-      </div>
+        </select>
+      }
     </div>
   )
 }
