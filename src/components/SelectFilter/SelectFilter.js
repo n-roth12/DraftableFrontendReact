@@ -13,6 +13,7 @@ const SelectFilter = ({ handleChange, templates, selectedTemplate, defaultTempla
         defaultValue={defaultTemplate}
         value={selectedTemplate && selectedTemplate._id}
         size="small"
+        style={{ backgroundColor: 'white' }}
         onChange={handleChange}>
         {templates && templates.length && templates.map((option) => (
           <MenuItem key={option._id} value={option._id}>

@@ -93,6 +93,14 @@
         flex: 1;
         justify-content: flex-start;
     }
+
+    .delete-icon {
+        color: var(--dark-red);
+    }
+
+    .drag-icon {
+        color: var(--grey);
+    }
 }
 
 .draftable:hover {

@@ -164,13 +164,13 @@
         .table-header {
             padding: 8px;
             font-size: 10pt;
-            background-color: white;
+            background-color: var(--lightgrey);
             border: 1px solid var(--lightgrey);
             border-radius: 6px 6px 0 0;
 
             .col-label {
                 font-weight: 600;
-                color: var(--grey);
+                color: black;
             }
         }
 

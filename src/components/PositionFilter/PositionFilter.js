@@ -24,7 +24,7 @@ const PositionFilter = ({ positions, onChange, selectedPos, parentRef, large }) 
           value={selectedPos}
           onChange={handleChangePos}
           size="small"
-          style={{ fontSize: '0.8rem' }}
+          style={{ fontSize: '0.8rem', backgroundColor: 'white' }}
         >
           {positions?.length > 0 && ["ALL", ...positions].map(pos =>
             <MenuItem
