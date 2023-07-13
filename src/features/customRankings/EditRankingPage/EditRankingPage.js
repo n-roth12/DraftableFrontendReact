@@ -14,6 +14,7 @@ import PositionFilter from '../../../components/PositionFilter/PositionFilter'
 import Helmet from "react-helmet"
 import LoadingBlock from '../../../components/Loading/LoadingBlock/LoadingBlock'
 import AddPlayersList from '../AddPlayersList/AddPlayersList'
+import useResponsiveBreakpoints from '../../../utilities/useResponsiveBreakpoints'
 
 const EditRankingPage = () => {
   const { rankingId } = useParams()
@@ -44,7 +45,10 @@ const EditRankingPage = () => {
 
   const [players, setPlayers] = useState(customRanking?.rankings || [])
   const handleChangeTitle = (e) => setTitle(e.target.value)
-  const size = mainRef?.current?.offsetWidth < 860 ? "small" : "large"
+  const size = useResponsiveBreakpoints(mainRef, [
+    {small: 860},
+    {large: 900}
+  ])
 
   useEffect(() => {
     setTitle(customRanking?.title || '')
@@ -92,7 +96,7 @@ const EditRankingPage = () => {
     const [reorderedItem] = playersCopy.splice(sourceIndex, 1)
     playersCopy.splice(destIndex, 0, reorderedItem)
     setPlayers(playersCopy)
-    if (autoSave) {
+    if (autoSave || size === "small") {
       updateCustomRanking({
         rankings: playersCopy,
         id: customRanking._id
@@ -130,7 +134,7 @@ const EditRankingPage = () => {
     const [reorderedItem] = playersCopy.splice(sourceIndex, 1)
     playersCopy.splice(destIndex, 0, reorderedItem)
     setPlayers(playersCopy)
-    if (autoSave) {
+    if (autoSave || size === "small") {
       updateCustomRanking({
         rankings: playersCopy,
         id: customRanking._id
@@ -144,20 +148,35 @@ const EditRankingPage = () => {
     const player = players[index]
     const tier = player?.tier
     if (tier) {
-      let playersCopy = [...players]
-      setPlayers(playersCopy.filter(x => x?.tier !== tier).map(x => {
+      let playersCopy = [...players].filter(x => x?.tier !== tier).map(x => {
         if (x?.tier && x?.tier > tier) {
           return { ...x, tier: x.tier - 1 }
         } else {
           return x
         }
-      }))
+      })
+      setPlayers(playersCopy)
+      if (autoSave || size === "small") {
+        updateCustomRanking({
+          rankings: playersCopy,
+          id: customRanking._id
+        })
+      } else {
+        setHasChanges(true)
+      }
     } else {
       let playersCopy = [...players]
       playersCopy.splice(index, 1)
       setPlayers(playersCopy)
+      if (autoSave || size === "small") {
+        updateCustomRanking({
+          rankings: playersCopy,
+          id: customRanking._id
+        })
+      } else {
+        setHasChanges(true)
+      }
     }
-    setHasChanges(true)
   }
 
   const addTier = () => {
@@ -406,27 +425,6 @@ const EditRankingPage = () => {
             </div>
             {activeTab === "rankings" ?
               <div className='rankings-wrapper'>
-                <div className='save-wrapper'>
-                  <div className='save-wrapper-inner'>
-                    <Switch
-                      checked={autoSave}
-                      onChange={handleChangeAutosave}
-                      size='small' />
-                    <p className='autosave-wrapper'>Autosave <span className='autosave'>{autoSave ? "On" : "Off"}</span></p>
-                    {!autoSave &&
-                      <>
-                        <button
-                          className={`cancel-btn${!hasChanges ? ' disabled' : ''}`}
-                          onClick={cancelEdit}
-                          disabled={!hasChanges}>Cancel</button>
-                        <button
-                          className={`submit-btn${!hasChanges ? ' disabled' : ''}`}
-                          onClick={saveEdit}
-                          disabled={!hasChanges}>Save</button>
-                      </>
-                    }
-                  </div>
-                </div>
                 <div className='table-options-wrapper' ref={rankingsOptionsRef}>
                   <PositionFilter
                     positions={positions}
