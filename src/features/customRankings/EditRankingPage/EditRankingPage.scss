@@ -23,7 +23,33 @@
         .add-players-wrapper {
             margin-left: 10px;
             flex: 1 1 300px;
+            align-self: flex-start;
+            position: sticky;
+            top: 50px;
         }
+    }
+
+    .tab-btns-wrapper {
+        margin-bottom: 0.6rem;
+        display: flex;
+    }
+
+    .tab-btn {
+        background: none;
+        border: none;
+        font-weight: 600;
+        font-size: 1rem;
+        padding: 0.4rem;
+        flex: 1;
+        cursor: pointer;
+    }
+
+    .tab-btn:not(.active) {
+        border-bottom: 2px solid transparent;
+    }
+
+    .tab-btn.active {
+        border-bottom: 2px solid black;
     }
 
     .updated-wrapper {

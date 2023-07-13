@@ -31,6 +31,8 @@ const EditRankingPage = () => {
   const [aggregatedRanking, setAggregatedRanking] = useState()
   const addPlayersRef = useRef(null)
   const rankingsOptionsRef = useRef(null)
+  const mainRef = useRef(null)
+  const [activeTab, setActiveTab] = useState("rankings")
 
   const {
     data: customRanking,
@@ -42,6 +44,7 @@ const EditRankingPage = () => {
 
   const [players, setPlayers] = useState(customRanking?.rankings || [])
   const handleChangeTitle = (e) => setTitle(e.target.value)
+  const size = mainRef?.current?.offsetWidth < 860 ? "small" : "large"
 
   useEffect(() => {
     setTitle(customRanking?.title || '')
@@ -321,7 +324,7 @@ const EditRankingPage = () => {
         players to create your own draft cheatsheet." />
       </Helmet>
       <Nav />
-      <main>
+      <main ref={mainRef}>
         <div className='title-wrapper'>
           <input
             type="text"
@@ -339,54 +342,117 @@ const EditRankingPage = () => {
           </p>
         </div>
         <p className='description'>Drag and drop players and tiers, or type on their rank and hit enter to adjust rankings.</p>
-        <div className='columns-wrapper'>
-          <div className='rankings-wrapper'>
-            <div className='save-wrapper'>
-              <div className='save-wrapper-inner'>
-                <h3>Rankings</h3>
-                <Switch
-                  checked={autoSave}
-                  onChange={handleChangeAutosave}
-                  size='small' />
-                <p className='autosave-wrapper'>Autosave <span className='autosave'>{autoSave ? "On" : "Off"}</span></p>
-                {!autoSave &&
-                  <>
-                    <button
-                      className={`cancel-btn${!hasChanges ? ' disabled' : ''}`}
-                      onClick={cancelEdit}
-                      disabled={!hasChanges}>Cancel</button>
-                    <button
-                      className={`submit-btn${!hasChanges ? ' disabled' : ''}`}
-                      onClick={saveEdit}
-                      disabled={!hasChanges}>Save</button>
-                  </>
-                }
+        {size === "large" &&
+          <div className='columns-wrapper'>
+            <div className='rankings-wrapper'>
+              <div className='save-wrapper'>
+                <div className='save-wrapper-inner'>
+                  <h3>Rankings</h3>
+                  <Switch
+                    checked={autoSave}
+                    onChange={handleChangeAutosave}
+                    size='small' />
+                  <p className='autosave-wrapper'>Autosave <span className='autosave'>{autoSave ? "On" : "Off"}</span></p>
+                  {!autoSave &&
+                    <>
+                      <button
+                        className={`cancel-btn${!hasChanges ? ' disabled' : ''}`}
+                        onClick={cancelEdit}
+                        disabled={!hasChanges}>Cancel</button>
+                      <button
+                        className={`submit-btn${!hasChanges ? ' disabled' : ''}`}
+                        onClick={saveEdit}
+                        disabled={!hasChanges}>Save</button>
+                    </>
+                  }
+                </div>
+              </div>
+              <div className='table-options-wrapper' ref={rankingsOptionsRef}>
+                <PositionFilter
+                  positions={positions}
+                  selectedPos={selectedPosition}
+                  onChange={setSelectedPosition}
+                  parentRef={rankingsOptionsRef} />
+                <button
+                  className='add-tier-btn'
+                  onClick={addTier}>Add Tier</button>
+              </div>
+              <div className='drag-drop-rankings-wrapper'>
+                {content}
               </div>
             </div>
-            <div className='table-options-wrapper' ref={rankingsOptionsRef}>
+            <div className='add-players-wrapper' ref={addPlayersRef}>
+              <h3>Add Players</h3>
               <PositionFilter
                 positions={positions}
                 selectedPos={selectedPosition}
                 onChange={setSelectedPosition}
-                parentRef={rankingsOptionsRef} />
+                parentRef={addPlayersRef} />
+              <AddPlayersList players={players} />
+            </div>
+          </div>
+        }
+        {size === "small" &&
+          <>
+            <div className='tab-btns-wrapper'>
               <button
-                className='add-tier-btn'
-                onClick={addTier}>Add Tier</button>
+                onClick={() => setActiveTab("rankings")}
+                className={`tab-btn ${activeTab === "rankings" ? "active" : ""}`}
+              >Rankings</button>
+              <button
+                onClick={() => setActiveTab("players")}
+                className={`tab-btn ${activeTab === "players" ? "active" : ""}`}
+              >Add Players</button>
             </div>
-            <div className='drag-drop-rankings-wrapper'>
-              {content}
-            </div>
-          </div>
-          <div className='add-players-wrapper' ref={addPlayersRef}>
-            <h3>Add Players</h3>
-            <PositionFilter
-              positions={positions}
-              selectedPos={selectedPosition}
-              onChange={setSelectedPosition}
-              parentRef={addPlayersRef} />
-            <AddPlayersList players={players} />
-          </div>
-        </div>
+            {activeTab === "rankings" ?
+              <div className='rankings-wrapper'>
+                <div className='save-wrapper'>
+                  <div className='save-wrapper-inner'>
+                    <Switch
+                      checked={autoSave}
+                      onChange={handleChangeAutosave}
+                      size='small' />
+                    <p className='autosave-wrapper'>Autosave <span className='autosave'>{autoSave ? "On" : "Off"}</span></p>
+                    {!autoSave &&
+                      <>
+                        <button
+                          className={`cancel-btn${!hasChanges ? ' disabled' : ''}`}
+                          onClick={cancelEdit}
+                          disabled={!hasChanges}>Cancel</button>
+                        <button
+                          className={`submit-btn${!hasChanges ? ' disabled' : ''}`}
+                          onClick={saveEdit}
+                          disabled={!hasChanges}>Save</button>
+                      </>
+                    }
+                  </div>
+                </div>
+                <div className='table-options-wrapper' ref={rankingsOptionsRef}>
+                  <PositionFilter
+                    positions={positions}
+                    selectedPos={selectedPosition}
+                    onChange={setSelectedPosition}
+                    parentRef={rankingsOptionsRef} />
+                  <button
+                    className='add-tier-btn'
+                    onClick={addTier}>Add Tier</button>
+                </div>
+                <div className='drag-drop-rankings-wrapper'>
+                  {content}
+                </div>
+              </div>
+              :
+              <div className='add-players-wrapper' ref={addPlayersRef}>
+                <PositionFilter
+                  positions={positions}
+                  selectedPos={selectedPosition}
+                  onChange={setSelectedPosition}
+                  parentRef={addPlayersRef} />
+                <AddPlayersList players={players} />
+              </div>
+            }
+          </>
+        }
       </main >
       <Footer />
     </div >

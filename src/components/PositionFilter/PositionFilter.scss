@@ -47,6 +47,10 @@
         cursor: pointer;
         border: 1px solid var(--lightgrey);
         border-radius: 6px;
-        padding: 0.4rem 1rem 0.4rem 1rem;
+        // padding: 0.4rem 1rem 0.4rem 1rem;
+
+        div {
+            font-size: 0.5rem !important;
+        }
     }
 }

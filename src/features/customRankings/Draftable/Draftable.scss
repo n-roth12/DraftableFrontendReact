@@ -37,6 +37,8 @@
     border-top: 1px solid var(--lightgrey);
     border-left: 1px solid var(--lightgrey);
     border-right: 1px solid var(--lightgrey);
+    border-bottom: 1px solid var(--lightgrey);
+    margin-bottom: -1px;
 
     .drag-icon-wrapper {
         flex: 1;
