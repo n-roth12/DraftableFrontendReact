@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { useGetCurrentRankingTemplatesQuery } from '../rankingsApiSlice'
 import { useGetRankingByIdQuery } from '../rankingsApiSlice'
 import { useSelector } from 'react-redux'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { useCreateNewCustomRankingsMutation } from '../../customRankings/customRankingsApiSlice'
 import { FaAngleRight } from 'react-icons/fa'
@@ -23,6 +23,7 @@ const RankingsPage = () => {
   const [selectedPosition, setSelectedPosition] = useState("ALL")
   const navigate = useNavigate()
   const [createNewCustomRankings] = useCreateNewCustomRankingsMutation()
+  const positionWrapperRef = useRef(null)
 
   const {
     data: rankingsTemplates,
@@ -113,11 +114,12 @@ const RankingsPage = () => {
               selectedTemplate={selectedTemplate}
             />
           }
-          <div className='options-row'>
+          <div className='options-row' ref={positionWrapperRef}>
             <PositionFilter 
               positions={positions} 
               selectedPos={selectedPosition} 
-              onChange={setSelectedPosition} />
+              onChange={setSelectedPosition}
+              large={true} />
             <button
               className='edit-button'
               onClick={customizeRanking}>

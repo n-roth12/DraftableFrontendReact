@@ -1,14 +1,17 @@
 import './PositionFilter.scss'
 import { Select, MenuItem } from '@mui/material'
+import useResponsiveBreakpoints from '../../utilities/useResponsiveBreakpoints'
 
-const PositionFilter = ({ positions, onChange, selectedPos, parentRef }) => {
-  console.log(parentRef?.current?.offsetWidth)
-  const size = parentRef?.current?.offsetWidth < 400 ? "small" : ""
+const PositionFilter = ({ positions, onChange, selectedPos, parentRef, large }) => {
+  var size = useResponsiveBreakpoints(parentRef, [
+    { small: 500 },
+    { large: 900 }
+  ])
   const handleChangePos = (e) => onChange(e.target.value)
 
   return (
-    <div className={`position-filter${size === "small" ? "-small" : ""}`}>
-      {size !== "small" ?
+    <div className={`position-filter${(size === "small" && !large) ? "-small" : ""}`}>
+      {size !== "small" || large ?
         positions?.length > 0 && ["ALL", ...positions].map(pos =>
           <button
             className={selectedPos === pos ? "active" : ""}
@@ -21,12 +24,12 @@ const PositionFilter = ({ positions, onChange, selectedPos, parentRef }) => {
           value={selectedPos}
           onChange={handleChangePos}
           size="small"
-          style={{fontSize: '0.8rem'}}
+          style={{ fontSize: '0.8rem' }}
         >
           {positions?.length > 0 && ["ALL", ...positions].map(pos =>
-            <MenuItem 
+            <MenuItem
               value={pos}
-              style={{fontSize: '0.8rem'}}
+              style={{ fontSize: '0.8rem' }}
             >{pos}</MenuItem>
           )}
         </Select>
