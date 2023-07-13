@@ -40,7 +40,7 @@ const MobileNav = () => {
     }
   }
 
-  window.addEventListener("scroll", () => {window.pageYOffset < 10 ? setAtTop(true) : setAtTop(false)})
+  window.addEventListener("scroll", () => { window.pageYOffset < 10 ? setAtTop(true) : setAtTop(false) })
 
   return (
     <header className={`mobile-nav${!atTop ? " shadow" : " no-shadow"}`}>
@@ -52,19 +52,19 @@ const MobileNav = () => {
           <div className={burgerClass}></div>
         </div>
       </nav>
-      
+
       {!isMenuClicked &&
         <NavInfo />
       }
 
       <div className={menuClass} onClick={updateMenu}>
-        {token && 
-          <Link className='mobile-nav-link' to={`/account`}>Account <FaAngleRight /></Link>
-        }
         <Link className='mobile-nav-link' to={`/rankings`}>Rankings <FaAngleRight /></Link>
         <Link className='mobile-nav-link' to={`/custom`}>Custom <FaAngleRight /></Link>
         {token ?
-          <a className='mobile-nav-link' onClick={handleLogout}>Logout <FaAngleRight /></a>
+          <>
+            <Link className='mobile-nav-link' to={`/account`}>Account <FaAngleRight /></Link>
+            <a className='mobile-nav-link' onClick={handleLogout}>Logout <FaAngleRight /></a>
+          </>
           :
           <Link className='mobile-nav-link' to={`/login`}>Login <FaAngleRight /></Link>
         }
