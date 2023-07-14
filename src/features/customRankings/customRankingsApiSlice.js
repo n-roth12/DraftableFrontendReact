@@ -5,14 +5,12 @@ export const customRankingsApiSlice = apiSlice.injectEndpoints({
         getUserCustomRankings: builder.query({
             query: (userId) => `/custom?user=${userId}`,
             keepUnusedDataFor: 5,
-            providesTags: (result, error, arg) => [
-                'CustomRanking',
-                ...result?.map(({ id }) => ({ type: 'CustomRanking', id }))
-            ]
+            providesTags: ['CustomRankings']
         }),
         getCustomRankingById: builder.query({
             query: (rankingId) => `/custom/${rankingId}`,
-            providesTags: ['CustomRanking']
+            keepUnusedDataFor: 0.001
+            // providesTags: ['CustomRanking']
         }),
         createNewCustomRankings: builder.mutation({
             query: (customRanking) => ({
@@ -35,7 +33,7 @@ export const customRankingsApiSlice = apiSlice.injectEndpoints({
                 method: 'PUT',
                 body
             }),
-            invalidatesTags: ['CustomRanking']
+            invalidatesTags: ['CustomRankingList']
             // optimistic update
             // async onQueryStarted(body, { dispatch, queryFulfilled }) {
             //     // `updateQueryData` requires the endpoint name and cache key arguments,

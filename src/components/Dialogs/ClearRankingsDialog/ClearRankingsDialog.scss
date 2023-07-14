@@ -1,0 +1,36 @@
+.clear-rankings-dialog {
+    .dialog-title {
+        border-bottom: 1px solid var(--lightgrey);
+        padding: 14px;
+    }
+    h2 {
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+    .description {
+        margin-top: 5px;
+        margin-bottom: 15px;
+    }
+    .dialog-actions {
+        border-top: 1px solid var(--lightgrey);
+        padding: 1rem;
+    }
+    .clear-btn, .cancel-btn {
+        cursor: pointer;
+        border: none;
+        padding: 0.7rem;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 0.8rem;
+    }
+    .clear-btn {
+        background-color: var(--red-1);
+        color: white;
+    }
+    .cancel-btn {
+        background-color: var(--lightgrey);
+    }
+}
+.MuiDialog-paperWidthMd {
+    width: 400px;
+}

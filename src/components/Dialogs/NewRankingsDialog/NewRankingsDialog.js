@@ -1,11 +1,11 @@
 import './NewRankingsDialog.scss'
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import { TextField, MenuItem } from '@mui/material';
-import { useState } from 'react';
-import TemplateSelector from '../../TemplateSelector/TemplateSelector';
+import Dialog from "@material-ui/core/Dialog"
+import DialogTitle from "@material-ui/core/DialogTitle"
+import DialogActions from "@material-ui/core/DialogActions"
+import DialogContent from "@material-ui/core/DialogContent"
+import { TextField } from '@mui/material'
+import { useState } from 'react'
+import TemplateSelector from '../../TemplateSelector/TemplateSelector'
 
 const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle, defaultTemplate }) => {
   const [selectedTemplate, setSelectedTemplate] = useState(

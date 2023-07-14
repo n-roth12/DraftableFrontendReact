@@ -7,6 +7,7 @@ import { useEffect, useState, useRef } from 'react'
 import { Switch } from '@mui/material'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { StrictModeDroppable as Droppable } from '../../../utilities/StrictModeDroppable'
+import { AiOutlinePlusCircle } from 'react-icons/ai'
 import Tier from '../Tier/Tier'
 import Draftable from '../Draftable/Draftable'
 import PositionFilter from '../../../components/PositionFilter/PositionFilter'
@@ -14,6 +15,7 @@ import Helmet from "react-helmet"
 import LoadingBlock from '../../../components/Loading/LoadingBlock/LoadingBlock'
 import AddPlayersList from '../AddPlayersList/AddPlayersList'
 import useResponsiveBreakpoints from '../../../utilities/useResponsiveBreakpoints'
+import ClearRankingsDialog from '../../../components/Dialogs/ClearRankingsDialog/ClearRankingsDialog'
 
 const EditRankingPage = () => {
   const { rankingId } = useParams()
@@ -34,6 +36,8 @@ const EditRankingPage = () => {
   const [activeTab, setActiveTab] = useState("rankings")
   const [unusedPlayers, setUnusedPlayers] = useState([])
   const [players, setPlayers] = useState([])
+  const [showClearRankings, setShowClearRankings] = useState(false)
+  const [inputTitle, setInputTitle] = useState()
 
   const {
     data: customRanking,
@@ -44,23 +48,40 @@ const EditRankingPage = () => {
   } = useGetCustomRankingByIdQuery(rankingId)
 
   // const [players, ] = useState(customRanking?.rankings || [])
-  const handleChangeTitle = (e) => setTitle(e.target.value)
+  const handleChangeInputTitle = (e) => setInputTitle(e.target.value)
   const size = useResponsiveBreakpoints(mainRef, [
     { small: 860 },
     { large: 900 }
   ])
 
   useEffect(() => {
-    setTitle(customRanking?.title || '')
+    setTitle(customRanking?.customRanking?.title || '')
+    setInputTitle(customRanking?.customRanking?.title || '')
     setPlayers(customRanking?.customRanking?.rankings)
-    // setUnusedPlayers(getUnusedPlayers(customRanking?.aggregatedRanking?.rankings))
+    // if (!unusedPlayers?.length) {
+    //   getUnusedPlayers(customRanking?.aggregatedRanking?.rankings, customRanking?.customRanking?.rankings)
+    // }
   }, [customRanking])
 
-  const updateTitle = (title) => {
-    if (title === customRanking?.customRanking?.title) return
+  const getUnusedPlayers = (playersList, rankingsList) => {
+    console.log("test")
+    if (playersList) {
+      const temp = playersList.filter(x => {
+        return !rankingsList.some(y => {
+          // console.log(y._id === x._id)
+          return y.name === x.name
+        })
+      })
+      setUnusedPlayers(temp)
+    }
+  }
+
+  const updateTitle = () => {
+    if (inputTitle === customRanking?.customRanking?.title) return
+    setTitle(inputTitle)
     updateCustomRanking({
-      title: title,
-      id: customRanking._id
+      title: inputTitle,
+      id: customRanking?.customRanking?._id
     })
     setEditingTitle(false)
   }
@@ -144,11 +165,19 @@ const EditRankingPage = () => {
 
   const addDraftable = (player) => {
     setUnusedPlayers(unusedPlayers.filter(el => el._id !== player._id))
-    setPlayers([...players, player])
+    const playersCopy = [...players]
+    setPlayers([...playersCopy, player])
+    if (autoSave || size === "small") {
+      updateCustomRanking({
+        rankings: [...playersCopy, player],
+        id: customRanking.customRanking._id
+      })
+    } else {
+      setHasChanges(true)
+    }
   }
 
   const deleteDraftable = (index) => {
-    console.log(index)
     const player = filterPlayers(players)[index]
     const tier = player?.tier
     if (tier) {
@@ -230,6 +259,20 @@ const EditRankingPage = () => {
     setAutoSave(!autoSave)
   }
 
+  const clearRankings = () => {
+    setUnusedPlayers([...unusedPlayers, ...players])
+    setPlayers([])
+    setShowClearRankings(false)
+    if (autoSave || size === "small") {
+      updateCustomRanking({
+        rankings: [],
+        id: customRanking.customRanking._id
+      })
+    } else {
+      setHasChanges(true)
+    }
+  }
+
   const cancelEdit = () => {
     setPlayers(customRanking.customRanking.rankings)
     setHasChanges(false)
@@ -246,10 +289,10 @@ const EditRankingPage = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      if (!title.length) {
+      if (!inputTitle.length) {
         return
       }
-      updateTitle(title)
+      updateTitle()
     }
   }
 
@@ -269,29 +312,29 @@ const EditRankingPage = () => {
   } else if (isRankingSuccess) {
     content =
       <div className='drag-drop-rankings'>
+        <div className='table-header'>
+          <div className='drag-icon-wrapper'>
+          </div>
+          <div className='rank-wrapper col-label'>
+            RK
+          </div>
+          <div className='name-wrapper col-label'>
+            NAME
+          </div>
+          <div className='position-wrapper col-label'>
+            POS
+          </div>
+          <div className='team-wrapper col-label'>
+            TEAM
+          </div>
+          <div className='bye-wrapper col-label'>
+            BYE
+          </div>
+          <div className='buttons-wrapper col-label'>
+          </div>
+        </div>
         {players?.length > 0 ?
           <>
-            <div className='table-header'>
-              <div className='drag-icon-wrapper'>
-              </div>
-              <div className='rank-wrapper col-label'>
-                RK
-              </div>
-              <div className='name-wrapper col-label'>
-                NAME
-              </div>
-              <div className='position-wrapper col-label'>
-                POS
-              </div>
-              <div className='team-wrapper col-label'>
-                TEAM
-              </div>
-              <div className='bye-wrapper col-label'>
-                BYE
-              </div>
-              <div className='buttons-wrapper col-label'>
-              </div>
-            </div>
             <Tier tier={{ "tier": 1, "position": selectedPosition !== "ALL" && selectedPosition }} />
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId="players">
@@ -333,7 +376,15 @@ const EditRankingPage = () => {
             </DragDropContext>
           </>
           :
-          <p>No players</p>
+          size !== "small" ?
+            <p className='empty-description'>
+              Click <AiOutlinePlusCircle className='add-icon' /> to add a player to custom rankings.
+            </p>
+            :
+            <p className='empty-description'>
+              Select Add Players to add a player to custom rankings. 
+            </p>
+
         }
       </div>
   } else if (isRankingError) {
@@ -349,16 +400,21 @@ const EditRankingPage = () => {
         players to create your own draft cheatsheet." />
       </Helmet>
       <Nav />
+      <ClearRankingsDialog
+        open={showClearRankings}
+        onClose={() => setShowClearRankings(false)}
+        onClear={clearRankings}
+      />
       <main ref={mainRef}>
         <div className='title-wrapper'>
           <input
             type="text"
             onBlur={() => updateTitle(title)}
             onFocus={() => setEditingTitle(true)}
-            onChange={handleChangeTitle}
+            onChange={handleChangeInputTitle}
             onKeyDown={handleKeyDown}
             className={`title-input-text${editingTitle ? " selected" : " unselected"}`}
-            value={!editingTitle ? customRanking?.customRanking?.title : title} />
+            value={!editingTitle ? title : inputTitle} />
         </div>
         <div className='updated-wrapper'>
           <p className='last-update'>Last updated {new Date(customRanking?.customRanking?.updatedAt).getMonth() + 1}
@@ -398,9 +454,14 @@ const EditRankingPage = () => {
                   selectedPos={selectedPosition}
                   onChange={setSelectedPosition}
                   parentRef={rankingsOptionsRef} />
-                <button
-                  className='add-tier-btn'
-                  onClick={addTier}>Add Tier</button>
+                <div>
+                  <button
+                    className='add-tier-btn'
+                    onClick={addTier}>Add Tier</button>
+                  <button
+                    className='clear-rankings-btn'
+                    onClick={() => setShowClearRankings(true)}>Clear</button>
+                </div>
               </div>
               <div className='drag-drop-rankings-wrapper'>
                 {content}
@@ -413,7 +474,7 @@ const EditRankingPage = () => {
                 selectedPos={selectedPosition}
                 onChange={setSelectedPosition}
                 parentRef={addPlayersRef} />
-              <AddPlayersList 
+              <AddPlayersList
                 players={unusedPlayers}
                 addPlayer={addDraftable} />
             </div>
@@ -439,9 +500,14 @@ const EditRankingPage = () => {
                     selectedPos={selectedPosition}
                     onChange={setSelectedPosition}
                     parentRef={rankingsOptionsRef} />
-                  <button
-                    className='add-tier-btn'
-                    onClick={addTier}>Add Tier</button>
+                  <div>
+                    <button
+                      className='add-tier-btn'
+                      onClick={addTier}>Add Tier</button>
+                    <button
+                      className='clear-rankings-btn'
+                      onClick={() => setShowClearRankings(true)}>Clear</button>
+                  </div>
                 </div>
                 <div className='drag-drop-rankings-wrapper'>
                   {content}
@@ -454,7 +520,7 @@ const EditRankingPage = () => {
                   selectedPos={selectedPosition}
                   onChange={setSelectedPosition}
                   parentRef={addPlayersRef} />
-                <AddPlayersList 
+                <AddPlayersList
                   players={unusedPlayers}
                   addPlayer={addDraftable} />
               </div>
