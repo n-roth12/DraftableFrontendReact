@@ -2,13 +2,15 @@ import './AddPlayersList.scss'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 
 
-const AddPlayersList = ({ players }) => {
+const AddPlayersList = ({ players, addPlayer }) => {
   return (
     <div className='add-players-list'>
       {players?.map((player, index) => 
         <div className='add-player'>
           <div className='add-icon-wrapper'>
-            <AiOutlinePlusCircle className='add-icon' />
+            <AiOutlinePlusCircle 
+              className='add-icon'
+              onClick={() => addPlayer(player)} />
           </div>
           <div className='info-wrapper'>
             <div className='name-wrapper'>

@@ -3,7 +3,6 @@ import Nav from '../../../components/Nav/Nav'
 import Footer from "../../../components/Footer/Footer"
 import { useParams } from 'react-router-dom'
 import { useGetCustomRankingByIdQuery, useUpdateCustomRankingMutation } from '../customRankingsApiSlice'
-import { useGetRankingByIdQuery } from '../../rankings/rankingsApiSlice'
 import { useEffect, useState, useRef } from 'react'
 import { Switch } from '@mui/material'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
@@ -29,11 +28,12 @@ const EditRankingPage = () => {
   const [positions, setPositions] = useState([])
   const [selectedPosition, setSelectedPosition] = useState("ALL")
   const [hasRenderedPositions, setHasRenderedPositions] = useState(false)
-  const [aggregatedRanking, setAggregatedRanking] = useState()
   const addPlayersRef = useRef(null)
   const rankingsOptionsRef = useRef(null)
   const mainRef = useRef(null)
   const [activeTab, setActiveTab] = useState("rankings")
+  const [unusedPlayers, setUnusedPlayers] = useState([])
+  const [players, setPlayers] = useState([])
 
   const {
     data: customRanking,
@@ -43,23 +43,21 @@ const EditRankingPage = () => {
     error: rankingError
   } = useGetCustomRankingByIdQuery(rankingId)
 
-  const [players, setPlayers] = useState(customRanking?.rankings || [])
+  // const [players, ] = useState(customRanking?.rankings || [])
   const handleChangeTitle = (e) => setTitle(e.target.value)
   const size = useResponsiveBreakpoints(mainRef, [
-    {small: 860},
-    {large: 900}
+    { small: 860 },
+    { large: 900 }
   ])
 
   useEffect(() => {
     setTitle(customRanking?.title || '')
-    setPlayers(customRanking?.rankings)
-    // if (customRanking?.createdFrom) {
-    //   setAggregatedRanking(useGetRankingByIdQuery(customRanking.createdFrom))
-    // }
+    setPlayers(customRanking?.customRanking?.rankings)
+    // setUnusedPlayers(getUnusedPlayers(customRanking?.aggregatedRanking?.rankings))
   }, [customRanking])
 
   const updateTitle = (title) => {
-    if (title === customRanking.title) return
+    if (title === customRanking?.customRanking?.title) return
     updateCustomRanking({
       title: title,
       id: customRanking._id
@@ -99,7 +97,7 @@ const EditRankingPage = () => {
     if (autoSave || size === "small") {
       updateCustomRanking({
         rankings: playersCopy,
-        id: customRanking._id
+        id: customRanking.customRanking._id
       })
     } else {
       setHasChanges(true)
@@ -137,15 +135,21 @@ const EditRankingPage = () => {
     if (autoSave || size === "small") {
       updateCustomRanking({
         rankings: playersCopy,
-        id: customRanking._id
+        id: customRanking.customRanking._id
       })
     } else {
       setHasChanges(true)
     }
   }
 
+  const addDraftable = (player) => {
+    setUnusedPlayers(unusedPlayers.filter(el => el._id !== player._id))
+    setPlayers([...players, player])
+  }
+
   const deleteDraftable = (index) => {
-    const player = players[index]
+    console.log(index)
+    const player = filterPlayers(players)[index]
     const tier = player?.tier
     if (tier) {
       let playersCopy = [...players].filter(x => x?.tier !== tier).map(x => {
@@ -159,19 +163,21 @@ const EditRankingPage = () => {
       if (autoSave || size === "small") {
         updateCustomRanking({
           rankings: playersCopy,
-          id: customRanking._id
+          id: customRanking.customRanking._id
         })
       } else {
         setHasChanges(true)
       }
     } else {
+      const playerIndex = players.findIndex(x => x._id === player._id)
       let playersCopy = [...players]
-      playersCopy.splice(index, 1)
+      playersCopy.splice(playerIndex, 1)
       setPlayers(playersCopy)
+      setUnusedPlayers([...unusedPlayers, player])
       if (autoSave || size === "small") {
         updateCustomRanking({
           rankings: playersCopy,
-          id: customRanking._id
+          id: customRanking.customRanking._id
         })
       } else {
         setHasChanges(true)
@@ -225,14 +231,14 @@ const EditRankingPage = () => {
   }
 
   const cancelEdit = () => {
-    setPlayers(customRanking.rankings)
+    setPlayers(customRanking.customRanking.rankings)
     setHasChanges(false)
     setShowAddTier(false)
   }
 
   const saveEdit = () => {
     updateCustomRanking({
-      id: customRanking._id,
+      id: customRanking.customRanking._id,
       rankings: players
     })
     setHasChanges(false)
@@ -352,12 +358,12 @@ const EditRankingPage = () => {
             onChange={handleChangeTitle}
             onKeyDown={handleKeyDown}
             className={`title-input-text${editingTitle ? " selected" : " unselected"}`}
-            value={!editingTitle ? customRanking?.title : title} />
+            value={!editingTitle ? customRanking?.customRanking?.title : title} />
         </div>
         <div className='updated-wrapper'>
-          <p className='last-update'>Last updated {new Date(customRanking?.updatedAt).getMonth() + 1}
-            /{new Date(customRanking?.updatedAt).getDate()}
-            /{new Date(customRanking?.updatedAt).getFullYear()}
+          <p className='last-update'>Last updated {new Date(customRanking?.customRanking?.updatedAt).getMonth() + 1}
+            /{new Date(customRanking?.customRanking?.updatedAt).getDate()}
+            /{new Date(customRanking?.customRanking?.updatedAt).getFullYear()}
           </p>
         </div>
         <p className='description'>Drag and drop players and tiers, or type on their rank and hit enter to adjust rankings.</p>
@@ -407,7 +413,9 @@ const EditRankingPage = () => {
                 selectedPos={selectedPosition}
                 onChange={setSelectedPosition}
                 parentRef={addPlayersRef} />
-              <AddPlayersList players={players} />
+              <AddPlayersList 
+                players={unusedPlayers}
+                addPlayer={addDraftable} />
             </div>
           </div>
         }
@@ -446,7 +454,9 @@ const EditRankingPage = () => {
                   selectedPos={selectedPosition}
                   onChange={setSelectedPosition}
                   parentRef={addPlayersRef} />
-                <AddPlayersList players={players} />
+                <AddPlayersList 
+                  players={unusedPlayers}
+                  addPlayer={addDraftable} />
               </div>
             }
           </>
