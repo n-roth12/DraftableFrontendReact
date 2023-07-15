@@ -45,7 +45,7 @@ const MobileNav = () => {
   return (
     <header className={`mobile-nav${!atTop ? " shadow" : " no-shadow"}`}>
       <nav>
-        <img onClick={() => navigate('/')} src="/draftabl_word_blue_2.svg" alt="image" />
+        <img className='logo' onClick={() => navigate('/')} src="/draftabl_word_blue_2.svg" alt="image" />
         <div className='burger-menu' onClick={updateMenu}>
           <div className={burgerClass}></div>
           <div className={burgerClass}></div>

@@ -29,7 +29,8 @@
     }
 
     .tab-btns-wrapper {
-        margin-bottom: 0.6rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
         display: flex;
     }
 
@@ -39,6 +40,7 @@
         font-weight: 600;
         font-size: 1rem;
         padding: 0.4rem;
+        color: black;
         flex: 1;
         cursor: pointer;
     }

@@ -97,12 +97,12 @@ const EditRankingPage = () => {
 
   useEffect(() => {
     if (!hasRenderedPositions) {
-      const pos = Array.from(getPositions(players))
+      const pos = Array.from(getPositions(customRanking?.aggregatedRanking?.rankings))
       if (!pos?.length) return
       setPositions(pos)
       setHasRenderedPositions(true)
     }
-  }, [players, hasRenderedPositions])
+  }, [customRanking, hasRenderedPositions])
 
   const handleEditRank = (playerId, newIndex) => {
     const r = filterPlayers(players, selectedPosition).filter(x => !x?.tier)[newIndex]

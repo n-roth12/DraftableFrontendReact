@@ -5,16 +5,20 @@
     top: 0;
     z-index: 2;
 
+    .logo {
+        cursor: pointer;
+    }
+
     * {
         margin: 0;
         box-sizing: 0;
     }
 
     nav {
-        height: 1.5em;
+        height: 1.5rem;
         display: flex;
         justify-content: space-between;
-        padding: 1em;
+        padding: 1rem;
     }
 
     .burger-menu {
@@ -35,7 +39,7 @@
 
     .menu {
         width: 100%;
-        background-color: var(--text-color-2);
+        background-color: black;
         position: absolute;
         z-index: 3;
         box-shadow: 0 10px 20px -10px var(--grey);
@@ -70,15 +74,16 @@
     }
 
     .mobile-nav-link {
-        color: black;
-        padding: 1.1em;
+        color: white;
+        padding: 1.4em;
         font-weight: 700;
         border: none;
-        border-bottom: 1px solid var(--lightgrey);
+        border-top: 1px solid var(--grey);
         display: flex;
         justify-content: space-between;
         align-items: center;
         text-decoration: none;
+        cursor: pointer;
     }
 }
 

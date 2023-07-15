@@ -26,7 +26,6 @@ const CustomRankingsList = ({ rankings }) => {
             <HiDotsHorizontal className='rankings-options-btn' />
             <div className={`${showOptionsDropdown !== ranking._id ? "hidden" : "dropdown-content"}`}>
               <button onClick={() => navigate(`/custom/${ranking._id}`)}>Edit</button>
-              <button>Export</button>
               <button onClick={() => deleteCustomRanking({ id: ranking._id })}>Delete</button>
             </div>
           </div>
