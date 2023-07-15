@@ -29,6 +29,7 @@ const EditRankingPage = () => {
   const [title, setTitle] = useState('')
   const [positions, setPositions] = useState([])
   const [selectedPosition, setSelectedPosition] = useState("ALL")
+  const [addPlayersSelectedPosition, setAddPlayersSelectedPosition] = useState("ALL")
   const [hasRenderedPositions, setHasRenderedPositions] = useState(false)
   const addPlayersRef = useRef(null)
   const rankingsOptionsRef = useRef(null)
@@ -58,6 +59,8 @@ const EditRankingPage = () => {
     setTitle(customRanking?.customRanking?.title || '')
     setInputTitle(customRanking?.customRanking?.title || '')
     setPlayers(customRanking?.customRanking?.rankings)
+    console.log("test")
+    getUnusedPlayers(customRanking?.aggregatedRanking?.rankings, customRanking?.customRanking?.rankings)
     // if (!unusedPlayers?.length) {
     //   getUnusedPlayers(customRanking?.aggregatedRanking?.rankings, customRanking?.customRanking?.rankings)
     // }
@@ -107,7 +110,7 @@ const EditRankingPage = () => {
   }, [players, hasRenderedPositions])
 
   const handleEditRank = (playerId, newIndex) => {
-    const r = filterPlayers(players).filter(x => !x?.tier)[newIndex]
+    const r = filterPlayers(players, selectedPosition).filter(x => !x?.tier)[newIndex]
     const sourceIndex = players.findIndex(x => x._id === playerId)
     const destIndex = players.findIndex(x => x._id === r._id)
     if (sourceIndex === destIndex) return
@@ -125,10 +128,10 @@ const EditRankingPage = () => {
     }
   }
 
-  const filterPlayers = (x) => {
-    const res = x.filter(player =>
-      player?.position === selectedPosition ||
-      (selectedPosition === "ALL" && (!player?.tier || player?.position === "ALL"))
+  const filterPlayers = (_players, _selectedPosition) => {
+    const res = _players.filter(player =>
+      player?.position === _selectedPosition ||
+      (_selectedPosition === "ALL" && (!player?.tier || player?.position === "ALL"))
     )
     return res
   }
@@ -136,8 +139,8 @@ const EditRankingPage = () => {
   const handleOnDragEnd = (result) => {
     if (!result.destination) return
     if (result.source.index === result.destination.index) return
-    const player = filterPlayers(players)[result.source.index]
-    const r = filterPlayers(players)[result.destination.index]
+    const player = filterPlayers(players, selectedPosition)[result.source.index]
+    const r = filterPlayers(players, selectedPosition)[result.destination.index]
     const sourceIndex = players.findIndex(x => x._id === player._id)
     const destIndex = players.findIndex(x => x._id === r._id)
     if (player?.tier) {
@@ -164,6 +167,7 @@ const EditRankingPage = () => {
   }
 
   const addDraftable = (player) => {
+    console.log(player)
     setUnusedPlayers(unusedPlayers.filter(el => el._id !== player._id))
     const playersCopy = [...players]
     setPlayers([...playersCopy, player])
@@ -178,7 +182,7 @@ const EditRankingPage = () => {
   }
 
   const deleteDraftable = (index) => {
-    const player = filterPlayers(players)[index]
+    const player = filterPlayers(players, selectedPosition)[index]
     const tier = player?.tier
     if (tier) {
       let playersCopy = [...players].filter(x => x?.tier !== tier).map(x => {
@@ -340,7 +344,7 @@ const EditRankingPage = () => {
               <Droppable droppableId="players">
                 {(provided) => (
                   <section {...provided.droppableProps} ref={provided.innerRef} >
-                    {filterPlayers(addRankings(players)).map((player, index) => (
+                    {filterPlayers(addRankings(players), selectedPosition).map((player, index) => (
                       <Draggable
                         key={player?.name || `${player?.position}-${player?.tier?.toString()}`}
                         draggableId={player?.name || `${player?.position}-${player?.tier?.toString()}`}
@@ -471,11 +475,11 @@ const EditRankingPage = () => {
               <h3>Add Players</h3>
               <PositionFilter
                 positions={positions}
-                selectedPos={selectedPosition}
-                onChange={setSelectedPosition}
+                selectedPos={addPlayersSelectedPosition}
+                onChange={setAddPlayersSelectedPosition}
                 parentRef={addPlayersRef} />
               <AddPlayersList
-                players={unusedPlayers}
+                players={filterPlayers(unusedPlayers, addPlayersSelectedPosition)}
                 addPlayer={addDraftable} />
             </div>
           </div>
@@ -517,11 +521,11 @@ const EditRankingPage = () => {
               <div className='add-players-wrapper' ref={addPlayersRef}>
                 <PositionFilter
                   positions={positions}
-                  selectedPos={selectedPosition}
-                  onChange={setSelectedPosition}
+                  selectedPos={addPlayersSelectedPosition}
+                  onChange={setAddPlayersSelectedPosition}
                   parentRef={addPlayersRef} />
                 <AddPlayersList
-                  players={unusedPlayers}
+                  players={filterPlayers(unusedPlayers, addPlayersSelectedPosition)}
                   addPlayer={addDraftable} />
               </div>
             }
