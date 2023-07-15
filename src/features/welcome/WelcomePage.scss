@@ -1,7 +1,7 @@
 .welcome-page {
 
     main {
-        width: 800px;
+        overflow-x: hidden;
     }
 
     .hero {
@@ -111,7 +111,7 @@
 
     .btns-section {
         padding-top: 4rem;
-        
+
         .btns {
             display: flex;
             flex-direction: row;
