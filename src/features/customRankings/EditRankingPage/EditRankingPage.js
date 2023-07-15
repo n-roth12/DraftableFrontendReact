@@ -59,15 +59,10 @@ const EditRankingPage = () => {
     setTitle(customRanking?.customRanking?.title || '')
     setInputTitle(customRanking?.customRanking?.title || '')
     setPlayers(customRanking?.customRanking?.rankings)
-    console.log("test")
     getUnusedPlayers(customRanking?.aggregatedRanking?.rankings, customRanking?.customRanking?.rankings)
-    // if (!unusedPlayers?.length) {
-    //   getUnusedPlayers(customRanking?.aggregatedRanking?.rankings, customRanking?.customRanking?.rankings)
-    // }
   }, [customRanking])
 
   const getUnusedPlayers = (playersList, rankingsList) => {
-    console.log("test")
     if (playersList) {
       const temp = playersList.filter(x => {
         return !rankingsList.some(y => {
@@ -167,7 +162,6 @@ const EditRankingPage = () => {
   }
 
   const addDraftable = (player) => {
-    console.log(player)
     setUnusedPlayers(unusedPlayers.filter(el => el._id !== player._id))
     const playersCopy = [...players]
     setPlayers([...playersCopy, player])

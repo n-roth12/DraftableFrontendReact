@@ -1,3 +1,159 @@
 .welcome-page {
-    
+
+    main {
+        width: 800px;
+    }
+
+    .hero {
+        background-color: black;
+        color: white;
+        display: flex;
+        justify-content: center;
+
+        .hero-inner {
+            padding: 5rem 2rem 5rem 2rem;
+            max-width: 1100px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-family: var(--orbitron-font);
+        }
+
+        .hero-btn {
+            text-decoration: none;
+            width: fit-content;
+            border: none;
+            cursor: pointer;
+            padding: 0.6rem 0.6rem 0.6rem 1rem;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            border-radius: 500px;
+            background-color: var(--btn-blue-1);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0px 0px 5px -1px var(--table-header-color);
+
+            .arrow {
+                padding-left: 0.3rem;
+                padding-right: 0.7rem;
+                transition: 0.2s padding ease-in-out;
+            }
+        }
+
+        .hero-btn:hover {
+            background-color: var(--submit-btn-hover-light-1);
+
+            .arrow {
+                padding-left: 0.7rem;
+                padding-right: 0.3rem;
+            }
+
+        }
+
+        .hero-description {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            line-height: 1.8rem;
+            color: var(--table-header-color);
+        }
+    }
+
+    .features-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .features-list {
+            width: 100%;
+            padding: 3rem 1rem 2rem 1rem;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            margin-right: 2rem;
+            text-align: center;
+            flex: 1 1 300px;
+        }
+
+        .features {
+            flex: 1 1 300px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        li {
+            line-height: 1.2rem;
+        }
+
+        .feature {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+            .icon {
+                font-size: 2rem;
+                margin-right: 0.6rem;
+            }
+        }
+    }
+
+    .btns-section {
+        padding-top: 4rem;
+        
+        .btns {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            width: fit-content;
+            padding: 0.8rem 0.8rem 0.8rem 1.2rem;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow-1);
+            border: 1px solid var(--lightgrey);
+            margin: 1rem;
+            font-weight: 600;
+
+            .arrow {
+                padding-left: 0.3rem;
+                padding-right: 0.7rem;
+                transition: 0.2s padding ease-in-out;
+            }
+        }
+
+        .btn:hover {
+
+            .arrow {
+                padding-left: 0.7rem;
+                padding-right: 0.3rem;
+            }
+        }
+
+        .register-btn {
+            background-color: var(--btn-blue-1);   
+             color: white;
+        }
+
+        .rankings-btn {
+            background-color: var(--table-header-color);
+            color: black;
+        }
+    }
 }

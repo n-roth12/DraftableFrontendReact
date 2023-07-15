@@ -5,7 +5,7 @@ export const customRankingsApiSlice = apiSlice.injectEndpoints({
         getUserCustomRankings: builder.query({
             query: (userId) => `/custom?user=${userId}`,
             keepUnusedDataFor: 5,
-            providesTags: ['CustomRankings']
+            providesTags: ['CustomRanking']
         }),
         getCustomRankingById: builder.query({
             query: (rankingId) => `/custom/${rankingId}`,

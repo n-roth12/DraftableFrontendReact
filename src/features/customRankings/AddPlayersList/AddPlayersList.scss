@@ -37,6 +37,7 @@
         flex-direction: row;
         justify-content: space-between;
         font-size: 0.8rem;
+        user-select: none;
 
         .name-wrapper {
             display: flex;

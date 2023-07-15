@@ -11,6 +11,7 @@ import PersistLogin from './features/auth/PersistLogin'
 import AccountPage from './features/acount/AccountPage/AccountPage'
 import ContactPage from './features/contact/ContactPage/ContactPage'
 import FourOFourPage from './components/FourOFourPage/FourOFourPage'
+import WelcomePage from './features/welcome/WelcomePage'
 import { ScrollToTop } from './utilities/ScrollToTop'
 
 function App() {
@@ -21,7 +22,8 @@ function App() {
         <Route element={<PersistLogin />}>
 
           <Route path="/" element={<Layout />} >
-            <Route index element={<RankingsPage />} />
+            <Route index element={<WelcomePage />} />
+            <Route path="rankings" element={<RankingsPage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
             <Route path="rankings" element={<RankingsPage />} />

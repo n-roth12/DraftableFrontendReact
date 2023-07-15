@@ -10,9 +10,10 @@ const Footer = () => {
         <img
           className='footer-logo'
           onClick={() => navigate('/rankings')}
-          src="/draftabl_word_blue.svg"
+          src="/draftabl_word_blue_2.svg"
           alt="image" />
         <div className='footer-links'>
+          <Link className='footer-link' to="/">About</Link>
           <Link className='footer-link' to="/account">Account</Link>
           <Link className='footer-link' to="/contact">Contact</Link>
           {/* <Link className='footer-link' to="">Terms of Use</Link>
