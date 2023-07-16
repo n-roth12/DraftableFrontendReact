@@ -1,13 +1,20 @@
 import './ContactForm.scss'
 import { TextField, MenuItem } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Ellipsis } from 'react-awesome-spinners'
+import { selectCurrentUser } from '../../auth/authSlice'
+import { useSelector } from 'react-redux'
 
 const ContactForm = () => {
   const [email, setEmail] = useState('')
   const [subject, setSubject] = useState('')
   const [body, setBody] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const userEmail = useSelector(selectCurrentUser)
+
+  useEffect(() => {
+    setEmail(userEmail)
+  }, [userEmail])
 
   const handleChangeEmail = (e) => setEmail(e.target.value)
   const handleChangeSubject = (e) => setSubject(e.target.value)
@@ -25,9 +32,10 @@ const ContactForm = () => {
       <TextField
         className='input'
         variant='outlined'
-        label='Enter Email'
+        label={userEmail ? userEmail : 'Enter Email'}
         onChange={handleChangeEmail}
         size='medium'
+        disabled={userEmail ? true : false}
       />
       <TextField
         className="input"

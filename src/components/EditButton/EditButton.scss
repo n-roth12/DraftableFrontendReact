@@ -3,7 +3,7 @@
     background-color: var(--btn-blue-1);
     color: white;
     cursor: pointer;
-    padding: 0.6rem;
+    padding: 0.6rem 0.7rem 0.6rem 0.7rem;
     border-radius: 0.4rem;
     height: fit-content;
     display: flex;
@@ -13,7 +13,7 @@
     font-weight: 600;
 }
 .edit-button:hover {
-    background-color: var(--link-color-hover-1);
+    background-color: var(--submit-btn-hover-light-1);
 }
 
 @media (min-width: 500px) {

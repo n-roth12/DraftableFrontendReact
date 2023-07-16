@@ -83,7 +83,7 @@ const CustomRankingsPage = () => {
         <div className='rankings-options'>
           <button
             className='edit-button'
-            onClick={() => setShowRankingsDialog(true)}>Create Ranking <FaAngleRight /></button>
+            onClick={() => setShowRankingsDialog(true)}>Create Ranking <FaAngleRight className='new-icon' /></button>
         </div>
         {rankingsContent}
       </main>

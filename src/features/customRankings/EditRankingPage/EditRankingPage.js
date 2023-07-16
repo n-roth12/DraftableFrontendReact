@@ -380,7 +380,7 @@ const EditRankingPage = () => {
             </p>
             :
             <p className='empty-description'>
-              Select Add Players to add a player to custom rankings. 
+              Select Add Players to add a player to custom rankings.
             </p>
 
         }
@@ -427,6 +427,7 @@ const EditRankingPage = () => {
               <div className='save-wrapper'>
                 <div className='save-wrapper-inner'>
                   <h3>Rankings</h3>
+                  <p className='length-indicator'>{players?.length}/{customRanking?.aggregatedRanking?.rankings?.length}</p>
                   <Switch
                     checked={autoSave}
                     onChange={handleChangeAutosave}
@@ -435,13 +436,13 @@ const EditRankingPage = () => {
                   {!autoSave &&
                     <>
                       <button
-                        className={`cancel-btn${!hasChanges ? ' disabled' : ''}`}
-                        onClick={cancelEdit}
-                        disabled={!hasChanges}>Cancel</button>
-                      <button
                         className={`submit-btn${!hasChanges ? ' disabled' : ''}`}
                         onClick={saveEdit}
                         disabled={!hasChanges}>Save</button>
+                      <button
+                        className={`cancel-btn${!hasChanges ? ' disabled' : ''}`}
+                        onClick={cancelEdit}
+                        disabled={!hasChanges}>Cancel</button>
                     </>
                   }
                 </div>
@@ -484,7 +485,11 @@ const EditRankingPage = () => {
               <button
                 onClick={() => setActiveTab("rankings")}
                 className={`tab-btn ${activeTab === "rankings" ? "active" : ""}`}
-              >Rankings</button>
+              >Rankings <span 
+                className='small-length-indicator'>
+                  {players?.length}/{customRanking?.aggregatedRanking?.rankings?.length}
+                </span>
+              </button>
               <button
                 onClick={() => setActiveTab("players")}
                 className={`tab-btn ${activeTab === "players" ? "active" : ""}`}

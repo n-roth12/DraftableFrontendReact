@@ -5,23 +5,70 @@ import { Tooltip } from '@mui/material'
 
 const Rankings = ({ players }) => {
   const [sortColumn, setSortColumn] = useState("Rank")
-  const [sortAsc, setSortAsc] = useState(true)
+  const [sortDesc, setSortDesc] = useState(true)
+  const [playersList, setPlayersList] = useState([...players])
 
   const toggleSort = (col) => {
     if (sortColumn === col) {
-      setSortAsc(!sortAsc)
+      setSortDesc(!sortDesc)
     } else {
       setSortColumn(col)
-      setSortAsc(true)
+      setSortDesc(true)
     }
   }
 
   const getSortIcon = (col) => {
     if (sortColumn === col) {
-      if (sortAsc === true) {
+      if (sortDesc === true) {
         return <FaAngleDown className='angle-icon' />
       }
       return <FaAngleUp className='angle-icon' />
+    }
+  }
+
+  const sortFunction = (a, b) => {
+    if (sortColumn === "Rank") {
+      if (sortDesc) {
+        return a.rank - b.rank
+      } else {
+        return b.rank - a.rank
+      }
+    } else if (sortColumn === "Name") {
+      if (sortDesc) {
+        return a.name.localeCompare(b.name)
+      } else {
+        return b.name.localeCompare(a.name)
+      }
+    } else if (sortColumn === "Pos") {
+      if (sortDesc) {
+        return a.position.localeCompare(b.position)
+      } else {
+        return b.position.localeCompare(a.position)
+      }
+    } else if (sortColumn === "Team") {
+      if (sortDesc) {
+        if (!a.team) {
+          return 1000
+        }
+        return a.team?.localeCompare(b.team)
+      } else {
+        if (!b.team) {
+          return -1000
+        }
+        return b.team?.localeCompare(a.team)
+      }
+    } else if (sortColumn === "Bye") {
+      if (sortDesc) {
+        if (!a.bye) {
+          return 1000
+        }
+        return a.bye - b.bye
+      } else {
+        if (!b.bye) {
+          return -1000
+        }
+        return b.bye - a.bye
+      }
     }
   }
 
@@ -37,9 +84,11 @@ const Rankings = ({ players }) => {
         </tr>
       </thead>
       <tbody>
-        {players.map((player, index) =>
+        {playersList
+          ?.sort(sortFunction)
+          .map((player, index) =>
           <tr key={index}>
-            <td>{index + 1}</td>
+            <td>{player.rank}</td>
             <td className='name'>{player.name}</td>
             <td>{player.position}</td>
             <td>{player.team}</td>

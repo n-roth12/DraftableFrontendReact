@@ -4,8 +4,10 @@
     h1 {
         margin-bottom: 0.8rem;
     }
+
     .description {
         margin-bottom: 0.8rem;
+        color: var(--grey);
     }
 
     .options-wrapper {
@@ -18,21 +20,53 @@
             flex-direction: row;
             width: 100%;
             justify-content: space-between;
-            flex-wrap: wrap;
+            flex-wrap: wrap-reverse;
         }
 
-        .select-filter, .position-filter, .edit-button {
+        .select-filter,
+        .position-filter,
+        .edit-button {
             margin-bottom: 0.5rem;
         }
 
-        .search, .position-filter, .edit-button {
+        .search,
+        .position-filter,
+        .edit-button {
             align-self: flex-end;
         }
 
         .edit-button {
-            justify-self: flex-end;
+            border: none;
+            background-color: var(--btn-blue-1);
+            color: white;
+            cursor: pointer;
+            padding: 0.7rem 0rem 0.7rem 0.9rem;
+            border-radius: 6px;
+            height: fit-content;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: var(--box-shadow-1);
+
+            .new-icon {
+                padding-left: 0.1rem;
+                padding-right: 0.9rem;
+                transition: 0.2s padding ease-in-out;
+            }
+        }
+
+        .edit-button:hover {
+            background-color: var(--submit-btn-hover-light-1);
+
+            .new-icon {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
         }
     }
+
     .rankings-table {
         width: 100%;
     }

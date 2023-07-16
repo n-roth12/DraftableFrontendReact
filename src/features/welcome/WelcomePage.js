@@ -28,7 +28,7 @@ const WelcomePage = () => {
             <h2>Current Features</h2>
             <div className='features'>
               <ul>
-                <li className='feature'><TbDragDrop className='icon' /> Drag-and-drop + click and type to rerank</li>
+                <li className='feature'><TbDragDrop className='icon' /> Drag-and-drop + click-and-type to rerank</li>
                 <li className='feature'><BiCrown className='icon' /> Custom positional and overall tiers</li>
                 <li className='feature'><FaListOl className='icon' /> Create and save multiple rankings</li>
               </ul>

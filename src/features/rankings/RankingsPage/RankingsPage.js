@@ -123,7 +123,7 @@ const RankingsPage = () => {
             <button
               className='edit-button'
               onClick={customizeRanking}>
-              Customize <FaAngleRight />
+              Customize <FaAngleRight className='new-icon' />
             </button>
           </div>
         </div>

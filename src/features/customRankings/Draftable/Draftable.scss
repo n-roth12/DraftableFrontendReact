@@ -5,7 +5,7 @@
 
     .drag-icon,
     .delete-icon {
-        font-size: 1.5em;
+        font-size: 1.5rem;
     }
 
     .delete-icon:hover {
@@ -159,6 +159,7 @@
     .table-header {
         .name-wrapper {
             flex-direction: row;
+            align-items: center;
         }
     }
 }
@@ -171,7 +172,7 @@
 
     .draftable,
     .table-header {
-        font-size: 9pt;
+        font-size: 0.9rem;
 
         .rank-wrapper {
             flex: 2;

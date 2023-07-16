@@ -8,8 +8,15 @@
     padding: 10px;
     background-color: white;
 
-
     .input {
         margin: 10px;
+        background-color: white;
+    }
+}
+
+@media (max-width: 499px) {
+    .contact-form {
+        background: none;
+        box-shadow: none;
     }
 }

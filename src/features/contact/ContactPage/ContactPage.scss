@@ -1,9 +1,14 @@
 .contact-page {
+    h1 {
+        margin-top: 0.5rem;
+    }
+
     .description {
         margin-top: 20px;
         margin-bottom: 30px;
-        line-height: 1.2em;
+        line-height: 1.4em;
     }
+    
     .submit-btn {
         background-color: var(--btn-blue-1);
         color: white;
