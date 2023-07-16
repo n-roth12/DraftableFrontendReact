@@ -2,10 +2,10 @@ import '../Draftable/Draftable.scss'
 import { MdDragIndicator } from 'react-icons/md'
 import { AiOutlineMinusCircle } from 'react-icons/ai'
 
-const Tier = ({ tier, provided, index, onDelete }) => {
+const Tier = ({ tier, provided, index, onDelete, isBeingDragged }) => {
   return (
     <div
-      className={`tier ${tier.tier === 1 ? 'top-tier' : ''}`}
+      className={`tier${tier.tier === 1 ? ' top-tier' : ''}${isBeingDragged ? ' selected' : ''}`}
       {...provided?.draggableProps}
       {...provided?.dragHandleProps}
       ref={provided?.innerRef}>

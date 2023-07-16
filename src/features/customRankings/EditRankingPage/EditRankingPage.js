@@ -350,6 +350,7 @@ const EditRankingPage = () => {
                               provided={provided}
                               tier={player}
                               onDelete={deleteDraftable}
+                              isBeingDragged={snapshot.isDragging}
                             />
                             :
                             <Draftable

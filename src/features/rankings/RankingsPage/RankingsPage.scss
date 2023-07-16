@@ -2,12 +2,14 @@
     width: 100%;
 
     h1 {
+        margin-top: 0.6rem;
         margin-bottom: 0.8rem;
     }
 
     .description {
         margin-bottom: 0.8rem;
         color: var(--grey);
+        line-height: 1.5rem;
     }
 
     .options-wrapper {

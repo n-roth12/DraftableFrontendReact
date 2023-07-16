@@ -34,7 +34,7 @@ const AccountPage = () => {
   }] = useLogoutMutation()
 
   useEffect(() => {
-    if (isSuccess) navigate('/login')
+    if (isSuccessLogout) navigate('/login')
 }, [isSuccessLogout, navigate])
 
   let content

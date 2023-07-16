@@ -104,7 +104,8 @@ const RankingsPage = () => {
       <Nav />
       <main>
         <h1>2023 NFL Fantasy Draft Rankings</h1>
-        <p className='description'>Select Customize to edit these rankings.</p>
+        <p className='description'>Our rankings are an index of expert consensus rankings
+          across the industry and are updated daily. <br/> Select Customize to edit these rankings.</p>
         <div className="options-wrapper">
           {rankingsTemplates && rankingsTemplates.length > 0 &&
             <SelectFilter

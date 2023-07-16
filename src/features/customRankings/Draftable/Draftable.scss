@@ -103,10 +103,6 @@
     }
 }
 
-.tier:not(.top-tier):hover {
-    background-color: var(--btn-blue-hover-1);
-}
-
 .tier {
     background-color: var(--btn-blue-1);
     border-top: 1px solid var(--btn-blue-1);
@@ -202,5 +198,10 @@
 
 .draftable.selected {
     background-color: var(--table-header-color);
+    outline: 2px solid var(--table-header-color);
+}
+
+.tier.selected {
+    background-color: var(--btn-blue-hover-1);
     outline: 2px solid var(--table-header-color);
 }
