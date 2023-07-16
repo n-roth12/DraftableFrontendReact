@@ -3,16 +3,16 @@ import { MdDragIndicator } from 'react-icons/md'
 import { AiOutlineMinusCircle } from 'react-icons/ai'
 import { useEffect, useState } from 'react'
 
-const Draftable = ({ player, provided, index, onDelete, handleEditRank, isPositionFiltered }) => {
+const Draftable = ({ player, provided, index, onDelete, handleEditRank, isPositionFiltered, isBeingDragged }) => {
 
   const [editingRank, setEditingRank] = useState(false)
   const [inputRank, setInputRank] = useState(!isPositionFiltered ? player._rank : player._posRank)
 
   useEffect(() => {
-    setInputRank(!isPositionFiltered ? player._rank : player._posRank)    
+    setInputRank(!isPositionFiltered ? player._rank : player._posRank)
   }, [index])
 
-  const handleChangeRank = (e) => setInputRank(e.target.value) 
+  const handleChangeRank = (e) => setInputRank(e.target.value)
 
   const nameSplit = (name) => {
     const names = name.split(/ (.*)/s)
@@ -44,7 +44,7 @@ const Draftable = ({ player, provided, index, onDelete, handleEditRank, isPositi
   }, [])
 
   return (
-    <div className='draftable'
+    <div className={`draftable ${isBeingDragged ? "selected" : ""}`}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
       ref={provided.innerRef}>
@@ -55,12 +55,12 @@ const Draftable = ({ player, provided, index, onDelete, handleEditRank, isPositi
         />
       </div>
       <div className='rank-wrapper'>
-        <input 
-          onBlur={cancelEditRank} 
+        <input
+          onBlur={cancelEditRank}
           onFocus={() => setEditingRank(true)}
           onChange={handleChangeRank}
           onKeyDown={handleKeyDown}
-          className={`rank-input${editingRank ? " selected" : " unselected"}`} 
+          className={`rank-input${editingRank ? " selected" : " unselected"}`}
           value={!editingRank ? (!isPositionFiltered ? player._rank : player._posRank) : inputRank} />
       </div>
       {nameSplit(player.name)}

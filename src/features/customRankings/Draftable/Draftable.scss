@@ -103,10 +103,6 @@
     }
 }
 
-.draftable:hover {
-    background-color: var(--table-header-color);
-}
-
 .tier:not(.top-tier):hover {
     background-color: var(--btn-blue-hover-1);
 }
@@ -202,4 +198,9 @@
             justify-content: center;
         }
     }
+}
+
+.draftable.selected {
+    background-color: var(--table-header-color);
+    outline: 2px solid var(--table-header-color);
 }

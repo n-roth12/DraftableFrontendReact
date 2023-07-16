@@ -336,14 +336,14 @@ const EditRankingPage = () => {
             <Tier tier={{ "tier": 1, "position": selectedPosition !== "ALL" && selectedPosition }} />
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId="players">
-                {(provided) => (
+                {(provided, snapshot) => (
                   <section {...provided.droppableProps} ref={provided.innerRef} >
                     {filterPlayers(addRankings(players), selectedPosition).map((player, index) => (
                       <Draggable
                         key={player?.name || `${player?.position}-${player?.tier?.toString()}`}
                         draggableId={player?.name || `${player?.position}-${player?.tier?.toString()}`}
                         index={index}>
-                        {(provided) => (
+                        {(provided, snapshot) => (
                           player?.tier ?
                             <Tier
                               index={index}
@@ -362,6 +362,7 @@ const EditRankingPage = () => {
                               showAddTier={showAddTier}
                               setEditingIndex={setEditingIndex}
                               editingIndex={editingIndex}
+                              isBeingDragged={snapshot.isDragging}
                               isPositionFiltered={selectedPosition !== "ALL"}
                             />
                         )}
