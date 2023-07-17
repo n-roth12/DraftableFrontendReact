@@ -36,6 +36,7 @@ const EditRankingPage = () => {
   const mainRef = useRef(null)
   const [activeTab, setActiveTab] = useState("rankings")
   const [unusedPlayers, setUnusedPlayers] = useState([])
+  const [prevPlayers, setPrevPlayers] = useState([])
   const [players, setPlayers] = useState([])
   const [showClearRankings, setShowClearRankings] = useState(false)
   const [inputTitle, setInputTitle] = useState()
@@ -58,7 +59,8 @@ const EditRankingPage = () => {
   useEffect(() => {
     setTitle(customRanking?.customRanking?.title || '')
     setInputTitle(customRanking?.customRanking?.title || '')
-    setPlayers(customRanking?.customRanking?.rankings)
+    setPlayers(customRanking?.customRanking?.rankings || [])
+    setPrevPlayers(customRanking?.customRanking?.rankings || [])
     getUnusedPlayers(customRanking?.aggregatedRanking?.rankings, customRanking?.customRanking?.rankings)
   }, [customRanking])
 
@@ -66,7 +68,6 @@ const EditRankingPage = () => {
     if (playersList) {
       const temp = playersList.filter(x => {
         return !rankingsList.some(y => {
-          // console.log(y._id === x._id)
           return y.name === x.name
         })
       })
@@ -112,15 +113,25 @@ const EditRankingPage = () => {
     const playersCopy = [...players]
     const [reorderedItem] = playersCopy.splice(sourceIndex, 1)
     playersCopy.splice(destIndex, 0, reorderedItem)
-    setPlayers(playersCopy)
+    saveChanges(playersCopy)
+  }
+  
+  const saveChanges = (playersToSave) => {
+    setPlayers(playersToSave)
     if (autoSave || size === "small") {
-      updateCustomRanking({
-        rankings: playersCopy,
-        id: customRanking.customRanking._id
-      })
+      postChanges(playersToSave)
     } else {
       setHasChanges(true)
     }
+  }
+
+  const postChanges = (playersToSave) => {
+    updateCustomRanking({
+      id: customRanking.customRanking._id,
+      rankings: playersToSave
+    })
+    setPrevPlayers([...playersToSave])
+    setHasChanges(false)
   }
 
   const filterPlayers = (_players, _selectedPosition) => {
@@ -150,29 +161,14 @@ const EditRankingPage = () => {
     const playersCopy = [...players]
     const [reorderedItem] = playersCopy.splice(sourceIndex, 1)
     playersCopy.splice(destIndex, 0, reorderedItem)
-    setPlayers(playersCopy)
-    if (autoSave || size === "small") {
-      updateCustomRanking({
-        rankings: playersCopy,
-        id: customRanking.customRanking._id
-      })
-    } else {
-      setHasChanges(true)
-    }
+    saveChanges(playersCopy)
   }
 
   const addDraftable = (player) => {
     setUnusedPlayers(unusedPlayers.filter(el => el._id !== player._id))
-    const playersCopy = [...players]
-    setPlayers([...playersCopy, player])
-    if (autoSave || size === "small") {
-      updateCustomRanking({
-        rankings: [...playersCopy, player],
-        id: customRanking.customRanking._id
-      })
-    } else {
-      setHasChanges(true)
-    }
+    const playersCopy = [...players, player]
+    setPlayers(playersCopy)
+    saveChanges(playersCopy)
   }
 
   const deleteDraftable = (index) => {
@@ -186,29 +182,13 @@ const EditRankingPage = () => {
           return x
         }
       })
-      setPlayers(playersCopy)
-      if (autoSave || size === "small") {
-        updateCustomRanking({
-          rankings: playersCopy,
-          id: customRanking.customRanking._id
-        })
-      } else {
-        setHasChanges(true)
-      }
+      saveChanges(playersCopy)
     } else {
       const playerIndex = players.findIndex(x => x._id === player._id)
       let playersCopy = [...players]
       playersCopy.splice(playerIndex, 1)
-      setPlayers(playersCopy)
-      setUnusedPlayers([...unusedPlayers, player])
-      if (autoSave || size === "small") {
-        updateCustomRanking({
-          rankings: playersCopy,
-          id: customRanking.customRanking._id
-        })
-      } else {
-        setHasChanges(true)
-      }
+      setUnusedPlayers([...unusedPlayers, player])      
+      saveChanges(playersCopy)
     }
   }
 
@@ -228,9 +208,8 @@ const EditRankingPage = () => {
       "_id": `${selectedPosition}-${tierCount + 1}`
     }]
     playersCopy.splice(lowestTierIndex + 1, 0, reorderedItem)
-    setPlayers(playersCopy)
     setShowAddTier(false)
-    setHasChanges(true)
+    saveChanges(playersCopy)
   }
 
   const addRankings = (playerList) => {
@@ -259,30 +238,14 @@ const EditRankingPage = () => {
 
   const clearRankings = () => {
     setUnusedPlayers([...unusedPlayers, ...players])
-    setPlayers([])
     setShowClearRankings(false)
-    if (autoSave || size === "small") {
-      updateCustomRanking({
-        rankings: [],
-        id: customRanking.customRanking._id
-      })
-    } else {
-      setHasChanges(true)
-    }
+    saveChanges([])
   }
 
   const cancelEdit = () => {
-    setPlayers(customRanking.customRanking.rankings)
+    setPlayers([...prevPlayers])
     setHasChanges(false)
     setShowAddTier(false)
-  }
-
-  const saveEdit = () => {
-    updateCustomRanking({
-      id: customRanking.customRanking._id,
-      rankings: players
-    })
-    setHasChanges(false)
   }
 
   const handleKeyDown = (e) => {
@@ -439,7 +402,7 @@ const EditRankingPage = () => {
                     <>
                       <button
                         className={`submit-btn${!hasChanges ? ' disabled' : ''}`}
-                        onClick={saveEdit}
+                        onClick={() => postChanges(players)}
                         disabled={!hasChanges}>Save</button>
                       <button
                         className={`cancel-btn${!hasChanges ? ' disabled' : ''}`}

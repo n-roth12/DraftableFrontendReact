@@ -7,10 +7,18 @@ import { BiCrown } from 'react-icons/bi'
 import { MdCompareArrows } from 'react-icons/md'
 import { ImStatsDots } from 'react-icons/im'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 const WelcomePage = () => {
   return (
     <div className="welcome-page">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Fantasy Football Draft Tools | Draftabl</title>
+        <meta name='description' content="Dominate your fantasy football draft with Draftabl's free draft tools.
+          Create cheat sheets, customize your rankings with tiers, and view expert draft 
+          rankings aggregated from across the industry." />
+      </Helmet>
       <Nav />
       <section className='hero'>
         <div className='hero-inner'>
