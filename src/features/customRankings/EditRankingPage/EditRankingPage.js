@@ -346,15 +346,11 @@ const EditRankingPage = () => {
             className={`title-input-text${editingTitle ? " selected" : " unselected"}`}
             value={isRankingLoading ? "Loading..." : (!editingTitle ? title : inputTitle)} />
         </div>
-        <div className='updated-wrapper'>
-          {ranking?.updatedAt &&
-            <p className='last-update'>Last updated {new Date(ranking?.updatedAt).getMonth() + 1}
-              /{new Date(ranking?.updatedAt).getDate()}
-              /{new Date(ranking?.updatedAt).getFullYear()}
-            </p>
-          }
-        </div>
         <p className='description'>Drag and drop players and tiers, or type on their rank and hit enter to adjust rankings.</p>
+        <p className='login-link-wrapper'>
+          <Link 
+          className='login-link'
+          to='/login'>Login</Link> to save custom rankings.</p>
         {size === "large" &&
           <div className='columns-wrapper'>
             <div className='rankings-wrapper'>
@@ -364,7 +360,6 @@ const EditRankingPage = () => {
                   {ranking?.rankings?.length &&
                     <p className='length-indicator'>{players?.length}/{ranking?.rankings?.length}</p>
                   }
-                  <p><Link className='login-link'>Login</Link> to save custom rankings.</p>
                 </div>
               </div>
               <div className='table-options-wrapper' ref={rankingsOptionsRef}>
@@ -401,7 +396,6 @@ const EditRankingPage = () => {
         }
         {size === "small" &&
           <>
-            <p><Link className='login-link'>Login</Link> to save custom rankings.</p>
             <div className='tab-btns-wrapper'>
               <button
                 onClick={() => setActiveTab("rankings")}

@@ -5,14 +5,19 @@
         width: 1200px;
     }
 
+    .login-link-wrapper {
+        color: var(--grey);
+        margin-bottom: 0.8rem;
+    }
+
     .login-link {
-        color: var(--btn-blue-1);
+        color: var(--link-color-1);
         cursor: pointer;
         text-decoration: none;
     }
 
     .login-link:hover {
-        color: var(--btn-blue-hover-1);
+        color: var(--link-color-hover-1);
     }
 
     .columns-wrapper {
@@ -64,7 +69,7 @@
     }
 
     .tab-btn.active {
-        background-color: var(--btn-blue-1);
+        background-color: var(--tier-color);
         color: white;
     }
 
@@ -253,7 +258,7 @@
 
     .description {
         margin-top: 0.6rem;
-        margin-bottom: 1.2rem;
+        margin-bottom: 0.4rem;
         color: var(--grey);
     }
 

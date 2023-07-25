@@ -105,10 +105,10 @@
 }
 
 .tier {
-    background-color: var(--btn-blue-1);
-    border-top: 1px solid var(--btn-blue-1);
-    border-left: 1px solid var(--btn-blue-1);
-    border-right: 1px solid var(--btn-blue-1);
+    background-color: var(--tier-color);
+    border-top: 1px solid var(--lightgrey);
+    border-left: 1px solid var(--tier-color);
+    border-right: 1px solid var(--tier-color);
     color: white;
     font-weight: 600;
 

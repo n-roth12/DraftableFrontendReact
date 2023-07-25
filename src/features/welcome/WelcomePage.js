@@ -26,7 +26,7 @@ const WelcomePage = () => {
           <p className='hero-description'>Stay ahead of your league-mates with our easily customizable player rankings.</p>
           <Link
             className='hero-btn'
-            to="/custom"
+            to="/rankings"
           >Start now <FaArrowRight className='arrow' /></Link>
         </div>
       </section>
