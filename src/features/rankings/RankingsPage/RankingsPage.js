@@ -15,6 +15,7 @@ import { selectCurrentToken } from '../../auth/authSlice'
 import PositionFilter from '../../../components/PositionFilter/PositionFilter'
 import Helmet from 'react-helmet'
 import LoadingBlock from '../../../components/Loading/LoadingBlock/LoadingBlock'
+import { epochToTimeAgo } from '../../../utilities/EpochToTimeAgo'
 
 const RankingsPage = () => {
   const token = useSelector(selectCurrentToken)
@@ -54,12 +55,17 @@ const RankingsPage = () => {
   }
 
   const filterPlayers = (players) => {
+    var temp
     if (selectedPosition === "ALL") {
-      return players
+      temp = players
+      // console.log(temp)
+      return temp
     }
-    return players.filter(player =>
+    temp = players.filter(player =>
       player?.position === selectedPosition
     )
+    // console.log(temp)
+    return temp
   }
 
   let content
@@ -73,7 +79,7 @@ const RankingsPage = () => {
 
   const customizeRanking = () => {
     if (!token) {
-      return navigate('/login')
+      return navigate(`/edit/${selectedTemplate}`)
     }
     createNewCustomRankings({
       title: "Custom Ranking",
@@ -104,8 +110,13 @@ const RankingsPage = () => {
       <Nav />
       <main>
         <h1>2023 NFL Fantasy Draft Rankings</h1>
+        {rankings?.createdAt &&
+          <div className='createdAt-wrapper'>
+            <p>Last updated: {epochToTimeAgo(rankings.createdAt / 1000000)}</p>
+          </div>
+        }
         <p className='description'>Our rankings are an index of expert consensus rankings
-          across the industry and are updated daily. <br/> Select Customize to edit these rankings.</p>
+          across the industry and are updated daily. <br /> Select Customize to edit these rankings.</p>
         <div className="options-wrapper">
           {rankingsTemplates && rankingsTemplates.length > 0 &&
             <SelectFilter
@@ -116,9 +127,9 @@ const RankingsPage = () => {
             />
           }
           <div className='options-row' ref={positionWrapperRef}>
-            <PositionFilter 
-              positions={positions} 
-              selectedPos={selectedPosition} 
+            <PositionFilter
+              positions={positions}
+              selectedPos={selectedPosition}
               onChange={setSelectedPosition}
               large={true} />
             <button

@@ -5,6 +5,7 @@ import RegisterPage from './features/auth/RegisterPage/RegisterPage'
 import RankingsPage from './features/rankings/RankingsPage/RankingsPage'
 import CustomRankingsPage from './features/customRankings/CustomRankingsPage/CustomRankingsPage'
 import EditRankingPage from './features/customRankings/EditRankingPage/EditRankingPage'
+import EditUserRankingPage from './features/customRankings/EditRankingPage/EditUserRankingPage'
 import RequireAuth from './features/auth/RequireAuth'
 import Layout from './components/Layout'
 import PersistLogin from './features/auth/PersistLogin'
@@ -28,12 +29,13 @@ function App() {
             <Route path="register" element={<RegisterPage />} />
             <Route path="rankings" element={<RankingsPage />} />
             <Route path="contact" element={<ContactPage />} />
+            <Route path="edit/:templateId" element={<EditRankingPage />} />
+            <Route path="custom">
+              <Route index element={<CustomRankingsPage />} />
+                <Route path=":rankingId" element={<EditUserRankingPage />} /> 
+            </Route>
 
             <Route element={<RequireAuth />}>
-              <Route path="custom">
-                <Route index element={<CustomRankingsPage />} />
-                <Route path=":rankingId" element={<EditRankingPage />} />
-              </Route>
               <Route path="account">
                 <Route index element={<AccountPage />} />
               </Route>

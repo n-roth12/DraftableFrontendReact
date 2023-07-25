@@ -4,6 +4,16 @@
         margin-top: 0.6rem;
     }
 
+    .login-link {
+        color: var(--btn-blue-1);
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .login-link:hover {
+        color: var(--btn-blue-hover-1);
+    }
+
     .rankings-options {
         display: flex;
         flex-direction: row;

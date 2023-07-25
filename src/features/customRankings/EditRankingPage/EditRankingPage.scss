@@ -5,6 +5,16 @@
         width: 1200px;
     }
 
+    .login-link {
+        color: var(--btn-blue-1);
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .login-link:hover {
+        color: var(--btn-blue-hover-1);
+    }
+
     .columns-wrapper {
         display: flex;
         flex-direction: row;

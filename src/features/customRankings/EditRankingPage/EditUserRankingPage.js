@@ -1,8 +1,10 @@
 import './EditRankingPage.scss'
 import Nav from '../../../components/Nav/Nav'
 import Footer from "../../../components/Footer/Footer"
-import { useParams, useLocation, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { useGetCustomRankingByIdQuery, useUpdateCustomRankingMutation } from '../customRankingsApiSlice'
 import { useEffect, useState, useRef } from 'react'
+import { Switch } from '@mui/material'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
 import { StrictModeDroppable as Droppable } from '../../../utilities/StrictModeDroppable'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
@@ -14,11 +16,13 @@ import LoadingBlock from '../../../components/Loading/LoadingBlock/LoadingBlock'
 import AddPlayersList from '../AddPlayersList/AddPlayersList'
 import useResponsiveBreakpoints from '../../../utilities/useResponsiveBreakpoints'
 import ClearRankingsDialog from '../../../components/Dialogs/ClearRankingsDialog/ClearRankingsDialog'
-import { useGetRankingByIdQuery } from '../../rankings/rankingsApiSlice'
 
-const EditRankingPage = () => {
-  const { templateId } = useParams()
+const EditUserRankingPage = () => {
+  const { rankingId } = useParams()
   const [editingTitle, setEditingTitle] = useState(false)
+  const [autoSave, setAutoSave] = useState(true)
+  const [updateCustomRanking] = useUpdateCustomRankingMutation()
+  const [hasChanges, setHasChanges] = useState(false)
   const [showAddTier, setShowAddTier] = useState(false)
   const [maxTierIndex, setMaxTierIndex] = useState()
   const [editingIndex, setEditingIndex] = useState()
@@ -38,13 +42,14 @@ const EditRankingPage = () => {
   const [inputTitle, setInputTitle] = useState()
 
   const {
-    data: ranking,
+    data: customRanking,
     isLoading: isRankingLoading,
     isSuccess: isRankingSuccess,
     isError: isRankingError,
     error: rankingError
-  } = useGetRankingByIdQuery(templateId)
+  } = useGetCustomRankingByIdQuery(rankingId)
 
+  // const [players, ] = useState(customRanking?.rankings || [])
   const handleChangeInputTitle = (e) => setInputTitle(e.target.value)
   const size = useResponsiveBreakpoints(mainRef, [
     { small: 860 },
@@ -52,12 +57,12 @@ const EditRankingPage = () => {
   ])
 
   useEffect(() => {
-    setTitle("Custom Ranking")
-    setInputTitle("Custom Ranking")
-    setPlayers(ranking?.rankings || [])
-    setPrevPlayers(ranking?.rankings || [])
-    getUnusedPlayers(ranking?.rankings, ranking?.rankings)
-  }, [ranking])
+    setTitle(customRanking?.customRanking?.title || '')
+    setInputTitle(customRanking?.customRanking?.title || '')
+    setPlayers(customRanking?.customRanking?.rankings || [])
+    setPrevPlayers(customRanking?.customRanking?.rankings || [])
+    getUnusedPlayers(customRanking?.aggregatedRanking?.rankings, customRanking?.customRanking?.rankings)
+  }, [customRanking])
 
   const getUnusedPlayers = (playersList, rankingsList) => {
     if (playersList) {
@@ -71,8 +76,12 @@ const EditRankingPage = () => {
   }
 
   const updateTitle = () => {
-    if (inputTitle === ranking?.title) return
+    if (inputTitle === customRanking?.customRanking?.title) return
     setTitle(inputTitle)
+    updateCustomRanking({
+      title: inputTitle,
+      id: customRanking?.customRanking?._id
+    })
     setEditingTitle(false)
   }
 
@@ -89,12 +98,12 @@ const EditRankingPage = () => {
 
   useEffect(() => {
     if (!hasRenderedPositions) {
-      const pos = Array.from(getPositions(ranking?.rankings))
+      const pos = Array.from(getPositions(customRanking?.aggregatedRanking?.rankings))
       if (!pos?.length) return
       setPositions(pos)
       setHasRenderedPositions(true)
     }
-  }, [ranking, hasRenderedPositions])
+  }, [customRanking, hasRenderedPositions])
 
   const handleEditRank = (playerId, newIndex) => {
     const r = filterPlayers(players, selectedPosition).filter(x => !x?.tier)[newIndex]
@@ -109,6 +118,20 @@ const EditRankingPage = () => {
 
   const saveChanges = (playersToSave) => {
     setPlayers(playersToSave)
+    if (autoSave || size === "small") {
+      postChanges(playersToSave)
+    } else {
+      setHasChanges(true)
+    }
+  }
+
+  const postChanges = (playersToSave) => {
+    updateCustomRanking({
+      id: customRanking.customRanking._id,
+      rankings: playersToSave
+    })
+    setPrevPlayers([...playersToSave])
+    setHasChanges(false)
   }
 
   const filterPlayers = (_players, _selectedPosition) => {
@@ -209,10 +232,20 @@ const EditRankingPage = () => {
     return playersListCopy
   }
 
+  const handleChangeAutosave = () => {
+    setAutoSave(!autoSave)
+  }
+
   const clearRankings = () => {
     setUnusedPlayers([...unusedPlayers, ...players])
     setShowClearRankings(false)
     saveChanges([])
+  }
+
+  const cancelEdit = () => {
+    setPlayers([...prevPlayers])
+    setHasChanges(false)
+    setShowAddTier(false)
   }
 
   const handleKeyDown = (e) => {
@@ -347,10 +380,10 @@ const EditRankingPage = () => {
             value={isRankingLoading ? "Loading..." : (!editingTitle ? title : inputTitle)} />
         </div>
         <div className='updated-wrapper'>
-          {ranking?.updatedAt &&
-            <p className='last-update'>Last updated {new Date(ranking?.updatedAt).getMonth() + 1}
-              /{new Date(ranking?.updatedAt).getDate()}
-              /{new Date(ranking?.updatedAt).getFullYear()}
+          {customRanking?.customRanking?.updatedAt &&
+            <p className='last-update'>Last updated {new Date(customRanking?.customRanking?.updatedAt).getMonth() + 1}
+              /{new Date(customRanking?.customRanking?.updatedAt).getDate()}
+              /{new Date(customRanking?.customRanking?.updatedAt).getFullYear()}
             </p>
           }
         </div>
@@ -361,10 +394,26 @@ const EditRankingPage = () => {
               <div className='save-wrapper'>
                 <div className='save-wrapper-inner'>
                   <h3>Rankings</h3>
-                  {ranking?.rankings?.length &&
-                    <p className='length-indicator'>{players?.length}/{ranking?.rankings?.length}</p>
+                  {customRanking?.aggregatedRanking?.rankings?.length &&
+                    <p className='length-indicator'>{players?.length}/{customRanking?.aggregatedRanking?.rankings?.length}</p>
                   }
-                  <p><Link className='login-link'>Login</Link> to save custom rankings.</p>
+                  <Switch
+                    checked={autoSave}
+                    onChange={handleChangeAutosave}
+                    size='small' />
+                  <p className='autosave-wrapper'>Autosave <span className='autosave'>{autoSave ? "On" : "Off"}</span></p>
+                  {!autoSave &&
+                    <>
+                      <button
+                        className={`submit-btn${!hasChanges ? ' disabled' : ''}`}
+                        onClick={() => postChanges(players)}
+                        disabled={!hasChanges}>Save</button>
+                      <button
+                        className={`cancel-btn${!hasChanges ? ' disabled' : ''}`}
+                        onClick={cancelEdit}
+                        disabled={!hasChanges}>Cancel</button>
+                    </>
+                  }
                 </div>
               </div>
               <div className='table-options-wrapper' ref={rankingsOptionsRef}>
@@ -401,16 +450,15 @@ const EditRankingPage = () => {
         }
         {size === "small" &&
           <>
-            <p><Link className='login-link'>Login</Link> to save custom rankings.</p>
             <div className='tab-btns-wrapper'>
               <button
                 onClick={() => setActiveTab("rankings")}
                 className={`tab-btn ${activeTab === "rankings" ? "active" : ""}`}
               >Rankings
-                {ranking?.rankings?.length &&
+                {customRanking?.aggregatedRanking?.rankings?.length &&
                   <span
                     className='small-length-indicator'>
-                    {players?.length}/{ranking?.rankings?.length}
+                    {players?.length}/{customRanking?.aggregatedRanking?.rankings?.length}
                   </span>
                 }
               </button>
@@ -460,4 +508,4 @@ const EditRankingPage = () => {
   )
 }
 
-export default EditRankingPage
+export default EditUserRankingPage

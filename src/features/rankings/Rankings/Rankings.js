@@ -1,12 +1,18 @@
 import './Rankings.scss'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaAngleUp, FaAngleDown, FaInfoCircle } from 'react-icons/fa'
 import { Tooltip } from '@mui/material'
 
 const Rankings = ({ players }) => {
   const [sortColumn, setSortColumn] = useState("Rank")
   const [sortDesc, setSortDesc] = useState(true)
-  const [playersList, setPlayersList] = useState([...players])
+  const [playersList, setPlayersList] = useState([])
+
+  useEffect(() => {
+    if (players?.length) {
+      setPlayersList([...players])
+    }
+  }, [players])
 
   const toggleSort = (col) => {
     if (sortColumn === col) {

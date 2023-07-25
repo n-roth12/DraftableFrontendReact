@@ -7,7 +7,7 @@ import { TextField } from '@mui/material'
 import { useState } from 'react'
 import TemplateSelector from '../../TemplateSelector/TemplateSelector'
 
-const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle, defaultTemplate }) => {
+const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle, defaultTemplate, disableTitle }) => {
   const [selectedTemplate, setSelectedTemplate] = useState(
     defaultTemplate ? defaultTemplate :
       templates && templates.length > 0 && templates[0]._id
@@ -16,6 +16,7 @@ const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle, d
 
   const handleChangeTemplate = (e) => setSelectedTemplate(e.target.value)
   const handleChangeTitle = (e) => setTitle(e.target.value)
+    console.log(disableTitle)
 
   const onCloseWrapper = () => {
     onClose()
@@ -39,6 +40,7 @@ const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle, d
             <TextField
               className='dialog-input-text'
               size='small'
+              disabled={disableTitle}
               onChange={handleChangeTitle}
               placeholder={defaultTitle}
               value={title}
