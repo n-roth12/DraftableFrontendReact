@@ -1,22 +1,20 @@
 import "./CustomRankingsPage.scss";
-import "../../../components/EditButton/EditButton.scss";
-import Nav from "../../../components/Nav/Nav";
-import Footer from "../../../components/Footer/Footer";
-import CustomRankingsList from "../CustomRankingsList/CustomRankingsList";
-import NewRankingsDialog from "../../../components/Dialogs/NewRankingsDialog/NewRankingsDialog";
-import { useGetUserQuery } from "../../acount/accountSlice";
+import Nav from "../../components/Nav/Nav";
+import Footer from "../../components/Footer/Footer";
+import CustomRankingsList from "../../features/customRankings/CustomRankingsList/CustomRankingsList";
+import NewRankingsDialog from "../../components/Dialogs/NewRankingsDialog/NewRankingsDialog"
 import {
   useGetUserCustomRankingsQuery,
   useCreateNewCustomRankingsMutation,
-} from "../customRankingsApiSlice";
+} from "../../features/customRankings/customRankingsApiSlice";
 import { useState } from "react";
-import { useGetCurrentRankingTemplatesQuery } from "../../rankings/rankingsApiSlice";
+import { useGetCurrentRankingTemplatesQuery } from "../../features/rankings/rankingsApiSlice";
 import { FaAngleRight } from "react-icons/fa";
-import LoadingBlock from "../../../components/Loading/LoadingBlock/LoadingBlock";
+import LoadingBlock from "../../components/Loading/LoadingBlock/LoadingBlock";
 import Helmet from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../../auth/authSlice";
+import { selectCurrentUser } from "../../features/auth/authSlice";
 
 const CustomRankingsPage = () => {
   const [showNewRankingsDialog, setShowRankingsDialog] = useState(false);
@@ -62,12 +60,12 @@ const CustomRankingsPage = () => {
         ));
   } else if (isRankingsError) {
     rankingsContent = (
-      <p>
-        Please{" "}
+      <p className="login-indicator">
+        Please {" "}
         <Link to="/login" className="login-link">
           login
         </Link>{" "}
-        in to save your custom rankings.
+        to save your custom rankings.
       </p>
     );
   }

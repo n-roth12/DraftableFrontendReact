@@ -1,6 +1,4 @@
 .add-players-list {
-    max-height: 70vh;
-    overflow-y: auto;
     border: 1px solid var(--lightgrey);
     border-radius: 6px;
     margin-top: 6px;
@@ -9,6 +7,7 @@
     .add-player {
         display: flex;
         flex-direction: row;
+        align-items: center;
         padding: 0.6rem;
         min-height: 30px;
         background-color: white;
@@ -55,5 +54,32 @@
 
     .team-wrapper {
         margin-right: 0.5rem;
+    }
+
+    .empty-players-indicator {
+        margin-left: auto;
+        margin-right: auto;
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+}
+
+.add-players-list:not(.small) {
+    max-height: 80vh;
+    overflow-y: auto;
+    border-collapse: separate;
+}
+
+.add-players-list.small {
+    .add-player:first-child {
+        border-radius: 6px 6px 0 0;
+    }
+
+    .add-player:last-child {
+        border-radius: 0 0 6px 6px;
+    }
+
+    .add-player:only-child {
+        border-radius: 6px;
     }
 }

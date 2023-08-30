@@ -1,12 +1,16 @@
 .draftable,
 .tier {
     user-select: none;
-    padding: 0.6rem;
+    padding: 0.7rem;
     font-size: 10pt;
 
     .drag-icon,
     .delete-icon {
         font-size: 1.5rem;
+    }
+
+    .delete-icon {
+        color: var(--red-1);
     }
 
     .delete-icon:hover {
@@ -105,12 +109,13 @@
 }
 
 .tier {
-    background-color: var(--tier-color);
+    background-color: var(--table-header-color);
     border-top: 1px solid var(--lightgrey);
-    border-left: 1px solid var(--tier-color);
-    border-right: 1px solid var(--tier-color);
-    color: white;
-    font-weight: 600;
+    border-left: 1px solid var(--lightgrey);
+    border-right: 1px solid var(--lightgrey);
+    border-bottom: 1px solid var(--lightgrey);
+    color: black;
+    margin-bottom: -1px;
 
     .drag-icon-wrapper {
         flex: 1;
@@ -120,7 +125,7 @@
     .rank-wrapper {
         flex: 2;
         justify-content: center;
-        font-weight: 800;
+        font-weight: 700;
     }
 
     .buttons-wrapper {
@@ -202,7 +207,7 @@
 }
 
 .tier.selected {
-    background-color: var(--btn-blue-hover-1);
+    background-color: #dfe4f2;
 }
 
 @media (pointer: fine), (pointer: none) {
@@ -210,6 +215,6 @@
         background-color: var(--table-header-color);
     }
     .tier:not(.top-tier):hover {
-        background-color: var(--btn-blue-hover-1);
+        background-color: #dfe4f2;
     }
 }

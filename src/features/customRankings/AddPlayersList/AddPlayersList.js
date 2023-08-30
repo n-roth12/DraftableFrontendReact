@@ -1,10 +1,10 @@
 import './AddPlayersList.scss'
-import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { AiOutlinePlusCircle, AiFillPlusCircle } from 'react-icons/ai'
 
 
-const AddPlayersList = ({ players, addPlayer }) => {
+const AddPlayersList = ({ players, addPlayer, size }) => {
   return (
-    <div className='add-players-list'>
+    <div className={`add-players-list ${size === "small" ? "small" : ""}`}>
       {players?.length ?
         players.map((player, index) =>
           <div className='add-player'>
@@ -30,7 +30,7 @@ const AddPlayersList = ({ players, addPlayer }) => {
         )
         :
         <div className='add-player'>
-          <p>No players to add</p>
+          <p className='empty-players-indicator'>All players already added</p>
         </div>
       }
     </div>

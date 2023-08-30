@@ -6,7 +6,7 @@
     }
 
     .login-link-wrapper {
-        color: var(--grey);
+        color: black;
         margin-bottom: 0.8rem;
     }
 
@@ -62,15 +62,35 @@
         flex: 1;
         border-radius: 4px;
         cursor: pointer;
+
+        .small-length-indicator {
+            background-color: none;
+            color: white;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 0.6rem;
+            border: 1px solid white;
+            padding: 0.2rem 0.3rem 0.2rem 0.3rem;
+        }
     }
 
     .tab-btn:not(.active) {
         color: var(--btn-blue-1);
+
+        .small-length-indicator {
+            color: var(--btn-blue-1);
+            border: 1px solid var(--btn-blue-1);
+        }
     }
 
     .tab-btn.active {
         background-color: var(--tier-color);
         color: white;
+
+        .small-length-indicator {
+            color: white;
+            border: 1px solid white;
+        }
     }
 
     .updated-wrapper {
@@ -86,12 +106,12 @@
     .title-wrapper {
         display: flex;
         align-items: center;
-        margin-top: 0.8rem;
+        margin-top: 0.4rem;
         
         .title-input-text {
-            font-size: 1.8em;
+            font-size: 1.6em;
             background: none;
-            font-weight: 700;
+            font-weight: 600;
             padding: 1px;
             border: none;
             width: 100%;
@@ -214,14 +234,22 @@
 
         .table-header {
             padding: 8px;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             background-color: var(--lightgrey);
             border: 1px solid var(--lightgrey);
             border-radius: 6px 6px 0 0;
+            padding: 0.7rem;
 
             .col-label {
                 font-weight: 500;
                 color: black;
+            }
+
+            .rank-wrapper {
+                justify-items: flex-start;
+                span {
+                    width: 50%;
+                }
             }
         }
 
@@ -247,19 +275,10 @@
         font-weight: 600;
     }
 
-    .small-length-indicator {
-        background-color: white;
-        color: var(--btn-blue-1);
-        border-radius: 4px;
-        font-size: 0.8rem;
-        margin-left: 0.4rem;
-        padding: 0.3rem 0.4rem 0.3rem 0.4rem;
-    }
-
     .description {
         margin-top: 0.6rem;
         margin-bottom: 0.4rem;
-        color: var(--grey);
+        color: black;
     }
 
     @media (max-width: 499px) {

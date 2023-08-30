@@ -1,19 +1,21 @@
 import './App.scss'
 import { Routes, Route } from 'react-router-dom'
-import LoginPage from './features/auth/LoginPage/LoginPage'
-import RegisterPage from './features/auth/RegisterPage/RegisterPage'
-import RankingsPage from './features/rankings/RankingsPage/RankingsPage'
-import CustomRankingsPage from './features/customRankings/CustomRankingsPage/CustomRankingsPage'
-import EditRankingPage from './features/customRankings/EditRankingPage/EditRankingPage'
-import EditUserRankingPage from './features/customRankings/EditRankingPage/EditUserRankingPage'
+import LoginPage from './pages/LoginPage/LoginPage'
+import RegisterPage from './pages/RegisterPage/RegisterPage'
+import RankingsPage from './pages/RankingsPage/RankingsPage'
+import CustomRankingsPage from './pages/CustomRankingsPage/CustomRankingsPage'
+import EditRankingPage from './pages/EditRankingPage/EditRankingPage'
+import EditUserRankingPage from './pages/EditRankingPage/EditUserRankingPage'
 import RequireAuth from './features/auth/RequireAuth'
 import Layout from './components/Layout'
 import PersistLogin from './features/auth/PersistLogin'
-import AccountPage from './features/acount/AccountPage/AccountPage'
-import ContactPage from './features/contact/ContactPage/ContactPage'
-import FourOFourPage from './components/FourOFourPage/FourOFourPage'
-import WelcomePage from './features/welcome/WelcomePage'
+import AccountPage from './pages/AccountPage/AccountPage'
+import ContactPage from './pages/ContactPage/ContactPage'
+import FourOFourPage from './pages/FourOFourPage/FourOFourPage'
+import WelcomePage from './pages/WelcomePage/WelcomePage'
 import { ScrollToTop } from './utilities/ScrollToTop'
+import DraftPage from './pages/DraftPage/DraftPage'
+import CreateDraftPage from './pages/CreateDraftPage/CreateDraftPage'
 
 function App() {
   return (
@@ -30,9 +32,14 @@ function App() {
             <Route path="rankings" element={<RankingsPage />} />
             <Route path="contact" element={<ContactPage />} />
             <Route path="edit/:templateId" element={<EditRankingPage />} />
+            <Route path="draft">
+              <Route index element={<CreateDraftPage />} />
+              <Route path=":draftId" element={<DraftPage />} />
+            </Route>
+            <Route path="draft/:draftId" element={<DraftPage />} />
             <Route path="custom">
               <Route index element={<CustomRankingsPage />} />
-                <Route path=":rankingId" element={<EditUserRankingPage />} /> 
+              <Route path=":rankingId" element={<EditUserRankingPage />} /> 
             </Route>
 
             <Route element={<RequireAuth />}>

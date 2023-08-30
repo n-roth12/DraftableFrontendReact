@@ -1,8 +1,8 @@
 import './ContactPage.scss'
-import Nav from '../../../components/Nav/Nav'
-import Footer from '../../../components/Footer/Footer'
+import Nav from '../../components/Nav/Nav'
+import Footer from '../../components/Footer/Footer'
 import { Helmet } from 'react-helmet'
-import ContactForm from '../ContactForm/ContactForm'
+import ContactForm from '../../features/contact/ContactForm/ContactForm'
 
 const ContactPage = () => {
   return (

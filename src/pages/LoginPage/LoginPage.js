@@ -1,6 +1,6 @@
 import './LoginPage.scss'
-import LoginForm from '../LoginForm'
-import Nav from '../../../components/Nav/Nav'
+import LoginForm from '../../features/auth/LoginForm'
+import Nav from '../../components/Nav/Nav'
 import { Helmet } from 'react-helmet'
 
 const LoginPage = () => {

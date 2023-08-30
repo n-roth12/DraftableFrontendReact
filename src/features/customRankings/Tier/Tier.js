@@ -1,5 +1,6 @@
 import '../Draftable/Draftable.scss'
 import { MdDragIndicator } from 'react-icons/md'
+import { HiMinusCircle } from 'react-icons/hi'
 import { AiOutlineMinusCircle } from 'react-icons/ai'
 
 const Tier = ({ tier, provided, index, onDelete, isBeingDragged }) => {
@@ -8,10 +9,11 @@ const Tier = ({ tier, provided, index, onDelete, isBeingDragged }) => {
       className={`tier${tier.tier === 1 ? ' top-tier' : ''}${isBeingDragged ? ' selected' : ''}`}
       {...provided?.draggableProps}
       {...provided?.dragHandleProps}
-      ref={provided?.innerRef}>
+      ref={provided?.innerRef}
+      >
       <div className='buttons-wrapper'>
         {tier.tier !== 1 &&
-          <AiOutlineMinusCircle
+          <HiMinusCircle
             className='delete-icon'
             onClick={() => onDelete(index)}
           />

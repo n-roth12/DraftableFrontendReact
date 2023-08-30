@@ -1,20 +1,20 @@
 import './EditRankingPage.scss'
-import Nav from '../../../components/Nav/Nav'
-import Footer from "../../../components/Footer/Footer"
-import { useParams, useLocation, Link } from 'react-router-dom'
+import Nav from '../../components/Nav/Nav'
+import Footer from '../../components/Footer/Footer'
+import { useParams, Link } from 'react-router-dom'
 import { useEffect, useState, useRef } from 'react'
 import { DragDropContext, Draggable } from 'react-beautiful-dnd'
-import { StrictModeDroppable as Droppable } from '../../../utilities/StrictModeDroppable'
+import { StrictModeDroppable as Droppable } from '../../utilities/StrictModeDroppable'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
-import Tier from '../Tier/Tier'
-import Draftable from '../Draftable/Draftable'
-import PositionFilter from '../../../components/PositionFilter/PositionFilter'
+import Tier from '../../features/customRankings/Tier/Tier'
+import Draftable from '../../features/customRankings/Draftable/Draftable'
+import PositionFilter from '../../components/PositionFilter/PositionFilter'
 import Helmet from "react-helmet"
-import LoadingBlock from '../../../components/Loading/LoadingBlock/LoadingBlock'
-import AddPlayersList from '../AddPlayersList/AddPlayersList'
-import useResponsiveBreakpoints from '../../../utilities/useResponsiveBreakpoints'
-import ClearRankingsDialog from '../../../components/Dialogs/ClearRankingsDialog/ClearRankingsDialog'
-import { useGetRankingByIdQuery } from '../../rankings/rankingsApiSlice'
+import LoadingBlock from '../../components/Loading/LoadingBlock/LoadingBlock'
+import AddPlayersList from '../../features/customRankings/AddPlayersList/AddPlayersList'
+import useResponsiveBreakpoints from '../../utilities/useResponsiveBreakpoints'
+import ClearRankingsDialog from '../../components/Dialogs/ClearRankingsDialog/ClearRankingsDialog'
+import { useGetRankingByIdQuery } from '../../features/rankings/rankingsApiSlice'
 
 const EditRankingPage = () => {
   const { templateId } = useParams()
@@ -244,7 +244,7 @@ const EditRankingPage = () => {
           <div className='drag-icon-wrapper'>
           </div>
           <div className='rank-wrapper col-label'>
-            RK
+            <span>RK</span>
           </div>
           <div className='name-wrapper col-label'>
             NAME
@@ -390,7 +390,8 @@ const EditRankingPage = () => {
                 parentRef={addPlayersRef} />
               <AddPlayersList
                 players={filterPlayers(unusedPlayers, addPlayersSelectedPosition)}
-                addPlayer={addDraftable} />
+                addPlayer={addDraftable}
+                size={size} />
             </div>
           </div>
         }
@@ -403,7 +404,7 @@ const EditRankingPage = () => {
               >Rankings
                 {ranking?.rankings?.length &&
                   <span
-                    className='small-length-indicator'>
+                    className={`small-length-indicator ${activeTab === "rankings" ? "selected" : ""}`}>
                     {players?.length}/{ranking?.rankings?.length}
                   </span>
                 }
@@ -443,7 +444,8 @@ const EditRankingPage = () => {
                   parentRef={addPlayersRef} />
                 <AddPlayersList
                   players={filterPlayers(unusedPlayers, addPlayersSelectedPosition)}
-                  addPlayer={addDraftable} />
+                  addPlayer={addDraftable}
+                  size={size} />
               </div>
             }
           </>

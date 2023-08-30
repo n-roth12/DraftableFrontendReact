@@ -1,17 +1,17 @@
 import './AccountPage.scss'
 import { useState, useEffect } from 'react'
-import Nav from '../../../components/Nav/Nav'
-import AccountDetails from '../AccountDetails/AccountDetails'
-import { useGetUserQuery } from '../accountSlice'
-import { useLogoutMutation } from '../../auth/authApiSlice'
+import Nav from '../../components/Nav/Nav'
+import AccountDetails from '../../features/acount/AccountDetails/AccountDetails'
+import { useGetUserQuery } from '../../features/acount/accountSlice'
+import { useLogoutMutation } from '../../features/auth/authApiSlice'
 import { useDispatch } from 'react-redux'
-import { logOut } from '../../auth/authSlice'
+import { logOut } from '../../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
 import { FiLogOut } from 'react-icons/fi'
-import DeleteAccountDialog from '../../../components/Dialogs/DeleteAccountDialog/DeleteAccountDialog'
+import DeleteAccountDialog from '../../components/Dialogs/DeleteAccountDialog/DeleteAccountDialog'
 import Helmet from "react-helmet"
-import Footer from '../../../components/Footer/Footer'
-import LoadingBlock from '../../../components/Loading/LoadingBlock/LoadingBlock'
+import Footer from '../../components/Footer/Footer'
+import LoadingBlock from '../../components/Loading/LoadingBlock/LoadingBlock'
 
 const AccountPage = () => {
   const [showDeleteAccountDialog, setShowDeleteAccountDialog] = useState(false)

@@ -37,6 +37,7 @@ const DefaultNav = () => {
           <div className='nav-links'>
             <Link className='nav-link' to='/rankings'>Rankings</Link>
             <Link className='nav-link' to='/custom'>Custom</Link>
+            <Link className='nav-link' to='/draft'>Draft</Link>
 
             {token ?
               <div 

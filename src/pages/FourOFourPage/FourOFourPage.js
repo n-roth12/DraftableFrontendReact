@@ -1,6 +1,6 @@
 import { MdOutlineSportsFootball } from 'react-icons/md'
-import Footer from '../Footer/Footer'
-import Nav from '../Nav/Nav'
+import Footer from '../../components/Footer/Footer'
+import Nav from '../../components/Nav/Nav'
 import './FourOFourPage.scss'
 
 const FourOFourPage = () => {

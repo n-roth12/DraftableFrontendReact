@@ -1,5 +1,5 @@
-import RegisterForm from '../RegisterForm'
-import Nav from '../../../components/Nav/Nav'
+import RegisterForm from '../../features/auth/RegisterForm'
+import Nav from '../../components/Nav/Nav'
 import { Helmet } from 'react-helmet'
 
 const RegisterPage = () => {

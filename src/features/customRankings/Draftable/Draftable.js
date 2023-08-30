@@ -1,6 +1,7 @@
 import './Draftable.scss'
 import { MdDragIndicator } from 'react-icons/md'
-import { AiOutlineMinusCircle } from 'react-icons/ai'
+import { AiOutlineMinusCircle, AiFillMinusCircle } from 'react-icons/ai'
+import { HiMinusCircle } from 'react-icons/hi'
 import { useEffect, useState } from 'react'
 
 const Draftable = ({ player, provided, index, onDelete, handleEditRank, isPositionFiltered, isBeingDragged }) => {
@@ -49,7 +50,7 @@ const Draftable = ({ player, provided, index, onDelete, handleEditRank, isPositi
       {...provided.dragHandleProps}
       ref={provided.innerRef}>
       <div className='delete-icon-wrapper'>
-        <AiOutlineMinusCircle
+        <HiMinusCircle
           className='delete-icon'
           onClick={() => onDelete(index)}
         />
