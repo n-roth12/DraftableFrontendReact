@@ -5,7 +5,7 @@ import DialogActions from "@material-ui/core/DialogActions"
 import DialogContent from "@material-ui/core/DialogContent"
 import { TextField } from '@mui/material'
 import { useState } from 'react'
-import TemplateSelector from '../../TemplateSelector/TemplateSelector'
+import LabeledSelect from '../../LabeledSelect/LabeledSelect'
 
 const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle, defaultTemplate, disableTitle }) => {
   const [selectedTemplate, setSelectedTemplate] = useState(
@@ -16,7 +16,6 @@ const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle, d
 
   const handleChangeTemplate = (e) => setSelectedTemplate(e.target.value)
   const handleChangeTitle = (e) => setTitle(e.target.value)
-    console.log(disableTitle)
 
   const onCloseWrapper = () => {
     onClose()
@@ -46,10 +45,14 @@ const NewRankingsDialog = ({ open, onClose, onSubmit, templates, defaultTitle, d
               value={title}
             />
         </div>
-        <TemplateSelector 
-          templates={templates} 
+        <LabeledSelect 
+          labelValue="Rankings Template"
+          selectOptions={templates}
+          keyAttr={"_id"}
+          valueAttr={"_id"}
+          textAttr={"scoring"}
           handleChange={handleChangeTemplate}
-          selectedTemplate={selectedTemplate}
+          selectedOption={selectedTemplate}
         />
       </DialogContent>
       <DialogActions className='dialog-actions'>

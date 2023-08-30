@@ -1,6 +1,5 @@
-.template-selector {
-    padding-bottom: 20px;
-
+.labeled-select {
+    padding-bottom: 1rem;
     label {
         display: block;
         font-size: 0.9rem;
@@ -8,7 +7,8 @@
         color: var(--dark-grey);
         margin-bottom: 4px;
     }
-    .select-filter-input {
+    .labeled-select-input {
         width: 100%;
+        background-color: white;
     }
 }

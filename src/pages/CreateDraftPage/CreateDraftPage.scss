@@ -1,2 +1,30 @@
 .create-draft-page {
+    .roster-select-wrapper, .draft-select-wrapper, .type-select-wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .type-select-wrapper, .roster-select-wrapper {
+        padding-top: 0.8rem;
+    }
+    .league-size-select {
+        max-width: 100px;
+        padding: 0 1.2rem 1.2rem 0;
+    }
+    .scoring-select {
+        max-width: 150px;
+        padding: 0 1.2rem 1.2rem 0;
+    }
+    .draft-position-select {
+        max-width: 120px;
+        padding: 0 1.2rem 1.2rem 0;
+    }
+    .draft-type-select {
+        max-width: 150px;
+        padding: 0 1.2rem 1.2rem 0;
+    }
+    .roster-pos-select {
+        padding: 0 1.2rem 1.2rem 0;
+        min-width: 80px;
+    }
 }
